@@ -1,0 +1,14 @@
+Vitesse toolchain.
+
+Major 3rd party tools/softwares are installed in this directory.  
+
+Installation:
+run ./build.sh
+
+To build postgres, one need to set env variable TOOLCHAIN_DIR, I found
+that it is easiest to just put that in your .bashrc file,
+
+TOOLCHAIN_DIR=/path/to/vitessedata/toolchain
+
+We do not expect software in toolchain dir change often, so sharing 
+this env variable for many git tree is most likely OK. 
