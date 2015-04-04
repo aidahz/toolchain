@@ -26,3 +26,11 @@
 *.exe
 *.out
 *.app
+
+installed
+gperftools-2.4
+gtest-1.7.0
+installed
+lz4-r127
+protobuf-2.6.1
+rapidjson
