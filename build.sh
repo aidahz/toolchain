@@ -8,4 +8,4 @@ echo "Making rapidjson ..."
 echo "Making gtest ..." 
 (cd gtest-1.7.0; ./configure; make)
 echo "Making protobuf ..."
-(cd protobuf-2.6.1; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed; make; make install)
+(cd protobuf-2.5.0; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed; make; make install)
