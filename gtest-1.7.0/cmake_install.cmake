@@ -1,4 +1,4 @@
-# Install script for directory: /nx/work/vitessedata/toolchain/gtest-1.7.0
+# Install script for directory: /nx/work/toolchain/gtest-1.7.0
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,7 +33,7 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
-file(WRITE "/nx/work/vitessedata/toolchain/gtest-1.7.0/${CMAKE_INSTALL_MANIFEST}" "")
+file(WRITE "/nx/work/toolchain/gtest-1.7.0/${CMAKE_INSTALL_MANIFEST}" "")
 foreach(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  file(APPEND "/nx/work/vitessedata/toolchain/gtest-1.7.0/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  file(APPEND "/nx/work/toolchain/gtest-1.7.0/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 endforeach()

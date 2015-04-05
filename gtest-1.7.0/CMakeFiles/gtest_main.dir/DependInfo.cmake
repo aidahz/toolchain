@@ -4,13 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/nx/work/vitessedata/toolchain/gtest-1.7.0/src/gtest_main.cc" "/nx/work/vitessedata/toolchain/gtest-1.7.0/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+  "/nx/work/toolchain/gtest-1.7.0/src/gtest_main.cc" "/nx/work/toolchain/gtest-1.7.0/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/nx/work/vitessedata/toolchain/gtest-1.7.0/CMakeFiles/gtest.dir/DependInfo.cmake"
+  "/nx/work/toolchain/gtest-1.7.0/CMakeFiles/gtest.dir/DependInfo.cmake"
   )
 
 # The include file search paths:

@@ -33,4 +33,5 @@ gtest-1.7.0
 installed
 lz4-r127
 protobuf-2.6.1
+protobuf-2.5.0
 rapidjson

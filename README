@@ -8,7 +8,18 @@ run ./build.sh
 To build postgres, one need to set env variable TOOLCHAIN_DIR, I found
 that it is easiest to just put that in your .bashrc file,
 
-TOOLCHAIN_DIR=/path/to/vitessedata/toolchain
+TOOLCHAIN_DIR=/path/to/toolchain
 
 We do not expect software in toolchain dir change often, so sharing 
 this env variable for many git tree is most likely OK. 
+
+==========================================================
+NOTE on gtest make --
+For some reason, gtest by default does not build libgtest.a, so has to
+do the following
+    cd gtest_dir
+    cmake .
+    make
+    mv libg* ../installed/lib
+Too bad, don't think it worth the time to automate.
+

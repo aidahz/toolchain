@@ -244,3 +244,47 @@ int main(int argc, char** argv)
 #endif
 }
 
+Determining if files pthread.h exist passed with the following output:
+Change Dir: /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec3973826248/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec3973826248.dir/build.make CMakeFiles/cmTryCompileExec3973826248.dir/build
+gmake[1]: Entering directory '/nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp'
+/opt/local/bin/cmake -E cmake_progress_report /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3973826248.dir/CheckIncludeFiles.c.o
+/usr/bin/clang    -o CMakeFiles/cmTryCompileExec3973826248.dir/CheckIncludeFiles.c.o   -c /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+Linking C executable cmTryCompileExec3973826248
+/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3973826248.dir/link.txt --verbose=1
+/usr/bin/clang    -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cmTryCompileExec3973826248.dir/CheckIncludeFiles.c.o  -o cmTryCompileExec3973826248  
+gmake[1]: Leaving directory '/nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp'
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/opt/local/bin/gmake" "cmTryCompileExec4157979302/fast"
+/opt/local/bin/gmake -f CMakeFiles/cmTryCompileExec4157979302.dir/build.make CMakeFiles/cmTryCompileExec4157979302.dir/build
+gmake[1]: Entering directory '/nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp'
+/opt/local/bin/cmake -E cmake_progress_report /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec4157979302.dir/CheckSymbolExists.c.o
+/usr/bin/clang    -o CMakeFiles/cmTryCompileExec4157979302.dir/CheckSymbolExists.c.o   -c /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec4157979302
+/opt/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec4157979302.dir/link.txt --verbose=1
+/usr/bin/clang    -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cmTryCompileExec4157979302.dir/CheckSymbolExists.c.o  -o cmTryCompileExec4157979302  
+gmake[1]: Leaving directory '/nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp'
+
+File /nx/work/toolchain/gtest-1.7.0/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
