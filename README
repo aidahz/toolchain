@@ -23,3 +23,8 @@ do the following
     mv libg* ../installed/lib
 Too bad, don't think it worth the time to automate.
 
+gflags
+    cd gflags
+    mkdir build
+    cd build; cmake ..; make
+
