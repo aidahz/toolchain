@@ -36,10 +36,17 @@ On Centos
     libtool, libevent-devel, openssl-devel, zlib-devel
 
 Note that we get thrift from git, latest 0.9.2 release seems to
-have trouble building c++ library.
+have trouble building c++ library. Once build, make install.  
+Must set THRIFT_HOME to toolchain/installed.
 
-Once build, make install, and must set THRIFT_HOME to toolchain/installed, 
-then one can build parquet-cpp.
+To make things worse, seems parquet-cpp requires the lz4 from svn
+(lz4-svn), AND, the cmake script of parquet will pick up lz4 from
+our installed dir, but link with the lz4.a that itself builds.  
+WTH?  I worked around it by hacking paquet-cpp/thirdparty, sim link
+installed to our installed, then, fix parquet use of lz4
+replace LZ4_uncompress with LZ4_decompress_fast.
+
+Then one can build parquet-cpp.
 
 Beats me, even thinking about automate these stuff.  Later ...
 

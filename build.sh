@@ -13,3 +13,5 @@ echo "Making gflags ..."
 (cd gflags-2.1.2; cmake -DCMAKE_INSTALL_PREFIX=$MY_TOOLCHAIN_DIR/installed .; make; make install)
 echo "Making glog ..."
 (cd glog-0.3.4; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed; make; make install)
+echo "Making snappy ..."
+(cd snappy-1.1.1; ./configure --with-pic --prefix=$MY_TOOLCHAIN_DIR/installed; make; make install)
