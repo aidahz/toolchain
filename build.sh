@@ -6,8 +6,8 @@ if ! (cd sparquet); then
 fi
 
 
-# (cd snappy-1.1.2; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed; make; make install)
-# (cd gperftools-2.4; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-frame-pointers; make; make install)
+# (cd snappy-1.1.2; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed; make ; make install)
+# (cd gperftools-2.4; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-frame-pointers; make ; make install)
 echo "Making lz4 ..."
 (cd lz4-r127/lib && make && PREFIX=$MY_TOOLCHAIN_DIR/installed make install) >& lz4.out && echo ok || echo failed
 echo "Making rapidjson ..."
@@ -23,6 +23,6 @@ echo "Making glog ..."
 echo "Making snappy ..."
 (cd snappy-1.1.1 && ./configure --with-pic --prefix=$MY_TOOLCHAIN_DIR/installed && make && make install) >& snappy.out && echo ok || echo failed
 echo "Making sparquet ..."
-(cd sparquet/src && make clean && make install) >& sparquet.out && echo ok || echo failed
+(cd sparquet/src && make && make install) >& sparquet.out && echo ok || echo failed
 echo "Making decNumber ..."
-(cd decNumber && make clean && make && make install) >& decnumber.out && echo ok || echo failed
+(cd decNumber && make && make && make install) >& decnumber.out && echo ok || echo failed
