@@ -23,4 +23,4 @@ echo "Making glog ..."
 echo "Making snappy ..."
 (cd snappy-1.1.1 && ./configure --with-pic --prefix=$MY_TOOLCHAIN_DIR/installed && make && make install) >& snappy.out && echo ok || echo failed
 echo "Making sparquet ..."
-(cd sparquet/src && make clean && make) >& sparquet.out && echo ok || echo failed
+(cd sparquet/src && make clean && make install) >& sparquet.out && echo ok || echo failed
