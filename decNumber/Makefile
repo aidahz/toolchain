@@ -9,5 +9,6 @@ clean:
 	rm -f libdecnumber.a $(OBJS)
 
 install:
-	install -D *.h ../installed/include/decnumber 
-	install -D libdecnumber.a ../installed/lib
+	mkdir -p ../installed/include/decnumber
+	cp *.h ../installed/include/decnumber/ 
+	cp libdecnumber.a ../installed/lib/
