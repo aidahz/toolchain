@@ -7,3 +7,7 @@ libdecnumber.a: $(OBJS)
 
 clean:
 	rm -f libdecnumber.a $(OBJS)
+
+install:
+	install -D *.h ../installed/include/decnumber 
+	install -D libdecnumber.a ../installed/lib
