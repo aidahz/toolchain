@@ -1,6 +1,6 @@
 OBJS = decSingle.o decDouble.o decQuad.o decNumber.o decContext.o
 
-CFLAGS = -Wall -g -O2
+CFLAGS = -Wall -g -O2 -fPIC
 
 libdecnumber.a: $(OBJS)
 	ar -rcs libdecnumber.a $(OBJS)
