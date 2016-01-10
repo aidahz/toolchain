@@ -47,6 +47,9 @@ echo "Making decNumber ..."
 echo "Making apr ..."
 (cd apr-1.5.2 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
 
+echo "Making libevent ..."
+(cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
+
 echo "Making sparquet ..."
 (cd sparquet/src && make clean && make -j8 && make install) >& sparquet.out && echo ok || echo failed
 
