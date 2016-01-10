@@ -33,6 +33,9 @@ echo "Making glog ..."
 echo "Making decNumber ..."
 (cd decNumber && make clean && make && make install) >& decnumber.out && echo ok || echo failed
 
+echo "Making apr ..."
+(cd apr-1.5.2 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
+
 echo "Making sparquet ..."
 (cd sparquet/src && make clean && make install) >& sparquet.out && echo ok || echo failed
 
