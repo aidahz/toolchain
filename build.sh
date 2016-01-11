@@ -16,6 +16,9 @@ function fatal
 
 [ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
 
+rm -rf installed
+mkdir installed
+
 
 # (cd gperftools-2.4; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-frame-pointers; make -j8 ; make install)
 
@@ -47,8 +50,11 @@ echo "Making decNumber ..."
 echo "Making apr ..."
 (cd apr-1.5.2 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
 
-echo "Making libevent ..."
-(cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
+# echo "Making libevent ..."
+# (cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
+# 
+# echo "Making yaml ..."
+# (cd yaml-0.1.5 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make -j8 && make install) >& apr.out && echo ok || echo failed
 
 echo "Making sparquet ..."
 (cd sparquet/src && make clean && make -j8 && make install) >& sparquet.out && echo ok || echo failed
