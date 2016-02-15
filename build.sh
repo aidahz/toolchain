@@ -59,3 +59,5 @@ echo "Making apr ..."
 echo "Making sparquet ..."
 (cd sparquet/src && make clean && make -j8 && make install) >& sparquet.out && echo ok || echo failed
 
+echo "Makeing Intel decimal floating point library ..."
+(cd IntelRDFPMathLib20U1/LIBRARY; make CC=gcc CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0; mv libbid.a ../../installed/lib)
