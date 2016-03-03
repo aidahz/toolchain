@@ -20,7 +20,7 @@ function fatal
 # (cd gperftools-2.4; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-frame-pointers; make -j8 ; make install)
 
 echo "Making lz4 ..."
-(cd lz4-r127/lib && make -j8 && PREFIX=$MY_TOOLCHAIN_DIR/installed make install) >& lz4.out && echo ok || echo failed
+(cd lz4-r129/lib && make -j8 && PREFIX=$MY_TOOLCHAIN_DIR/installed make install) >& lz4.out && echo ok || echo failed
 
 echo "Making rapidjson ..."
 (cp -r rapidjson/include/rapidjson $MY_TOOLCHAIN_DIR/installed/include) >& rapidjson.out && echo ok || echo failed
