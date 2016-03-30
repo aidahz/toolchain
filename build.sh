@@ -97,7 +97,7 @@ echo -n 'event: ..........'
 echo -n 'yaml: ...........'
 (cd yaml-0.1.5 \
   && autoreconf --force --install \
-  && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed \
+  && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-shared=no \
   && make -j8 && make install) >& out/yaml.out && pass || fail
 
 
@@ -110,3 +110,5 @@ echo -n 'sparquet: .......'
 echo -n 'intelfp: ........'
 (cd IntelRDFPMathLib20U1/LIBRARY && make CC=gcc CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 && mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
 
+echo -n 'rm *.so: ........'
+(cd $MY_TOOLCHAIN_DIR/installed/lib && rm -f *.so *.so.*) && pass || fail
