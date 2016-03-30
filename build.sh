@@ -39,6 +39,14 @@ mkdir -p out
 
 
 ##########################
+echo -n 'yaml: ...........'
+(cd yaml-0.1.5 \
+  && autoreconf --force --install \
+  && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
+
+
+##########################
 # (cd gperftools-2.4; ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-frame-pointers; make clean; make -j8 ; make install)
 
 
@@ -93,14 +101,6 @@ echo -n 'event: ..........'
 (cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/event.out && pass || fail
 
  
-##########################
-echo -n 'yaml: ...........'
-(cd yaml-0.1.5 \
-  && autoreconf --force --install \
-  && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-shared=no \
-  && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
-
-
 ##########################
 echo -n 'sparquet: .......'
 (cd sparquet/src && make clean && make -j8 && make install) >& out/sparquet.out && pass || fail
