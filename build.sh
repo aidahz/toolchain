@@ -41,7 +41,7 @@ mkdir -p out
 ##########################
 echo -n 'yaml: ...........'
 (cd yaml-0.1.5 \
-  && autoreconf --force --install \
+  && (autoreconf --force --install || true) \
   && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-shared=no \
   && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
 
