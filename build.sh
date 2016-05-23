@@ -37,6 +37,23 @@ rm -rf installed
 mkdir installed
 mkdir -p out
 
+##########################
+echo -n 'cmake: ...........'
+(cd cmake-3.5.2 \
+  && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed  \
+  && make clean && make -j8 && make install) >& out/cmake.out && pass || fail
+
+##########################
+echo -n 'bzip2: ...........'
+(cd bzip2-1.0.6 \
+  && make clean && make -j8  \
+  && make install PREFIX=$MY_TOOLCHAIN_DIR/installed) >& out/bzip2.out && pass || fail
+
+##########################
+echo -n 'curl: ...........'
+(cd curl-7.49.0 \
+  && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
 echo -n 'yaml: ...........'
