@@ -20,6 +20,7 @@ function pass
 function fail
 {
    echo '[fail]'
+   if [ $1 ]; then echo $*; fi
 }
 
 
@@ -36,6 +37,15 @@ function fail
 rm -rf installed
 mkdir installed
 mkdir -p out
+
+
+##########################
+echo -n 'event: ..........'
+HINT=
+if [ -e /opt/local/include/openssl ] && ! [ -e /usr/local/include/openssl ] ; then
+    HINT='HINT: try (cd /usr/local/include; ln -s /opt/local/include/openssl)'
+fi
+(cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
 
 ##########################
 echo -n 'cmake: ...........'
@@ -111,11 +121,6 @@ echo -n 'decNumber: ......'
 ##########################
 echo -n 'apr: ............'
 (cd apr-1.5.2 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/apr.out && pass || fail
-
-
-##########################
-echo -n 'event: ..........'
-(cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/event.out && pass || fail
 
  
 ##########################
