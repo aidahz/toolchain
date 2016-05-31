@@ -117,6 +117,9 @@ echo -n 'glog: ...........'
 echo -n 'decNumber: ......'
 (cd decNumber && make clean && make -j8 && make install) >& out/decnumber.out && pass || fail
 
+##########################
+echo -n 'highwayhash: ......'
+(cd highwayhash && make clean && make -j8 && make install) >& out/highwayhash.out && pass || fail
 
 ##########################
 echo -n 'apr: ............'
