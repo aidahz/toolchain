@@ -13,3 +13,11 @@
 // limitations under the License.
 
 #include "highwayhash/highway_tree_hash.h"
+
+#include <stdint.h>
+extern "C" uint64_t C_HighwayHash64(const char* bytes, uint64_t sz);
+uint64_t C_HighwayHash64(const char* bytes, uint64_t sz)
+{
+    static const highwayhash::HighwayTreeHashState::Key key = {1, 2, 3, 4};
+    return highwayhash::HighwayTreeHash(key, bytes, sz);
+}
