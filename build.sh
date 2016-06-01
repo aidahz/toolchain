@@ -123,7 +123,7 @@ echo -n 'highwayhash: ......'
 
 ##########################
 echo -n 're2: ......'
-(cd re2-master && make clean && make -j8 && DESTDIR=$MY_TOOLCHAIN_DIR/installed make install) >& out/highwayhash.out && pass || fail
+(cd re2-master && make clean && make -j8 && make install) >& out/re2.out && pass || fail
 
 
 ##########################
