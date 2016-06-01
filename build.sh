@@ -122,6 +122,11 @@ echo -n 'highwayhash: ......'
 (cd highwayhash && make clean && make -j8 && make install) >& out/highwayhash.out && pass || fail
 
 ##########################
+echo -n 're2: ......'
+(cd re2-master && make clean && make -j8 && DESTDIR=$MY_TOOLCHAIN_DIR/installed make install) >& out/highwayhash.out && pass || fail
+
+
+##########################
 echo -n 'apr: ............'
 (cd apr-1.5.2 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/apr.out && pass || fail
 
