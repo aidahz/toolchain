@@ -93,9 +93,10 @@ echo -n 'gtest: ..........'
 
 
 ##########################
-echo -n 'protobuf: .......'
-(cd protobuf-2.5.0 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/protobuf.out && pass || fail
-
+# disable protobuf. expect it to come with grpc that
+# echo -n 'protobuf: .......'
+# (cd protobuf-2.5.0 && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/protobuf.out && pass || fail
+# 
 
 ##########################
 echo -n 'gflags: .........'
