@@ -48,13 +48,13 @@ fi
 (cd libevent-2.0.22-stable && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
 
 ##########################
-echo -n 'cmake: ...........'
+echo -n 'cmake: ..........'
 (cd cmake-3.5.2 \
   && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed  \
   && make clean && make -j8 && make install) >& out/cmake.out && pass || fail
 
 ##########################
-echo -n 'bzip2: ...........'
+echo -n 'bzip2: ..........'
 (cd bzip2-1.0.6 \
   && make clean && make -j8  \
   && make install PREFIX=$MY_TOOLCHAIN_DIR/installed) >& out/bzip2.out && pass || fail
@@ -119,11 +119,11 @@ echo -n 'decNumber: ......'
 (cd decNumber && make clean && make -j8 && make install) >& out/decnumber.out && pass || fail
 
 ##########################
-echo -n 'highwayhash: ......'
+echo -n 'highwayhash: ....'
 (cd highwayhash && make clean && make -j8 && make install) >& out/highwayhash.out && pass || fail
 
 ##########################
-echo -n 're2: ......'
+echo -n 're2: ............'
 (cd re2-master && make clean && make -j8 && make install) >& out/re2.out && pass || fail
 
 
