@@ -14,7 +14,7 @@ MAIN := sip_hash_main
 all: $(MAIN)
 
 $(MAIN): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(MAIN)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(MAIN) -lrt
 
 libhighwayhash.a: $(OBJS)
 	ar -rcs libhighwayhash.a $(OBJS)
