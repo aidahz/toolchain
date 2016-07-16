@@ -1,2 +1,0 @@
-/nx/work/toolchain/gtest-1.7.0/CMakeFiles/gtest.dir
-/nx/work/toolchain/gtest-1.7.0/CMakeFiles/gtest_main.dir

@@ -37,6 +37,7 @@ function fail
 rm -rf installed
 mkdir installed
 mkdir -p out
+export PATH=$MY_TOOLCHAIN_DIR/installed/bin:$PATH
 
 
 ##########################
@@ -52,6 +53,13 @@ echo -n 'cmake: ..........'
 (cd cmake-3.5.2 \
   && ./configure --prefix=$MY_TOOLCHAIN_DIR/installed  \
   && make clean && make -j8 && make install) >& out/cmake.out && pass || fail
+
+##########################
+echo -n 'googletest: .....'
+(cd googletest && rm -rf build && mkdir build && cd build \
+	&& cmake -DCMAKE_INSTALL_PREFIX:PATH=$MY_TOOLCHAIN_DIR/installed .. \
+	&& make all install) >& out/googletest.out && pass || fail
+
 
 ##########################
 echo -n 'bzip2: ..........'
@@ -81,15 +89,9 @@ echo -n 'yaml: ...........'
 echo -n 'lz4: ............'
 (cd lz4-r129/lib && make clean && make -j8 && PREFIX=$MY_TOOLCHAIN_DIR/installed make install) >& out/lz4.out && pass || fail
 
-
 ##########################
 echo -n 'rapidjson: ......'
 (cp -r rapidjson/include/rapidjson $MY_TOOLCHAIN_DIR/installed/include) >& out/rapidjson.out && pass || fail
-
-
-##########################
-echo -n 'gtest: ..........'
-(cd gtest-1.7.0 && ./configure && make clean && make -j8 ) >& out/gtest.out && pass || fail
 
 
 ##########################
