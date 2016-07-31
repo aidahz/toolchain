@@ -181,7 +181,7 @@ echo -n 'libuuid: ........'
 
 ##########################
 echo -n 'kerboros: .......'
-(cd krb5-1.14.2/src \
+(cd krb5-1.14.3/src \
   && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
 
