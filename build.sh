@@ -174,7 +174,7 @@ echo -n 'libgsasl: .......'
 
 ##########################
 echo -n 'libuuid: ........'
-(cd libuuid-1.0.3 \
+(tar xf libuuid-1.0.3.tar.gz && cd libuuid-1.0.3 \
   && ./configure --prefix=$TARGETDIR --enable-shared=no \
   && make clean && make -j8 && make install) >& out/libuuid.out && pass || fail
 
@@ -195,7 +195,7 @@ echo -n 'kerboros: .......'
 
 ##########################
 echo -n 'libxml2: ........'
-(cd libxml2-2.9.4 \
+(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
   && ./configure --prefix=$TARGETDIR --without-python --enable-shared=no \
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
