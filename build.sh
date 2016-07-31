@@ -27,6 +27,7 @@ function fail
 
 ##########################
 (cd sparquet >& /dev/null) || fatal 'please symlink sparquet'
+(cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
 
 
 ##########################
@@ -144,8 +145,6 @@ echo -n 'sparquet: .......'
 (cd sparquet/src && make clean && make -j8 && make install) >& out/sparquet.out && pass || fail
 
 
-##########################
-(cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
 
 
 ##########################
