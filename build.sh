@@ -39,6 +39,7 @@ mkdir installed
 mkdir -p out
 TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
+export PKG_CONFIG_PATH="$TARGETDIR/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 
 ##########################
@@ -129,16 +130,97 @@ echo -n 're2: ............'
 echo -n 'apr: ............'
 (cd apr-1.5.2 && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/apr.out && pass || fail
 
- 
-
 
 ##########################
 echo -n 'intelfp: ........'
 (cd IntelRDFPMathLib20U1/LIBRARY && make clean && make CC=gcc CFLAGS=-O3 CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 -j8 && mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
 
 ##########################
+echo -n 'rm *.so: ........'
+(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
+
+##########################
 echo -n 'sparquet: .......'
 (cd sparquet/src && make clean && make -j8 && make install) >& out/sparquet.out && pass || fail
 
+
+##########################
+(cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
+
+
+##########################
+echo -n 'protobuf: .......'
+(cd protobuf-3.0.0 \
+	&& ./autogen.sh \
+	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
+	&& make clean && make -j8 \
+	&& make install) >& out/protobuf.out && pass || fail
+
+##########################
+echo -n 'grpc: ...........'
+(cd grpc && make clean \
+	&& make -j8 prefix=$TARGETDIR \
+	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
+
+##########################
 echo -n 'rm *.so: ........'
 (cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
+
+##########################
+echo -n 'libgsasl: .......'
+(cd libgsasl-1.8.0 \
+  && ./configure --prefix=$TARGETDIR --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
+
+
+##########################
+echo -n 'libuuid: ........'
+(cd libuuid-1.0.3 \
+  && ./configure --prefix=$TARGETDIR --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/libuuid.out && pass || fail
+
+
+##########################
+echo -n 'kerboros: .......'
+(cd krb5-1.14.2/src \
+  && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
+  && make clean && make -j8 && make install) >& out/krb.out && pass || fail
+
+##########################
+# DON'T NEED THIS SHIT
+#echo -n 'boost: ..........'
+#(cd boost_1_61_0 \
+#  && ./bootstrap.sh --with-python=no --prefix=$TARGETDIR \
+#  && ./b2 install) >& out/boost.out && pass || fail
+
+
+##########################
+echo -n 'libxml2: ........'
+(cd libxml2-2.9.4 \
+  && ./configure --prefix=$TARGETDIR --without-python --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
+
+##########################
+#echo -n 'rm *.so: ........'
+#(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
+
+##########################
+echo -n 'libhdfs3: .......'
+# Use good old Makefiles
+( (cd libhdfs3/src && make clean && make -j8) \
+	&& cp libhdfs3/src/libhdfs3.a installed/lib/ \
+	&& cp libhdfs3/src/client/hdfs.h installed/include/ ) >& out/libhdfs3.out && pass || fail
+
+##########################
+echo -n 'rm *.so: ........'
+(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
+
+##########################
+echo -n 'xdrive: .........'
+( (cd xdrive && make clean && make -j8) \
+	&& mkdir -p installed/include/xdrive \
+	&& cp xdrive/client/xdrclnt.h installed/include/xdrive/ \
+	&& cp xdrive/server/xdrive installed/bin/ \
+	&& cp xdrive/client/libxdrive.a installed/lib ) >& out/xdrive.out && pass || fail
+
+
