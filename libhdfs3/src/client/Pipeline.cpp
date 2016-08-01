@@ -35,6 +35,8 @@
 #include "DataTransferProtocolSender.h"
 #include "datatransfer.pb.h"
 
+/* CK: define __STDC_FORMAT_MACROS necessary to make PRId64 work in older g++ */
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
 namespace Hdfs {

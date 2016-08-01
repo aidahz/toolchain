@@ -40,6 +40,9 @@
 #include "SWCrc32c.h"
 
 #include <cassert>
+
+/* CK: define __STDC_FORMAT_MACROS necessary to make PRId64 work in older g++ */
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
 namespace Hdfs {

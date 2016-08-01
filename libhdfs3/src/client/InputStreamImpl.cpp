@@ -38,6 +38,8 @@
 
 #include <algorithm>
 #include <ifaddrs.h>
+/* CK: define __STDC_FORMAT_MACROS necessary to make PRId64 work in older g++ */
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #include <iostream>
 #include <sys/socket.h>

@@ -44,6 +44,8 @@
 #include "StringUtil.h"
 
 #include <cstring>
+/* CK: define __STDC_FORMAT_MACROS necessary to make PRId64 work in older g++ */
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #include <libxml/uri.h>
 #include <strings.h>

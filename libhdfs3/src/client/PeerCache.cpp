@@ -25,6 +25,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* CK: define __STDC_FORMAT_MACROS necessary to make PRId64 work in older g++ */
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
 #include "client/PeerCache.h"
