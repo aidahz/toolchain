@@ -120,7 +120,8 @@ echo -n 'decNumber: ......'
 
 ##########################
 echo -n 'highwayhash: ....'
-(cd highwayhash && make clean && make -j8 && make install) >& out/highwayhash.out && pass || fail
+# note: do not do make all; only make install works. 
+(cd highwayhash && make clean && make install) >& out/highwayhash.out && pass || fail
 
 ##########################
 echo -n 're2: ............'
