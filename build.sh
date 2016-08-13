@@ -143,7 +143,7 @@ echo -n 'rm *.so: ........'
 
 ##########################
 echo -n 'sparquet: .......'
-(cd sparquet/src && make clean && make -j8 && make install) >& out/sparquet.out && pass || fail
+(cd sparquet/src && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
 
 
@@ -217,10 +217,7 @@ echo -n 'rm *.so: ........'
 
 ##########################
 echo -n 'xdrive: .........'
-( (cd xdrive && make clean && make -j8) \
-	&& mkdir -p installed/include/xdrive \
-	&& cp xdrive/client/xdrclnt.h installed/include/xdrive/ \
-	&& cp xdrive/server/xdrive installed/bin/ \
-	&& cp xdrive/client/libxdrive.a installed/lib ) >& out/xdrive.out && pass || fail
+(cd xdrive && make clean && make -j8 \
+	&& make install prefix=$TARGETDIR ) >& out/xdrive.out && pass || fail
 
 
