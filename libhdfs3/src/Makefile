@@ -8,6 +8,12 @@ SUBOBJS = proto/subobj.o common/subobj.o server/subobj.o \
 
 all: libhdfs3.a
 
+prefix ?= /usr/local
+
+install: all 
+	install libhdfs3.a ${prefix}/lib/
+	install client/hdfs.h ${prefix}/include/
+
 libhdfs3.a: $(BUILDDIRS)
 	ar -rcs $@ $(SUBOBJS)
 
