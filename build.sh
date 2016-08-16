@@ -207,9 +207,8 @@ echo -n 'libxml2: ........'
 ##########################
 echo -n 'libhdfs3: .......'
 # Use good old Makefiles
-( (cd libhdfs3/src && make clean && make -j8) \
-	&& cp libhdfs3/src/libhdfs3.a installed/lib/ \
-	&& cp libhdfs3/src/client/hdfs.h installed/include/ ) >& out/libhdfs3.out && pass || fail
+(cd libhdfs3/src && make clean && make -j8
+	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
 
 ##########################
 echo -n 'rm *.so: ........'
