@@ -6,7 +6,7 @@ MY_TOOLCHAIN_DIR=$DIR
 function fatal
 {
    echo
-   echo ERROR: $1
+   echo ERROR: "$@"
    echo
    exit 1
 }
@@ -20,15 +20,13 @@ function pass
 function fail
 {
    echo '[fail]'
-   if [ $1 ]; then echo $*; fi
+   if [ $1 ]; then echo "$@"; fi
 }
 
 
 
 ##########################
-(cd sparquet >& /dev/null) || fatal 'please symlink sparquet'
-(cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
-
+(cd mendota >& /dev/null) || fatal please symlink mendota
 
 ##########################
 [ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
@@ -143,7 +141,7 @@ echo -n 'rm *.so: ........'
 
 ##########################
 echo -n 'sparquet: .......'
-(cd sparquet/src && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
+(cd mendota/sparquet/src && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
 
 
@@ -207,7 +205,7 @@ echo -n 'libxml2: ........'
 ##########################
 echo -n 'libhdfs3: .......'
 # Use good old Makefiles
-(cd libhdfs3/src && make clean && make -j8 \
+(cd mendota/libhdfs3/src && make clean && make -j8 \
 	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
 
 ##########################
@@ -216,7 +214,7 @@ echo -n 'rm *.so: ........'
 
 ##########################
 echo -n 'xdrive: .........'
-(cd xdrive && make clean && make -j8 \
+(cd mendota/xdrive && make clean && make -j8 \
 	&& make install prefix=$TARGETDIR ) >& out/xdrive.out && pass || fail
 
 
