@@ -42,6 +42,16 @@ export PKG_CONFIG_PATH="$TARGETDIR/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 
 ##########################
+echo -n 'protobuf: .......'
+(rm -rf protobuf-3.0.0-GA && unzip protobuf-3.0.0-GA.zip \
+	&& cd protobuf-3.0.0-GA  \
+	&& ./autogen.sh \
+	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
+	&& make clean && make -j8 \
+	&& make install) >& out/protobuf.out && pass || fail
+
+
+##########################
 echo -n 'event: ..........'
 HINT=
 if [ -e /opt/local/include/openssl ] && ! [ -e /usr/local/include/openssl ] ; then
@@ -145,14 +155,6 @@ echo -n 'sparquet: .......'
 
 
 
-
-##########################
-echo -n 'protobuf: .......'
-(cd protobuf-3.0.0 \
-	&& ./autogen.sh \
-	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
-	&& make clean && make -j8 \
-	&& make install) >& out/protobuf.out && pass || fail
 
 ##########################
 echo -n 'grpc: ...........'
