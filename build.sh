@@ -150,6 +150,10 @@ echo -n 'rm *.so: ........'
 (cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
 ##########################
+echo -n 'viper: .......'
+(cd mendota/viper && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
+
+##########################
 echo -n 'sparquet: .......'
 (cd mendota/sparquet/src && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
