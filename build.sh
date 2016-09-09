@@ -33,12 +33,11 @@ function fail
 
 
 ##########################
-rm -rf installed
-mkdir installed
+rm -rf installed 
+mkdir -p installed
 mkdir -p out
 TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
-export PKG_CONFIG_PATH="$TARGETDIR/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 
 ##########################
@@ -146,21 +145,6 @@ echo -n 'intelfp: ........'
 (cd IntelRDFPMathLib20U1/LIBRARY && make clean && make CC=gcc CFLAGS=-O3 CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 -j8 && mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
 
 ##########################
-echo -n 'rm *.so: ........'
-(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
-
-##########################
-echo -n 'viper: .......'
-(cd mendota/viper && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
-
-##########################
-echo -n 'sparquet: .......'
-(cd mendota/sparquet/src && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
-
-
-
-
-##########################
 echo -n 'grpc: ...........'
 (cd grpc && make clean \
 	&& make -j8 prefix=$TARGETDIR \
@@ -204,23 +188,9 @@ echo -n 'libxml2: ........'
   && ./configure --prefix=$TARGETDIR --without-python --enable-shared=no \
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
-##########################
-#echo -n 'rm *.so: ........'
-#(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
 ##########################
-echo -n 'libhdfs3: .......'
-# Use good old Makefiles
-(cd mendota/libhdfs3/src && make clean && make -j8 \
-	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
-
-##########################
-echo -n 'rm *.so: ........'
-(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
-
-##########################
-echo -n 'xdrive: .........'
-(cd mendota/xdrive && make clean && make -j8 \
-	&& make install prefix=$TARGETDIR ) >& out/xdrive.out && pass || fail
-
-
+echo 
+echo '*** local ***'
+echo 
+bash build_local.sh
