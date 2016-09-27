@@ -49,7 +49,7 @@ echo -n 'viper: ..........'
 
 ##########################
 echo -n 'sparquet: .......'
-(cd mendota/sparquet/src && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
+(cd mendota/sparquet && make clean && make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
 ##########################
 echo -n 'libhdfs3: .......'
