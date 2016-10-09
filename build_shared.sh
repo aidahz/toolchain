@@ -34,6 +34,14 @@ mkdir -p out
 TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 
+##########################
+echo -n 'proj: ...........'
+(tar xf proj.4-4.9.3.tar.gz && cd proj.4-4.9.3 \
+  && mkdir -p build && cd build \
+  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
+  && make -j8  \
+  && make install ) >& out/geos.out && pass || fail
+
 
 ##########################
 echo -n 'geos: ...........'
