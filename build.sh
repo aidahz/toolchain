@@ -34,7 +34,6 @@ TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 mkdir -p out
 
-
 ##########################
 rm -rf installed 
 mkdir -p installed
@@ -188,15 +187,13 @@ echo -n 'libxml2: ........'
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
 ##########################
-echo -n 'libgeos: ........'
-(tar xf libgeos-3.5.tar.gz && cd libgeos-3.5 \
-  && mkdir -p build  \
-  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
-  && make -j8  \
-  && make install ) >& out/libgeos.out && pass || fail
-
-##########################
 echo 
 echo '*** local ***'
 echo 
 bash build_local.sh
+
+##########################
+echo 
+echo '*** shared ***'
+echo 
+bash build_shared.sh
