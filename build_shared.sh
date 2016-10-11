@@ -35,8 +35,16 @@ TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 
 ##########################
+echo -n 'gdal: ...........'
+(cd gdal-1.9.2 \
+  && configure --prefix=$TOOLCHAIN_DIR/installed \
+  && make clean && make -j8  \
+  && make install ) >& out/gdal.out && pass || fail
+
+
+##########################
 echo -n 'proj: ...........'
-(tar xf proj.4-4.9.3.tar.gz && cd proj.4-4.9.3 \
+(F=proj.4-4.9.3; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
   && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
   && make -j8  \
@@ -45,9 +53,14 @@ echo -n 'proj: ...........'
 
 ##########################
 echo -n 'geos: ...........'
-(tar xf geos-3.4.2.tar.gz && cd geos-3.4.2 \
+(F=geos-3.4.2; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
   && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
   && make -j8  \
   && make install ) >& out/geos.out && pass || fail
 
+##########################
+echo -n 'libxml2: ........'
+(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
+  && ./configure --prefix=$TARGETDIR --without-python  \
+  && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail

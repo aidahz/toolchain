@@ -180,11 +180,6 @@ echo -n 'kerboros: .......'
 #  && ./b2 install) >& out/boost.out && pass || fail
 
 
-##########################
-echo -n 'libxml2: ........'
-(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
-  && ./configure --prefix=$TARGETDIR --without-python --enable-shared=no \
-  && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
 ##########################
 echo 
