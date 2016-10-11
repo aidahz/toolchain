@@ -40,7 +40,7 @@ echo -n 'rm *.so: ........'
 
 ##########################
 echo -n 'gdal: ...........'
-(cd gdal-1.9.2 \
+(F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && configure --prefix=$TOOLCHAIN_DIR/installed \
   && make clean && make -j8  \
   && make install ) >& out/gdal.out && pass || fail
