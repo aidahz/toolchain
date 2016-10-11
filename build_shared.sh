@@ -39,6 +39,12 @@ echo -n 'rm *.so: ........'
 (cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
 ##########################
+echo -n 'libxml2: ........'
+(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
+  && ./configure --prefix=$TARGETDIR --without-python  \
+  && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
+
+##########################
 echo -n 'gdal: ...........'
 (F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && ./configure --prefix=$TOOLCHAIN_DIR/installed \
@@ -63,8 +69,3 @@ echo -n 'geos: ...........'
   && make -j8  \
   && make install ) >& out/geos.out && pass || fail
 
-##########################
-echo -n 'libxml2: ........'
-(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
-  && ./configure --prefix=$TARGETDIR --without-python  \
-  && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
