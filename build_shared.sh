@@ -35,6 +35,10 @@ TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 
 ##########################
+echo -n 'rm *.so: ........'
+(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
+
+##########################
 echo -n 'gdal: ...........'
 (cd gdal-1.9.2 \
   && configure --prefix=$TOOLCHAIN_DIR/installed \

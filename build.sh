@@ -179,7 +179,11 @@ echo -n 'kerboros: .......'
 #  && ./bootstrap.sh --with-python=no --prefix=$TARGETDIR \
 #  && ./b2 install) >& out/boost.out && pass || fail
 
-
+##########################
+echo 
+echo '*** shared ***'
+echo 
+bash build_shared.sh
 
 ##########################
 echo 
@@ -187,8 +191,3 @@ echo '*** local ***'
 echo 
 bash build_local.sh
 
-##########################
-echo 
-echo '*** shared ***'
-echo 
-bash build_shared.sh

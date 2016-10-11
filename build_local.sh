@@ -40,10 +40,6 @@ TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 
 ##########################
-echo -n 'rm *.so: ........'
-(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
-
-##########################
 echo -n 'viper: ..........'
 (cd mendota/viper && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
@@ -56,10 +52,6 @@ echo -n 'libhdfs3: .......'
 # Use good old Makefiles
 (cd mendota/libhdfs3/src && make clean && make -j8 \
 	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
-
-##########################
-echo -n 'rm *.so: ........'
-(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
 ##########################
 echo -n 'xdrive: .........'
