@@ -40,7 +40,7 @@ echo -n 'proj: ...........'
   && mkdir -p build && cd build \
   && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
   && make -j8  \
-  && make install ) >& out/geos.out && pass || fail
+  && make install ) >& out/proj.out && pass || fail
 
 
 ##########################
