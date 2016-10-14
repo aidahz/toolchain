@@ -45,18 +45,10 @@ echo -n 'libxml2: ........'
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
 ##########################
-echo -n 'gdal: ...........'
-(F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F \
-  && ./configure --prefix=$TOOLCHAIN_DIR/installed \
-  && make clean && make -j8  \
-  && make install ) >& out/gdal.out && pass || fail
-
-
-##########################
 echo -n 'proj: ...........'
 (F=proj.4-4.9.3; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
-  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
+  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
   && make -j8  \
   && make install ) >& out/proj.out && pass || fail
 
@@ -65,7 +57,15 @@ echo -n 'proj: ...........'
 echo -n 'geos: ...........'
 (F=geos-3.4.2; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
-  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN_DIR/installed .. \
+  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
   && make -j8  \
   && make install ) >& out/geos.out && pass || fail
+
+##########################
+echo -n 'gdal: ...........'
+(F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F \
+  && ./configure --prefix=$TARGETDIR --with-xml2=$TARGETDIR/bin/xml2-config \
+	--with-geos=$TARGETDIR/bin/geos-config \
+  && make clean && make -j8  \
+  && make install ) >& out/gdal.out && pass || fail
 
