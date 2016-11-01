@@ -88,6 +88,11 @@ echo -n 'yaml: ...........'
   && ./configure --prefix=$TARGETDIR --enable-shared=no \
   && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
 
+##########################
+echo -n 'aws: ............'
+(cd aws-sdk-cpp-master && rm -fr build && mkdir build && cd build \
+    && cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF -DCURL_LIBRARIES=$TOOCHAIN_DIR/installed/lib/libcurl.a .. \
+    && make && make install) >& out/aws.out && pass || fail
 
 ##########################
 # (cd gperftools-2.4; ./configure --prefix=$TARGETDIR --enable-frame-pointers; make clean; make -j8 ; make install)
