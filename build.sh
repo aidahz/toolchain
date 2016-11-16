@@ -78,7 +78,7 @@ echo -n 'bzip2: ..........'
 ##########################
 echo -n 'curl: ...........'
 (cd curl-7.49.0 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no \
+  && ./configure --prefix=$TARGETDIR --enable-shared=no --without-librtmp \
   && make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
