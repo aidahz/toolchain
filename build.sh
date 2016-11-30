@@ -47,6 +47,9 @@ echo -n 'protobuf: .......'
 	&& make clean && make -j8 \
 	&& make install) >& out/protobuf.out && pass || fail
 
+##########################
+echo -n 'daemonize: ......'
+(cd daemonize-release-1.7.7 && ./configure --prefix=$TARGETDIR && make clean && make && make install) >& out/daemonize.out && pass || fail
 
 ##########################
 echo -n 'event: ..........'
