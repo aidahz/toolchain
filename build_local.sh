@@ -48,6 +48,11 @@ echo -n 'sparquet: .......'
 (cd mendota/sparquet && make clean && make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
 ##########################
+echo -n 'exx: ............'
+(cd mendota/exx && make clean && make -j8 \
+	&& make install prefix=$TARGETDIR ) >& out/exx && pass || fail
+
+##########################
 echo -n 'libhdfs3: .......'
 # Use good old Makefiles
 (cd mendota/libhdfs3/src && make clean && make -j8 \
