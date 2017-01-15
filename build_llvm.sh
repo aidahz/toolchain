@@ -42,7 +42,7 @@ start 'llvm debug: .....'
 	&& rm -rf build \
 	&& mkdir build \
 	&& cd build \
-	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed/llvm-debug \
+	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/llvm/debug \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DLLVM_ENABLE_ASSERTIONS=On \
 		.. \
@@ -55,7 +55,7 @@ start 'llvm release: ...'
 	&& rm -rf build \
 	&& mkdir build \
 	&& cd build \
-	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed/llvm-release \
+	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/llvm/release \
 		-DCMAKE_BUILD_TYPE=Release \
 		.. \
 	&& (make -j8  || make -j8 || make) \
