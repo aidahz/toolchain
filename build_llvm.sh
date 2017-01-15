@@ -34,6 +34,8 @@ function fail
    if [ $1 ]; then echo "$@"; fi
 }
 
+rm -rf $MY_TOOLCHAIN_DIR/llvm
+
 
 ##########################
 start 'llvm debug: .....'
@@ -42,7 +44,7 @@ start 'llvm debug: .....'
 	&& rm -rf build \
 	&& mkdir build \
 	&& cd build \
-	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/llvm/debug \
+	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$MY_TOOLCHAIN_DIR/llvm/debug \
 		-DLLVM_TARGETS_TO_BUILD=X86 \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DLLVM_ENABLE_ASSERTIONS=On \
@@ -56,7 +58,7 @@ start 'llvm release: ...'
 	&& rm -rf build \
 	&& mkdir build \
 	&& cd build \
-	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/llvm/release \
+	&& cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=$MY_TOOLCHAIN_DIR/llvm/release \
 		-DLLVM_TARGETS_TO_BUILD=X86 \
 		-DCMAKE_BUILD_TYPE=Release \
 		.. \
