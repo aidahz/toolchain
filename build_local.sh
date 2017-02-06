@@ -43,6 +43,11 @@ export PATH="$TARGETDIR/bin:$PATH"
 echo -n 'viper: ..........'
 (cd mendota/viper && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
+
+##########################
+echo -n 'toml: ...........'
+(cd toml && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/toml.out && pass || fail
+
 ##########################
 echo -n 'sparquet: .......'
 (cd mendota/sparquet && make clean && make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
@@ -59,9 +64,9 @@ echo -n 'libhdfs3: .......'
 	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
 
 ##########################
-echo -n 'xdrive: .........'
-(cd mendota/xdrive && make clean && make -j8 \
-	&& make install prefix=$TARGETDIR ) >& out/xdrive.out && pass || fail
+#echo -n 'xdrive: .........'
+#(cd mendota/xdrive && make clean && make -j8 \
+#	&& make install prefix=$TARGETDIR ) >& out/xdrive.out && pass || fail
 
 ##########################
 echo -n 'dgza: ...........'
