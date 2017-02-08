@@ -5,6 +5,38 @@
 #include <assert.h>
 #include "toml.h"
 
+typedef struct toml_keyval_t toml_keyval_t;
+struct toml_keyval_t {
+    const char* key;
+    const char* val;
+};
+
+
+struct toml_array_t {
+    const char* key;
+    int typ; /* 'v'alue, 'a'rray, or 't'able */
+    
+    int nelem;
+    char** val;
+    toml_array_t** arr;
+    toml_table_t** tab;
+};
+    
+
+struct toml_table_t {
+    const char* key;
+
+    int             nkval;
+    toml_keyval_t** kval;
+
+    int            narr;
+    toml_array_t** arr;
+
+    int            ntab;
+    toml_table_t** tab;
+};
+
+
 static void xfree(const void* x) { if (x) free((void*)x); }
 
 
@@ -691,4 +723,223 @@ static int outofmemory(context_t* ctx, const char* fline)
 {
     snprintf(ctx->errbuf, ctx->errbufsz, "ERROR: out of memory (%s)", fline);
     return -1;
+}
+
+
+const char* toml_get_raw(toml_table_t* tab, const char* key)
+{
+    int i;
+    for (i = 0; i < tab->nkval; i++) {
+	if (0 == strcmp(key, tab->kval[i]->key))
+	    return tab->kval[i]->val;
+    }
+    return 0;
+}
+
+toml_array_t* toml_get_array(toml_table_t* tab, const char* key)
+{
+    int i;
+    for (i = 0; i < tab->narr; i++) {
+	if (0 == strcmp(key, tab->arr[i]->key))
+	    return tab->arr[i];
+    }
+    return 0;
+}
+
+
+toml_table_t* toml_get_table(toml_table_t* tab, const char* key)
+{
+    int i;
+    for (i = 0; i < tab->ntab; i++) {
+	if (0 == strcmp(key, tab->tab[i]->key))
+	    return tab->tab[i];
+    }
+    return 0;
+}
+
+const char* toml_index_raw(toml_array_t* arr, int idx)
+{
+    if (arr->typ != 'v')
+	return 0;
+    if (! (0 <= idx && idx < arr->nelem))
+	return 0;
+    return arr->val[idx];
+}
+
+toml_array_t* toml_index_array(toml_array_t* arr, int idx)
+{
+    if (arr->typ != 'a')
+	return 0;
+    if (! (0 <= idx && idx < arr->nelem))
+	return 0;
+    return arr->arr[idx];
+}
+
+toml_table_t* toml_index_table(toml_array_t* arr, int idx)
+{
+    if (arr->typ != 't')
+	return 0;
+    if (! (0 <= idx && idx < arr->nelem))
+	return 0;
+    return arr->tab[idx];
+}
+
+
+int toml_raw2bool(const char* src, int* ret)
+{
+    if (!src) return -1;
+    
+    if (0 == strcmp(src, "true")) {
+	*ret = 1;
+	return 0;
+    }
+    if (0 == strcmp(src, "false")) {
+	*ret = 0;
+	return 0;
+    }
+    return -1;
+}
+
+
+int toml_raw2int(const char* src, int64_t* ret)
+{
+    if (!src) return -1;
+    
+    char buf[100];
+    char* p = buf;
+    const char* s = src;
+    
+    if (*s == '+')
+	*p++ = *s++;
+    else if (*s == '-')
+	*p++ = *s++;
+
+    /* if 0, no other digits after it.*/
+    if (s[0] == '0' && s[1]) return -1;
+
+    while (p - buf < 99) {
+	int ch = *s++;
+	if ('0' <= ch && ch <= '9')
+	    *p++ = ch;
+	else if (ch == '_')
+	    ;
+	else
+	    return -1;
+    }
+    *p++ = 0;
+    
+    if (p - buf >= 100)
+	return -1;
+
+    return strtoll(buf, 0, 0);
+}
+
+int toml_raw2string(const char* src, char** ret)
+{
+    if (!src) return -1;
+    
+    char* buf = strdup(src);
+    if (!buf) return -1;
+
+    char* p = buf;
+    if (0 == strncmp(src, "'''", 3)) {
+	const char* s = src + 3;
+
+	/* skip first new line right after ''' */
+	if (*s == '\n')
+	    s++;
+	else if (s[0] == '\r' && s[1] == '\n')
+	    s++, s++;
+
+	for (;;) {
+	    if (*s == '\\') {
+		if (s[1] == '\n' || (s[1] == '\r' && s[2] == '\n')) {
+		    s++;
+		    s += strspn(s, " \t\r\n");
+		    continue;
+		}
+	    }
+	    if (0 == strncmp(s, "'''", 3)) break;
+	    *p++ = *s++;
+	}
+	
+	*p++ = 0;
+	*ret = buf;
+	return 0;
+    }
+
+    if (*src == '\'') {
+	const char* s = src + 1;
+	while (*s != '\'') { *p++ = *s++; }
+	*p++ = 0;
+	*ret = buf;
+	return 0;
+    }
+
+    if (0 == strncmp(src, "\"\"\"", 3)) {
+	const char* s = src + 3;
+
+	/* skip first new line right after """ */
+	if (*s == '\n')
+	    s++;
+	else if (s[0] == '\r' && s[1] == '\n')
+	    s++, s++;
+
+	for (;;) {
+	    if (*s == '\\') {
+		if (s[1] == '\n' || (s[1] == '\r' && s[2] == '\n')) {
+		    s++;
+		    s += strspn(s, " \t\r\n");
+		    continue;
+		}
+		switch (s[1]) {
+		case 'b': *p++ = '\b'; s += 2; break;
+		case 't': *p++ = '\t'; s += 2; break;
+		case 'n': *p++ = '\n'; s += 2; break;
+		case 'f': *p++ = '\f'; s += 2; break;
+		case 'r': *p++ = '\r'; s += 2; break;
+		case '"': *p++ = '"'; s += 2; break;
+		case '\'': *p++ = '\''; s += 2; break;
+		case '\\': *p++ = '\\'; s += 2; break;
+		default:
+		    *p++ = *s++; break;
+		}		    
+		continue;
+	    }
+	    if (0 == strncmp(s, "\"\"\"", 3)) break;
+	    *p++ = *s++;
+	}
+	*p++ = 0;
+	*ret = buf;
+	return 0;
+    }
+	
+    if (*src == '"') {
+	const char* s = src + 1;
+	for (;;) {
+	    if (*s == '\\') {
+		switch (s[1]) {
+		case 'b': *p++ = '\b'; s += 2; break;
+		case 't': *p++ = '\t'; s += 2; break;
+		case 'n': *p++ = '\n'; s += 2; break;
+		case 'f': *p++ = '\f'; s += 2; break;
+		case 'r': *p++ = '\r'; s += 2; break;
+		case '"': *p++ = '"'; s += 2; break;
+		case '\'': *p++ = '\''; s += 2; break;
+		case '\\': *p++ = '\\'; s += 2; break;
+		default:
+		    *p++ = *s++; break;
+		}		    
+		continue;
+	    }
+	    if (*s == '"') break;
+	    *p++ = *s++;
+	}
+	*p++ = 0;
+	*ret = buf;
+	return 0;
+    }
+
+    *ret = buf;
+    return 0;
 }

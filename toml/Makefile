@@ -1,5 +1,6 @@
 CFILES = toml.c
 CFLAGS = -O2 -DNDEBUG
+#CFLAGS = -O0 -g
 
 EXEC = toml_cat
 
