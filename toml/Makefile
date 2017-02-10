@@ -1,6 +1,8 @@
+CC = gcc 
 CFILES = toml.c
-CFLAGS = -O2 -DNDEBUG
-#CFLAGS = -O0 -g
+CFLAGS = -std=c99 -Wall -Wextra 
+#CFLAGS += -O2 -DNDEBUG
+CFLAGS += -O0 -g
 
 EXEC = toml_cat
 

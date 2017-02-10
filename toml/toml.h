@@ -10,19 +10,31 @@
 typedef struct toml_table_t toml_table_t;
 typedef struct toml_array_t toml_array_t;
 
-TOML_EXTERN toml_table_t* toml_parse(char* conf,
-				 char* errbuf,
-				 int errbufsz);
+TOML_EXTERN toml_table_t* toml_parse_file(FILE* fp, 
+					  char* errbuf,
+					  int errbufsz);
+TOML_EXTERN toml_table_t* toml_parse(char* conf, /* NUL terminated pls. */
+				     char* errbuf,
+				     int errbufsz);
 
+/* free the table returned by toml_parse() or toml_parse_file(). */
 TOML_EXTERN void toml_free(toml_table_t* tab);
 
-TOML_EXTERN const char* toml_get_raw(toml_table_t* tab, const char* key);
-TOML_EXTERN toml_array_t* toml_get_array(toml_table_t* tab, const char* key);
-TOML_EXTERN toml_table_t* toml_get_table(toml_table_t* tab, const char* key);
+/* keys in table */
+TOML_EXTERN const char* toml_key_in(toml_table_t* tab, int keyidx);
 
-TOML_EXTERN const char* toml_index_raw(toml_array_t* arr, int idx);
-TOML_EXTERN toml_array_t* toml_index_array(toml_array_t* arr, int idx);
-TOML_EXTERN toml_table_t* toml_index_table(toml_array_t* arr, int idx);
+/* table lookup */
+TOML_EXTERN const char* toml_raw_in(toml_table_t* tab, const char* key);
+TOML_EXTERN toml_array_t* toml_array_in(toml_table_t* tab, const char* key);
+TOML_EXTERN toml_table_t* toml_table_in(toml_table_t* tab, const char* key);
+
+/* array type: 't'able, 'a'rray, 'v'alue */
+TOML_EXTERN char toml_array_typ(toml_array_t* arr);
+
+/* array index */
+TOML_EXTERN const char* toml_raw_at(toml_array_t* arr, int idx);
+TOML_EXTERN toml_array_t* toml_array_at(toml_array_t* arr, int idx);
+TOML_EXTERN toml_table_t* toml_table_at(toml_array_t* arr, int idx);
 
 
 /* These functions return 0 on success, -1 on failure. */
