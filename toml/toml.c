@@ -89,170 +89,210 @@ struct context_t {
 static int outofmemory(context_t* ctx, const char* fline);
 static tokentype_t next_token(context_t* ctx, int dotisspecial);
 
-static void internal_error(context_t* ctx, const char* fline)
+static int internal_error(context_t* ctx, const char* fline)
 {
     snprintf(ctx->errbuf, ctx->errbufsz, "internal error (%s)", fline);
     longjmp(ctx->jmp, 1);
+    return -1;
 }
 
-static void syntax_error(context_t* ctx, int lineno, const char* msg)
+static int syntax_error(context_t* ctx, int lineno, const char* msg)
 {
     snprintf(ctx->errbuf, ctx->errbufsz, "line %d: %s", lineno, msg);
     longjmp(ctx->jmp, 1);
+    return -1;
 }
 
-static void bad_key(context_t* ctx, int lineno)
+static int bad_key(context_t* ctx, int lineno)
 {
     snprintf(ctx->errbuf, ctx->errbufsz, "line %d: bad key", lineno);
     longjmp(ctx->jmp, 1);
+    return -1;
 }
 
-static void noimpl(context_t* ctx, const char* feature)
+static int noimpl(context_t* ctx, const char* feature)
 {
     snprintf(ctx->errbuf, ctx->errbufsz, "not implemented: %s", feature);
     longjmp(ctx->jmp, 1);
+    return -1;
 }
 
-typedef struct normkey_t normkey_t;
-struct normkey_t {
-    char str[201];
-};
 
-static void check_key(context_t* ctx, int lineno, normkey_t* norm)
+static char* quotestring(const char* src, int srclen)
 {
-    const char* p = norm->str;
-    const char* q = p + strlen(p);
-    if (*p != '\'') bad_key(ctx, lineno);
-    p++;
+    char* dst = 0;
+    int   max = 0;
+    int   off = 0;
+    const char* sp = src;
+    const char* sq = src + srclen;
 
-    if (! (p < q && q[-1] == '\'')) bad_key(ctx, lineno);
-    q--;
-
-    for ( ; p < q; p++) {
-	if (*p == '\'' || *p == '\n') bad_key(ctx, lineno);
-    }
-}
-
-static void normalize_key(context_t* ctx, token_t key, normkey_t* norm)
-{
-    char* p = norm->str;
-    char* q = norm->str + sizeof(norm->str);
-    char* s = key.ptr;
-    char* t = key.ptr + key.len;
-    int lineno = key.lineno;
-    int escape = 0;
-
-    *p++ = '\'';
-    if (0 == strncmp(s, "'''", 3)) {
-	s += 3;
-	const char* end = strstr(s, "'''");
-	if (end + 3 >= t) bad_key(ctx, lineno);
-	while (p < q && s < end) *p++ = *s++;
-
-    } else if (s[0] == '\'') {
-	s++;
-	const char* end = strchr(s, '\'');
-	if (end + 1 >= t) bad_key(ctx, lineno);
-	while (p < q && s < end) *p++ = *s++;
-
-    } else if (0 == strncmp(s, "\"\"\"", 3)) {
-	s += 3;
-	for ( ;p < q && s < t; *p++ = *s++) {
-	    if (escape) { escape = 0; continue; }
-	    if (*p == '\\') { escape = 1; continue; }
-	    if (0 == strncmp(s, "\"\"\"", 3)) {
-		if (s + 3 >= t) bad_key(ctx, lineno);
-		break;
+    for ( ; sp < sq; sp++){
+	if (off >=  max - 2) { /* max - 2: save 2 chars for last quote and NUL */
+	    char* x = realloc(dst, max += 100);
+	    if (!x) {
+		if (dst) free(dst);
+		return 0;
+	    }
+	    dst = x;
+	    if (off == 0) {
+		dst[off++] = '"';
 	    }
 	}
-
-    } else if (s[0] == '"') {
-	s++;
-	int escape = 0;
-	for ( ;p < q && s < t; *p++ = *s++) {
-	    if (escape) { escape = 0; continue; }
-	    if (*p == '\\') { escape = 1; continue; }
-	    if (*s == '"' && s + 1 >= t) bad_key(ctx, lineno);
+	
+	int ch = *sp;
+	if (strchr("\b\t\n\f\r\"\'\\", ch)) {
+	    dst[off++] = '\\';
+	    switch (ch) {
+	    case '\b': ch = 'b'; break;
+	    case '\t': ch = 't'; break;
+	    case '\f': ch = 'f'; break;
+	    case '\r': ch = 'r'; break;
+	    case '"':  ch = '"'; break;
+	    case '\'': ch = '\''; break;
+	    case '\\': ch = '\\'; break;
+	    }
 	}
-	if (escape) bad_key(ctx, lineno);
-
-    } else {
-	while (p < q && s < t) *p++ = *s++;
+	dst[off++] = ch;
     }
 
-    if (escape)  bad_key(ctx, lineno);
-    if (p + 1 >= q)  bad_key(ctx, lineno);
-    
-    *p++ = '\'';
-    *p++ = 0;
-    check_key(ctx, key.lineno, norm);
+    dst[off++] = '"';
+    dst[off++] = 0;
+    return dst;
 }
 
-static toml_keyval_t* create_keyval_in_table(toml_table_t* tab, normkey_t* key)
+
+static char* normalize_key(context_t* ctx, token_t keytok)
+{
+    const char* sp = keytok.ptr;
+    const char* sq = keytok.ptr + keytok.len;
+    int lineno = keytok.lineno;
+
+    const char* end;
+    if (0 == strncmp(sp, "'''", 3)) {
+	sp += 3;
+
+	end = strstr(sp, "'''");
+	if (end + 3 == sq) ; else bad_key(ctx, lineno);
+	
+    } else if (sp[0] == '\'') {
+	sp++;
+	
+	end = strchr(sp, '\'');
+	if (end + 1 == sq) ; else bad_key(ctx, lineno);
+
+    } else if (0 == strncmp(sp, "\"\"\"", 3)) {
+	sp += 3;
+
+	int escape = 0;
+	for (end = sp; end < sq; end++) {
+	    if (escape) { escape = 0; continue; }
+	    if (*end == '\\') { escape = 1; continue; }
+	    if (0 == strncmp(end, "\"\"\"", 3)) break;
+	}
+	if (0 == escape) ; else bad_key(ctx, lineno);
+	if (end + 3 == sq) ; else bad_key(ctx, lineno);
+	
+    } else if (sp[0] == '"') {
+	sp++;
+
+	int escape = 0;
+	for (end = sp; end < sq; end++) {
+	    if (escape) { escape = 0; continue; }
+	    if (*end == '\\') { escape = 1; continue; }
+	    if (*end == '"') break;
+	}
+	if (0 == escape) ; else bad_key(ctx, lineno);
+	if (end + 1 == sq) ; else bad_key(ctx, lineno);
+
+    } else {
+	end = sq;
+    }
+
+    char* ret = quotestring(sp, end - sp);
+    if (! ret)
+	outofmemory(ctx, FLINE);
+
+    return ret;
+}
+
+
+static toml_keyval_t* create_keyval_in_table(context_t* ctx, toml_table_t* tab, token_t keytok)
 {
     /* find key in tab */
     int i;
+    char* newkey = normalize_key(ctx, keytok);
+    
     toml_keyval_t* dest = 0;
     for (i = 0; i < tab->nkval && !dest; i++) {
 	toml_keyval_t* xxx = tab->kval[i];
-	if (0 == strcmp(xxx->key, key->str))
+	if (0 == strcmp(xxx->key, newkey))
 	    dest = xxx;
     }
     if (!dest) {
 	/* not found, make a new entry */
 	int n = tab->nkval;
 	toml_keyval_t** base;
-	if (0 == (base = realloc(tab->kval, (n+1) * sizeof(*base))))
-	    return 0;
+	if (0 == (base = realloc(tab->kval, (n+1) * sizeof(*base)))) {
+	    free(newkey);
+	    outofmemory(ctx, FLINE);
+	}
 	tab->kval = base;
 	
-	if (0 == (base[n] = calloc(1, sizeof(*base[n]))))
-	    return 0;
+	if (0 == (base[n] = calloc(1, sizeof(*base[n])))) {
+	    free(newkey);
+	    outofmemory(ctx, FLINE);
+	}
 
 	dest = base[n];
 	tab->nkval++;
     }
 
     /* set the key */
-    if (dest->key == 0) {
-	if (0 == (dest->key = strdup(key->str)))
-	    return 0;
-    }
+    if (dest->key == 0) 
+	dest->key = newkey;
+    else 
+	free(newkey);
 
     return dest;
 }
 
 
-static toml_table_t* create_keytable_in_table(toml_table_t* tab, normkey_t* key)
+static toml_table_t* create_keytable_in_table(context_t* ctx, toml_table_t* tab, token_t keytok)
 {
     /* find key in tab */
     int i;
+    char* newkey = normalize_key(ctx, keytok);
+    
     toml_table_t* dest = 0;
     for (i = 0; i < tab->ntab && !dest; i++) {
 	toml_table_t* xxx = tab->tab[i];
-	if (0 == strcmp(xxx->key, key->str)) 
+	if (0 == strcmp(xxx->key, newkey))
 	    dest = xxx;
     }
     if (!dest) {
 	/* not found, make a new entry */
 	int n = tab->ntab;
 	toml_table_t** base;
-	if (0 == (base = realloc(tab->tab, (n+1) * sizeof(*base))))
-	    return 0;
+	if (0 == (base = realloc(tab->tab, (n+1) * sizeof(*base)))) {
+	    free(newkey);
+	    outofmemory(ctx, FLINE);
+	}
 	tab->tab = base;
 	
-	if (0 == (base[n] = calloc(1, sizeof(*base[n]))))
-	    return 0;
+	if (0 == (base[n] = calloc(1, sizeof(*base[n])))) {
+	    free(newkey);
+	    outofmemory(ctx, FLINE);
+	}
 
 	dest = base[n];
 	tab->ntab++;
     }
 
     /* set the key */
-    if (dest->key == 0) {
-	if (0 == (dest->key = strdup(key->str)))
-	    return 0;
-    }
+    if (dest->key == 0) 
+	dest->key = newkey;
+    else
+	free(newkey);
 
     return dest;
 }
@@ -307,36 +347,42 @@ static void parse_table(context_t* ctx, toml_table_t* tab)
 
 
 
-static toml_array_t* create_keyarray_in_table(toml_table_t* tab, normkey_t* key)
+static toml_array_t* create_keyarray_in_table(context_t* ctx, toml_table_t* tab, token_t keytok)
 {
     /* find key in tab */
     int i;
+    char* newkey = normalize_key(ctx, keytok);
+    
     toml_array_t* dest = 0;
     for (i = 0; i < tab->narr && !dest; i++) {
 	toml_array_t* xxx = tab->arr[i];
-	if (0 == strcmp(xxx->key, key->str))
+	if (0 == strcmp(xxx->key, newkey))
 	    dest = xxx;
     }
     if (!dest) {
 	/* not found, make a new entry */
 	int n = tab->narr;
 	toml_array_t** base;
-	if (0 == (base = realloc(tab->arr, (n+1) * sizeof(*base))))
-	    return 0;
+	if (0 == (base = realloc(tab->arr, (n+1) * sizeof(*base)))) {
+	    free(newkey);
+	    outofmemory(ctx, FLINE);
+	}
 	tab->arr = base;
 	
-	if (0 == (base[n] = calloc(1, sizeof(*base[n]))))
-	    return 0;
+	if (0 == (base[n] = calloc(1, sizeof(*base[n])))) {
+	    free(newkey);
+	    outofmemory(ctx, FLINE);
+	}
 
 	dest = base[n];
 	tab->narr++;
     }
 
     /* set the key */
-    if (dest->key == 0) {
-	if (0 == (dest->key = strdup(key->str)))
-	    return 0;
-    }
+    if (dest->key == 0) 
+	dest->key = newkey;
+    else
+	free(newkey);
 
     return dest;
 }
@@ -428,8 +474,7 @@ static void parse_keyval(context_t* ctx, toml_table_t* tab)
     if (ctx->tok.tok != STRING)
 	internal_error(ctx, FLINE);
 
-    normkey_t key;
-    normalize_key(ctx, ctx->tok, &key);
+    token_t key = ctx->tok;
 
     if (next_token(ctx, 1) != EQUAL) 
 	syntax_error(ctx, ctx->tok.lineno, "missing =");
@@ -440,9 +485,7 @@ static void parse_keyval(context_t* ctx, toml_table_t* tab)
     case STRING:
     case MLSTRING:
 	{ /* key = "value" */
-	    toml_keyval_t* keyval = create_keyval_in_table(tab, &key);
-	    if (!keyval) outofmemory(ctx, FLINE);
-
+	    toml_keyval_t* keyval = create_keyval_in_table(ctx, tab, key);
 	    token_t val = ctx->tok;
 	    xfree(keyval->val);
 	    keyval->val = strndup(val.ptr, val.len);
@@ -459,9 +502,7 @@ static void parse_keyval(context_t* ctx, toml_table_t* tab)
 
     case LBRACKET:
 	{ /* key = [ array ] */
-	    toml_array_t* arr = create_keyarray_in_table(tab, &key);
-	    if (!arr) outofmemory(ctx, FLINE);
-
+	    toml_array_t* arr = create_keyarray_in_table(ctx, tab, key);
 	    parse_array(ctx, arr);
 
 	    if (ctx->tok.tok != NEWLINE)
@@ -472,9 +513,7 @@ static void parse_keyval(context_t* ctx, toml_table_t* tab)
 
     case LBRACE:
 	{ /* key = { table } */
-	    toml_table_t* nxttab = create_keytable_in_table(tab, &key);
-	    if (!nxttab) outofmemory(ctx, FLINE);
-
+	    toml_table_t* nxttab = create_keytable_in_table(ctx, tab, key);
 	    parse_table(ctx, nxttab);
 	    
 	    if (ctx->tok.tok != NEWLINE)
@@ -625,10 +664,7 @@ static void parse_array_of_tables(context_t* ctx)
     /* Walk down [x.y] */
     walk_tabpath(ctx, &tpath);
 
-    normkey_t key;
-    normalize_key(ctx, z, &key);
-
-    toml_array_t* arr = create_keyarray_in_table(ctx->curtab, &key);
+    toml_array_t* arr = create_keyarray_in_table(ctx, ctx->curtab, z);
     if (arr->typ == 0) arr->typ = 't';
     if (arr->typ != 't') syntax_error(ctx, z.lineno, "array mismatch");
 
