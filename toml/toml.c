@@ -701,6 +701,7 @@ toml_table_t* toml_parse(char* conf,
 			 char* errbuf,
 			 int errbufsz)
 {
+    int i;
     context_t ctx_;
     context_t* ctx = &ctx_;
 
@@ -751,10 +752,17 @@ toml_table_t* toml_parse(char* conf,
 	    }
 	}
 
+	for (i = 0; i < ctx->tpath.top; i++) {
+	    xfree(ctx->tpath.key[i]);
+	}
+
 	/* success */
 	return ctx->root;
     }
-
+    
+    for (i = 0; i < ctx->tpath.top; i++) {
+	xfree(ctx->tpath.key[i]);
+    }
     /* bailed from a long_jmp */
     toml_free(ctx->root);
     return 0;
