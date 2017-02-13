@@ -42,6 +42,23 @@ TOML_EXTERN toml_table_t* toml_table_at(toml_array_t* arr, int idx);
 TOML_EXTERN int toml_raw2string(const char* s, char** ret);
 TOML_EXTERN int toml_raw2bool(const char* s, int* ret);
 TOML_EXTERN int toml_raw2int(const char* s, int64_t* ret);
+TOML_EXTERN int toml_raw2double(const char* s, double* ret);
+
+
+typedef struct toml_timestamp_t toml_timestamp_t;
+struct toml_timestamp_t {
+    struct {
+	int year, month, day;
+	int hour, minute, second;
+	char z[10];
+    } __buffer;
+    int *year, *month, *day;
+    int *hour, *minute, *second;
+    char* z;
+};
+TOML_EXTERN int toml_raw2timestamp(const char* s, toml_timestamp_t* ret);
+
+
 
 
 #endif /* TOML_H */
