@@ -135,8 +135,9 @@ static void print_array(toml_array_t* curarr)
 	    print_array(arr);
 	}
 	break;
+
     default:
-	abort();
+	break;
     }
     printf("]}");
 }

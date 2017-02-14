@@ -341,6 +341,24 @@ static toml_array_t* create_keyarray_in_table(context_t* ctx,
     return dest;
 }
 
+static toml_array_t* create_array_in_array(context_t* ctx,
+					   toml_array_t* parent)
+{
+    int n = parent->nelem;
+    toml_array_t** base;
+    if (0 == (base = realloc(parent->arr, (n+1) * sizeof(*base)))) {
+	outofmemory(ctx, FLINE);
+    }
+    parent->arr = base;
+    
+    if (0 == (base[n] = calloc(1, sizeof(*base[n])))) {
+	outofmemory(ctx, FLINE);
+    }
+
+    return parent->arr[parent->nelem++];
+}
+					   
+
 static void parse_keyval(context_t* ctx, toml_table_t* tab);
 
 static void parse_table(context_t* ctx, toml_table_t* tab)
@@ -428,7 +446,12 @@ static void parse_array(context_t* ctx, toml_array_t* arr)
 
 	case LBRACKET:
 	    { /* [ [array], [array] ... ] */
-		noimpl(ctx, "array in array");
+		if (arr->typ == 0) arr->typ = 'a';
+		if (arr->typ != 'a') {
+		    syntax_error(ctx, ctx->tok.lineno, "array type mismatch");
+		}
+		parse_array(ctx, create_array_in_array(ctx, arr));
+		break;
 	    }
 
 	case LBRACE:
@@ -591,38 +614,61 @@ static void walk_tabpath(context_t* ctx)
 {
     /* start from root */
     toml_table_t* curtab = ctx->root;
-    int i;
+    int i, j;
 
     for (i = 0; i < ctx->tpath.top; i++) {
 	const char* key = ctx->tpath.key[i];
 
 	toml_table_t* nexttab = 0;
-	if (check_key(curtab, key)) {
-	    /* key exists. lookup key in curtab */
-	    int t;
-	    for (t = 0; t < curtab->ntab && !nexttab; t++) {
-		if (0 == strcmp(curtab->tab[t]->key, key))
-		    nexttab = curtab->tab[t];
+	switch (check_key(curtab, key)) {
+	case 't':
+	    { /* key exists. look up table in curtab */
+		for (j = 0; j < curtab->ntab && !nexttab; j++) {
+		    if (0 == strcmp(curtab->tab[j]->key, key))
+			nexttab = curtab->tab[j];
+		}
+		if (!nexttab)
+		    key_exists(ctx, ctx->tpath.tok[i]);
 	    }
-	    if (!nexttab)
-		key_exists(ctx, ctx->tpath.tok[i]);
-	}
-	else {
-	    int n = curtab->ntab;
-	    toml_table_t** base = realloc(curtab->tab, (n+1) * sizeof(*base));
-	    if (0 == base) outofmemory(ctx, FLINE);
-	    curtab->tab = base;
+	    break;
 
-	    if (0 == (base[n] = calloc(1, sizeof(*base[n]))))
-		outofmemory(ctx, FLINE);
+	case 'a':
+	    { /* key exists. look up array in curtab */
+		for (j = 0; j < curtab->narr && !nexttab; j++) {
+		    if (0 == strcmp(curtab->arr[j]->key, key)) {
+			toml_array_t* arr = curtab->arr[j];
+			if (arr->typ != 't') internal_error(ctx, FLINE);
+			if (arr->nelem == 0) internal_error(ctx, FLINE);
+			nexttab = arr->tab[arr->nelem-1];
+		    }
+		}
+		if (!nexttab) 
+		    key_exists(ctx, ctx->tpath.tok[i]);
+	    }
+	    break;
 
-	    if (0 == (base[n]->key = strdup(key)))
-		outofmemory(ctx, FLINE);
+	case 0:
+	    {
+		int n = curtab->ntab;
+		toml_table_t** base = realloc(curtab->tab, (n+1) * sizeof(*base));
+		if (0 == base) outofmemory(ctx, FLINE);
+		curtab->tab = base;
+		
+		if (0 == (base[n] = calloc(1, sizeof(*base[n]))))
+		    outofmemory(ctx, FLINE);
+		
+		if (0 == (base[n]->key = strdup(key)))
+		    outofmemory(ctx, FLINE);
+		
+		nexttab = curtab->tab[curtab->ntab++];
+		
+		/* tabs created by walk_tabpath are considered implicit */
+		nexttab->implicit = 1;
+	    }
+	    break;
 
-	    nexttab = curtab->tab[curtab->ntab++];
-
-	    /* tabs created by walk_tabpath are considered implicit */
-	    nexttab->implicit = 1;
+	default:
+	    abort();
 	}
 
 	/* switch to next tab */
