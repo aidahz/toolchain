@@ -1151,7 +1151,7 @@ toml_table_t* toml_table_at(toml_array_t* arr, int idx)
 }
 
 
-int toml_raw2timestamp(const char* src_, toml_timestamp_t* ret)
+int toml_rtots(const char* src_, toml_timestamp_t* ret)
 {
     const char* p = src_;
     const char* q = src_ + strlen(src_);
@@ -1234,7 +1234,7 @@ int toml_raw2timestamp(const char* src_, toml_timestamp_t* ret)
 
 
 
-int toml_raw2bool(const char* src, int* ret)
+int toml_rtob(const char* src, int* ret)
 {
     if (!src) return -1;
     
@@ -1250,7 +1250,7 @@ int toml_raw2bool(const char* src, int* ret)
 }
 
 
-int toml_raw2int(const char* src, int64_t* ret)
+int toml_rtoi(const char* src, int64_t* ret)
 {
     if (!src) return -1;
     
@@ -1286,7 +1286,7 @@ int toml_raw2int(const char* src, int64_t* ret)
 }
 
 
-int toml_raw2double(const char* src, double* ret)
+int toml_rtod(const char* src, double* ret)
 {
     if (!src) return -1;
     
@@ -1322,7 +1322,7 @@ int toml_raw2double(const char* src, double* ret)
 }
 
 
-int toml_raw2string(const char* src, char** ret)
+int toml_rtos(const char* src, char** ret)
 {
     if (!src) return -1;
     if (*src != '\'' && *src != '"') return -1;

@@ -38,11 +38,11 @@ TOML_EXTERN toml_table_t* toml_table_at(toml_array_t* arr, int idx);
 
 
 /* These functions return 0 on success, -1 on failure. */
-/* for toml_raw2string, caller must call free() on the return value */
-TOML_EXTERN int toml_raw2string(const char* s, char** ret);
-TOML_EXTERN int toml_raw2bool(const char* s, int* ret);
-TOML_EXTERN int toml_raw2int(const char* s, int64_t* ret);
-TOML_EXTERN int toml_raw2double(const char* s, double* ret);
+/* for toml_rtos, caller must call free() on the return value */
+TOML_EXTERN int toml_rtos(const char* s, char** ret); /* raw to string */
+TOML_EXTERN int toml_rtob(const char* s, int* ret);   /* raw to bool */
+TOML_EXTERN int toml_rtoi(const char* s, int64_t* ret); /* raw to int */
+TOML_EXTERN int toml_rtod(const char* s, double* ret);	/* raw to double */
 
 
 typedef struct toml_timestamp_t toml_timestamp_t;
@@ -56,7 +56,7 @@ struct toml_timestamp_t {
     int *hour, *minute, *second;
     char* z;
 };
-TOML_EXTERN int toml_raw2timestamp(const char* s, toml_timestamp_t* ret);
+TOML_EXTERN int toml_rtots(const char* s, toml_timestamp_t* ret);
 
 
 

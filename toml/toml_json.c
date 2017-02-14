@@ -37,18 +37,18 @@ static void print_raw(const char* s)
     double dval;
     toml_timestamp_t ts;
 
-    if (0 == toml_raw2string(s, &sval)) {
+    if (0 == toml_rtos(s, &sval)) {
 	printf("{\"type\":\"string\",\"value\":\"");
 	print_escape_string(sval);
 	printf("\"}");
 	free(sval);
-    } else if (0 == toml_raw2int(s, &ival)) {
+    } else if (0 == toml_rtoi(s, &ival)) {
 	printf("{\"type\":\"integer\",\"value\":\"%" PRId64 "\"}", ival);
-    } else if (0 == toml_raw2bool(s, &bval)) {
+    } else if (0 == toml_rtob(s, &bval)) {
 	printf("{\"type\":\"bool\",\"value\":\"%s\"}", bval ? "true" : "false");
-    } else if (0 == toml_raw2double(s, &dval)) {
+    } else if (0 == toml_rtod(s, &dval)) {
 	printf("{\"type\":\"float\",\"value\":\"%s\"}", s);
-    } else if (0 == toml_raw2timestamp(s, &ts)) {
+    } else if (0 == toml_rtots(s, &ts)) {
 	if (ts.year && ts.hour) {
 	    printf("{\"type\":\"datetime\",\"value\":\"%04d-%02d-%02dT%02d:%02d:%02d%s\"}",
 		   *ts.year, *ts.month, *ts.day, *ts.hour, *ts.minute, *ts.second,
