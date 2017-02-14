@@ -1153,6 +1153,8 @@ toml_table_t* toml_table_at(toml_array_t* arr, int idx)
 
 int toml_rtots(const char* src_, toml_timestamp_t* ret)
 {
+    if (! src_) return -1;
+    
     const char* p = src_;
     const char* q = src_ + strlen(src_);
     int64_t val;
@@ -1231,7 +1233,6 @@ int toml_rtots(const char* src_, toml_timestamp_t* ret)
     }
     return (p == q) ? 0 : -1;
 }
-
 
 
 int toml_rtob(const char* src, int* ret)
