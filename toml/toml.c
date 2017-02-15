@@ -155,9 +155,6 @@ static char* quote_string(const char* src, int srclen)
 		return 0;
 	    }
 	    dst = x;
-	    if (off == 0) {
-		dst[off++] = '"'; /* this is the first quote */
-	    }
 	}
 	
 	int ch = *sp;
@@ -176,7 +173,6 @@ static char* quote_string(const char* src, int srclen)
 	dst[off++] = ch;
     }
 
-    dst[off++] = '"';
     dst[off++] = 0;
     return dst;
 }

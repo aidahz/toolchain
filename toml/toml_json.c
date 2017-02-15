@@ -80,7 +80,7 @@ static void print_table(toml_table_t* curtab)
     printf("{");
     for (i = 0; 0 != (key = toml_key_in(curtab, i)); i++) {
 
-	printf("%s%s:", i > 0 ? "," : "", key);
+	printf("%s\"%s\":", i > 0 ? "," : "", key);
 	
 	if (0 != (raw = toml_raw_in(curtab, key))) {
 	    print_raw(raw);
