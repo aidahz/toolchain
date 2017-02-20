@@ -28,8 +28,8 @@ TOML_EXTERN const char* toml_raw_in(toml_table_t* tab, const char* key);
 TOML_EXTERN toml_array_t* toml_array_in(toml_table_t* tab, const char* key);
 TOML_EXTERN toml_table_t* toml_table_in(toml_table_t* tab, const char* key);
 
-/* array type: 't'able, 'a'rray, 'v'alue */
-TOML_EXTERN char toml_array_typ(toml_array_t* arr);
+/* array kind: 't'able, 'a'rray, 'v'alue */
+TOML_EXTERN char toml_array_kind(toml_array_t* arr);
 
 /* array index */
 TOML_EXTERN const char* toml_raw_at(toml_array_t* arr, int idx);
@@ -58,7 +58,8 @@ struct toml_timestamp_t {
 };
 TOML_EXTERN int toml_rtots(const char* s, toml_timestamp_t* ret);
 
-
+TOML_EXTERN int toml_utf8_to_ucs(const char* orig, int len, int64_t* ret);
+TOML_EXTERN int toml_ucs_to_utf8(int64_t code, char buf[6]);
 
 
 #endif /* TOML_H */

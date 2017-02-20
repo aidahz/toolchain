@@ -1,5 +1,5 @@
 #ifdef NDEBUG
-#under NDEBUG
+#undef NDEBUG
 #endif
 
 #include <stdio.h>
@@ -114,13 +114,13 @@ static void print_array(toml_array_t* curarr)
     const char* raw;
     int i;
 
-    if (toml_array_typ(curarr) == 't') {
+    if (toml_array_kind(curarr) == 't') {
 	print_table_array(curarr);
 	return;
     } 
 
     printf("{\"type\":\"array\",\"value\":[");
-    switch (toml_array_typ(curarr)) {
+    switch (toml_array_kind(curarr)) {
 
     case 'v': 
 	for (i = 0; 0 != (raw = toml_raw_at(curarr, i)); i++) {

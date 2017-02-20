@@ -8,6 +8,170 @@
 #include <string.h>
 #include "toml.h"
 
+
+int toml_utf8_to_ucs(const char* orig, int len, int64_t* ret)
+{
+    const unsigned char* buf = (const unsigned char*) orig;
+    unsigned i = *buf++;
+    int64_t v;
+    
+    /* 0x00000000 - 0x0000007F:
+       0xxxxxxx
+    */
+    if (0 == (i >> 7)) {
+	if (len < 1) return -1;
+	v = i;
+	return *ret = v, 1;
+    }
+    /* 0x00000080 - 0x000007FF:
+       110xxxxx 10xxxxxx
+    */
+    if (0x6 == (i >> 5)) {
+	if (len < 2) return -1;
+	v = i & 0x1f;
+	i = *(++buf);
+	if (0x2 != (i >> 6)) return -1;
+	v = (v << 6) | (i & 0x3f);
+	return *ret = v, (const char*) buf - orig;
+    }
+
+    /* 0x00000800 - 0x0000FFFF:
+       1110xxxx 10xxxxxx 10xxxxxx
+    */
+    if (0xE == (i >> 4)) {
+	if (len < 3) return -1;
+	v = i & 0x0F;
+	for (int j = 0; j < 2; j++) {
+	    i = *(++buf);
+	    if (0x2 != (i >> 6)) return -1;
+	    v = (v << 6) | (i & 0x3f);
+	}
+	return *ret = v, (const char*) buf - orig;
+    }
+
+    /* 0x00010000 - 0x001FFFFF:
+       11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+    */
+    if (0x1E == (i >> 3)) {
+	if (len < 4) return -1;
+	v = i & 0x07;
+	for (int j = 0; j < 3; j++) {
+	    i = *(++buf);
+	    if (0x2 != (i >> 6)) return -1;
+	    v = (v << 6) | (i & 0x3f);
+	}
+	return *ret = v, (const char*) buf - orig;
+    }
+    
+    /* 0x00200000 - 0x03FFFFFF:
+       111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+    */
+    if (0x3E == (i >> 2)) {
+	if (len < 5) return -1;
+	v = i & 0x03;
+	for (int j = 0; j < 4; j++) {
+	    i = *(++buf);
+	    if (0x2 != (i >> 6)) return -1;
+	    v = (v << 6) | (i & 0x3f);
+	}
+	return *ret = v, (const char*) buf - orig;
+    }
+
+    /* 0x04000000 - 0x7FFFFFFF:
+       1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+    */
+    if (0x7e == (i >> 1)) {
+	if (len < 6) return -1;
+	v = i & 0x01;
+	for (int j = 0; j < 5; j++) {
+	    i = *(++buf);
+	    if (0x2 != (i >> 6)) return -1;
+	    v = (v << 6) | (i & 0x3f);
+	}
+	return *ret = v, (const char*) buf - orig;
+    }
+    return -1;
+}
+
+
+int toml_ucs_to_utf8(int64_t code, char buf[6])
+{
+    /* http://stackoverflow.com/questions/6240055/manually-converting-unicode-codepoints-into-utf-8-and-utf-16 */
+    /* The UCS code values 0xd800–0xdfff (UTF-16 surrogates) as well
+     * as 0xfffe and 0xffff (UCS noncharacters) should not appear in
+     * conforming UTF-8 streams.
+     */
+    if (0xd800 <= code && code <= 0xdfff) return -1;
+    if (0xfffe <= code && code <= 0xffff) return -1;
+
+    /* 0x00000000 - 0x0000007F:
+       0xxxxxxx
+    */
+    if (code < 0) return -1;
+    if (code <= 0x7F) {
+	buf[0] = (unsigned char) code;
+	return 1;
+    }
+
+    /* 0x00000080 - 0x000007FF:
+       110xxxxx 10xxxxxx
+    */
+    if (code <= 0x000007FF) {
+	buf[0] = 0xc0 | (code >> 6);
+	buf[1] = 0x80 | (code & 0x3f);
+	return 2;
+    }
+
+    /* 0x00000800 - 0x0000FFFF:
+       1110xxxx 10xxxxxx 10xxxxxx
+    */
+    if (code <= 0x0000FFFF) {
+	buf[0] = 0xe0 | (code >> 12);
+	buf[1] = 0x80 | ((code >> 6) & 0x3f);
+	buf[2] = 0x80 | (code & 0x3f);
+	return 3;
+    }
+
+    /* 0x00010000 - 0x001FFFFF:
+       11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+    */
+    if (code <= 0x001FFFFF) {
+	buf[0] = 0xf0 | (code >> 18);
+	buf[1] = 0x80 | ((code >> 12) & 0x3f);
+	buf[2] = 0x80 | ((code >> 6) & 0x3f);
+	buf[3] = 0x80 | (code & 0x3f);
+	return 4;
+    }
+
+    /* 0x00200000 - 0x03FFFFFF:
+       111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+    */
+    if (code <= 0x03FFFFFF) {
+	buf[0] = 0xf8 | (code >> 24);
+	buf[1] = 0x80 | ((code >> 18) & 0x3f);
+	buf[2] = 0x80 | ((code >> 12) & 0x3f);
+	buf[3] = 0x80 | ((code >> 6) & 0x3f);
+	buf[4] = 0x80 | (code & 0x3f);
+	return 5;
+    }
+    
+    /* 0x04000000 - 0x7FFFFFFF:
+       1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+    */
+    if (code <= 0x7FFFFFFF) {
+	buf[0] = 0xfc | (code >> 30);
+	buf[1] = 0x80 | ((code >> 24) & 0x3f);
+	buf[2] = 0x80 | ((code >> 18) & 0x3f);
+	buf[3] = 0x80 | ((code >> 12) & 0x3f);
+	buf[4] = 0x80 | ((code >> 6) & 0x3f);
+	buf[5] = 0x80 | (code & 0x3f);
+	return 5;
+    }
+
+    return -1;
+}
+
+
 typedef struct toml_keyval_t toml_keyval_t;
 struct toml_keyval_t {
     const char* key;
@@ -17,7 +181,8 @@ struct toml_keyval_t {
 
 struct toml_array_t {
     const char* key;
-    int typ; /* 'v'alue, 'a'rray, or 't'able */
+    int kind; /* 'v'alue, 'a'rray, or 't'able */
+    int type; /* 'i'nt, 'd'ouble, 'b'ool, 's'tring, 't'ime, 'D'ate, 'T'imestamp */
     
     int nelem;
     char** val;
@@ -109,9 +274,9 @@ static int syntax_error(context_t* ctx, int lineno, const char* msg)
     return -1;
 }
 
-static int bad_string(context_t* ctx, int lineno)
+static int bad_key(context_t* ctx, int lineno)
 {
-    snprintf(ctx->errbuf, ctx->errbufsz, "line %d: bad string", lineno);
+    snprintf(ctx->errbuf, ctx->errbufsz, "line %d: bad key", lineno);
     longjmp(ctx->jmp, 1);
     return -1;
 }
@@ -139,37 +304,101 @@ static int key_exists(context_t* ctx, token_t keytok)
 }
 
 
-static char* quote_string(const char* src, int srclen)
+
+/* 
+ * unescape all special chars. 
+ * returns the new string. 
+ * if error, returns NULL, and message written to errbuf;
+ */
+static char* normalize_string(const char* src, int srclen,
+			      int kill_line_ending_backslash,
+			      char* errbuf, int errbufsz)
 {
     char* dst = 0;
     int   max = 0;
     int   off = 0;
     const char* sp = src;
     const char* sq = src + srclen;
+    int ch;
 
-    for ( ; sp < sq; sp++){
+    for (;;) {
 	if (off >=  max - 10) { /* have some slack for misc stuff */
 	    char* x = realloc(dst, max += 100);
 	    if (!x) {
 		if (dst) free(dst);
+		snprintf(errbuf, errbufsz, "out of memory");
 		return 0;
 	    }
 	    dst = x;
 	}
 	
-	int ch = *sp;
-	if (strchr("\b\t\n\f\r\"\\", ch)) {
-	    dst[off++] = '\\';
-	    switch (ch) {
-	    case '\b': ch = 'b'; break;
-	    case '\t': ch = 't'; break;
-	    case '\n': ch = 'n'; break;
-	    case '\f': ch = 'f'; break;
-	    case '\r': ch = 'r'; break;
-	    case '"':  ch = '"'; break;
-	    case '\\': ch = '\\'; break;
+	if (sp >= sq) break;	/* finished */
+
+	ch = *sp++;
+	if (ch != '\\') {
+	    dst[off++] = ch;
+	    continue;
+	}
+
+	/* ch == backslash. we expect the escape char. */
+	if (sp >= sq) {
+	    snprintf(errbuf, errbufsz, "last backslash is invalid");
+	    free(dst);
+	    return 0;
+	}
+
+	if (kill_line_ending_backslash) {
+	    if (*sp == '\n' || (*sp == '\r' && sp[1] == '\n')) {
+		sp += strspn(sp, " \t\r\n");
+		continue;
 	    }
 	}
+	    
+	ch = *sp++;
+	switch (ch) {
+	case 'u': case 'U':
+	    {
+		int64_t ucs = 0;
+		for (int i = (ch == 'u' ? 4 : 8); i; i--) {
+		    if (sp >= sq) {
+			snprintf(errbuf, errbufsz, "\\%c expects %d hex chars", ch, (ch == 'u' ? 4 : 8));
+			free(dst);
+			return 0;
+		    }
+		    ch = *sp++;
+		    int v = ('0' <= ch && ch <= '9')
+			? ch - '0'
+			: (('A' <= ch && ch <= 'F') ? ch - 'A' + 10 : -1);
+		    if (-1 == v) {
+			snprintf(errbuf, errbufsz, "invalid hex chars for \\u or \\U");
+			free(dst);
+			return 0;
+		    }
+		    ucs = ucs * 16 + v;
+		}
+		int n = toml_ucs_to_utf8(ucs, &dst[off]);
+		if (-1 == n) {
+		    snprintf(errbuf, errbufsz, "illegal ucs code in \\u or \\U");
+		    free(dst);
+		    return 0;
+		}
+		off += n;
+	    }
+	    continue;
+
+	case 'b': ch = '\b'; break;
+	case 't': ch = '\t'; break;
+	case 'n': ch = '\n'; break;
+	case 'f': ch = '\f'; break;
+	case 'r': ch = '\r'; break;
+	case '"':  ch = '"'; break;
+	case '\\': ch = '\\'; break;
+	default: 
+	    snprintf(errbuf, errbufsz, "illegal escape char \\%c", ch);
+	    free(dst);
+	    return 0;
+	}
+
 	dst[off++] = ch;
     }
 
@@ -183,38 +412,46 @@ static char* normalize_key(context_t* ctx, token_t strtok)
     const char* sp = strtok.ptr;
     const char* sq = strtok.ptr + strtok.len;
     int lineno = strtok.lineno;
+    char* ret;
+    int ch = *sp;
+    char ebuf[80];
 
-    const char* end;
-    if (0 == strncmp(sp, "'''", 3)) {
-	sp += 3;
-	end = sq - 3;
-    } else if (sp[0] == '\'') {
-	sp++;
-	end = sq - 1;
-    } else if (0 == strncmp(sp, "\"\"\"", 3)) {
-	sp += 3;
-	end = sq - 3;
-    } else if (sp[0] == '"') {
-	sp++;
-	end = sq - 1;
-    } else {
-	end = sq;
-	/* for barekey allow only this regex: [A-Za-z0-9_-]+ */
-	const char* xp;
-	for (xp = sp; xp != sq; xp++) {
-	    int ch = *xp;
-	    if ('A' <= ch && ch <= 'Z') continue;
-	    if ('a' <= ch && ch <= 'z') continue;
-	    if ('0' <= ch && ch <= '9') continue;
-	    if (ch == '_' || ch == '-') continue;
-	    bad_string(ctx, lineno);
+    if (ch == '\'' || ch == '\"') {
+	if (sp[1] == ch && sp[2] == ch) 
+	    sp += 3, sq -= 3;
+	else
+	    sp++, sq--;
+
+	if (ch == '\'') {
+	    if (! (ret = strndup(sp, sq - sp))) outofmemory(ctx, FLINE);
+	} else {
+	    ret = normalize_string(sp, sq - sp, 0, ebuf, sizeof(ebuf));
+	    if (!ret) {
+		snprintf(ctx->errbuf, ctx->errbufsz, "line %d: %s", lineno, ebuf);
+		longjmp(ctx->jmp, 1);
+	    }
 	}
+	if (strchr(ret, '\n')) {
+	    /* newlines are not allowed in keys */
+	    free(ret);
+	    bad_key(ctx, lineno);
+	}
+	return ret;
     }
-
-    char* ret = quote_string(sp, end - sp);
-    if (! ret)
+	
+    /* for barekey allow only this regex: [A-Za-z0-9_-]+ */
+    const char* xp;
+    for (xp = sp; xp != sq; xp++) {
+	int ch = *xp;
+	if ('A' <= ch && ch <= 'Z') continue;
+	if ('a' <= ch && ch <= 'z') continue;
+	if ('0' <= ch && ch <= '9') continue;
+	if (ch == '_' || ch == '-') continue;
+	bad_key(ctx, lineno);
+    }
+    if (! (ret = strndup(sp, sq - sp)))
 	outofmemory(ctx, FLINE);
-
+    
     return ret;
 }
 
@@ -254,7 +491,7 @@ static toml_keyval_t* create_keyval_in_table(context_t* ctx, toml_table_t* tab, 
 	free(newkey);
 	outofmemory(ctx, FLINE);
     }
-	
+    
     toml_keyval_t* dest = tab->kval[tab->nkval++];
     dest->key = newkey;
     return dest;
@@ -403,6 +640,21 @@ static void parse_table(context_t* ctx, toml_table_t* tab)
     next_token(ctx, 1);
 }
 
+static int valtype(const char* val)
+{
+    toml_timestamp_t ts;
+    if (*val == '\'' || *val == '"') return 's';
+    if (0 == toml_rtob(val, 0)) return 'b';
+    if (0 == toml_rtoi(val, 0)) return 'i';
+    if (0 == toml_rtod(val, 0)) return 'd';
+    if (0 == toml_rtots(val, &ts)) {
+	if (ts.year && ts.hour) return 'T'; /* timestamp */
+	if (ts.year) return 'D'; /* date */
+	return 't'; /* time */
+    }
+    return 'u'; /* unknown */
+}
+
 
 static void parse_array(context_t* ctx, toml_array_t* arr)
 {
@@ -422,8 +674,8 @@ static void parse_array(context_t* ctx, toml_array_t* arr)
 		char* val = ctx->tok.ptr;
 		int   vlen = ctx->tok.len;
 		
-		if (arr->typ == 0) arr->typ = 'v';
-		if (arr->typ != 'v') {
+		if (arr->kind == 0) arr->kind = 'v';
+		if (arr->kind != 'v') {
 		    syntax_error(ctx, ctx->tok.lineno,
 				 "a string array can only contain strings");
 		}
@@ -432,18 +684,24 @@ static void parse_array(context_t* ctx, toml_array_t* arr)
 		if (!tmp) outofmemory(ctx, FLINE);
 		arr->val = tmp;
 		
-		if (0 == (arr->val[arr->nelem] = strndup(val, vlen)))
+		if (0 == (val = strndup(val, vlen)))
 		    outofmemory(ctx, FLINE);
-		arr->nelem++;
 
+		arr->val[arr->nelem++] = val;
+
+		if (arr->nelem == 1) 
+		    arr->type = valtype(arr->val[0]);
+		else if (arr->type != valtype(val))
+		    syntax_error(ctx, ctx->tok.lineno, "array type mismatch");
+		    
 		next_token(ctx, 0);
 		break;
 	    }
 
 	case LBRACKET:
 	    { /* [ [array], [array] ... ] */
-		if (arr->typ == 0) arr->typ = 'a';
-		if (arr->typ != 'a') {
+		if (arr->kind == 0) arr->kind = 'a';
+		if (arr->kind != 'a') {
 		    syntax_error(ctx, ctx->tok.lineno, "array type mismatch");
 		}
 		parse_array(ctx, create_array_in_array(ctx, arr));
@@ -633,7 +891,7 @@ static void walk_tabpath(context_t* ctx)
 		for (j = 0; j < curtab->narr && !nexttab; j++) {
 		    if (0 == strcmp(curtab->arr[j]->key, key)) {
 			toml_array_t* arr = curtab->arr[j];
-			if (arr->typ != 't') internal_error(ctx, FLINE);
+			if (arr->kind != 't') internal_error(ctx, FLINE);
 			if (arr->nelem == 0) internal_error(ctx, FLINE);
 			nexttab = arr->tab[arr->nelem-1];
 		    }
@@ -704,8 +962,8 @@ static void parse_select(context_t* ctx)
     } else {
 	/* [[x.y.z]] -> create z = [] in x.y.z */
 	toml_array_t* arr = create_keyarray_in_table(ctx, ctx->curtab, z, 1);
-	if (arr->typ == 0) arr->typ = 't';
-	if (arr->typ != 't') syntax_error(ctx, z.lineno, "array mismatch");
+	if (arr->kind == 0) arr->kind = 't';
+	if (arr->kind != 't') syntax_error(ctx, z.lineno, "array mismatch");
 
 	/* add to z=[] */
 	toml_table_t* dest;
@@ -869,13 +1127,13 @@ static void xfree_arr(toml_array_t* p)
 
     int i;
     for (i = 0; i < p->nelem; i++) {
-	switch (p->typ) {
+	switch (p->kind) {
 	case 'v': xfree(p->val[i]); break;
 	case 'a': xfree_arr(p->arr[i]); break;
 	case 't': xfree_tab(p->tab[i]); break;
 	}
     }
-    switch (p->typ) {
+    switch (p->kind) {
     case 'v': xfree(p->val); break;
     case 'a': xfree(p->arr); break;
     case 't': xfree(p->tab); break;
@@ -1114,23 +1372,23 @@ toml_table_t* toml_table_in(toml_table_t* tab, const char* key)
 
 const char* toml_raw_at(toml_array_t* arr, int idx)
 {
-    if (arr->typ != 'v')
+    if (arr->kind != 'v')
 	return 0;
     if (! (0 <= idx && idx < arr->nelem))
 	return 0;
     return arr->val[idx];
 }
 
-char toml_array_typ(toml_array_t* arr)
+char toml_array_kind(toml_array_t* arr)
 {
-    return arr->typ;
+    return arr->kind;
 }
 
 
 
 toml_array_t* toml_array_at(toml_array_t* arr, int idx)
 {
-    if (arr->typ != 'a')
+    if (arr->kind != 'a')
 	return 0;
     if (! (0 <= idx && idx < arr->nelem))
 	return 0;
@@ -1139,7 +1397,7 @@ toml_array_t* toml_array_at(toml_array_t* arr, int idx)
 
 toml_table_t* toml_table_at(toml_array_t* arr, int idx)
 {
-    if (arr->typ != 't')
+    if (arr->kind != 't')
 	return 0;
     if (! (0 <= idx && idx < arr->nelem))
 	return 0;
@@ -1213,27 +1471,35 @@ int toml_rtots(const char* src_, toml_timestamp_t* ret)
     /* parse and copy Z */
     ret->z = ret->__buffer.z;
     char* z = ret->z;
-    for (i = 0; i < 10 && *p; i++) {
-	int ch = *p++;
-	*z++ = ch;
-	if (ch == 'Z') {
-	    if (i == 0) break; else return -1;
+    if (*p == 'Z') {
+	*z++ = *p++;
+	*z = 0;
+	return (p == q) ? 0 : -1;
+    }
+    if (*p == '+' || *p == '-') {
+	*z++ = *p++;
+	if (('0' <= p[0] && p[0] <= '9') && ('0' <= p[1] && p[1] <= '9')) {
+	    *z++ = *p++;
+	    *z++ = *p++;
+	    if (*p == ':') {
+		*z++ = *p++;
+		if (('0' <= p[0] && p[0] <= '9') && ('0' <= p[1] && p[1] <= '9')) {
+		    *z++ = *p++;
+		    *z++ = *p++;
+		    *z++ = 0;
+		}
+	    }
 	}
-	if (ch == '+' || ch == '-') {
-	    if (i == 0) continue; else return -1;
-	}
-	if (ch == ':') {
-	    if (i == 3) continue; else return -1;
-	}
-	if (! ('0' <= ch && ch <= '9')) return -1;
     }
     return (p == q) ? 0 : -1;
 }
 
 
-int toml_rtob(const char* src, int* ret)
+int toml_rtob(const char* src, int* ret_)
 {
     if (!src) return -1;
+    int dummy;
+    int* ret = ret_ ? ret_ : &dummy;
     
     if (0 == strcmp(src, "true")) {
 	*ret = 1;
@@ -1247,7 +1513,7 @@ int toml_rtob(const char* src, int* ret)
 }
 
 
-int toml_rtoi(const char* src, int64_t* ret)
+int toml_rtoi(const char* src, int64_t* ret_)
 {
     if (!src) return -1;
     
@@ -1255,6 +1521,8 @@ int toml_rtoi(const char* src, int64_t* ret)
     char* p = buf;
     char* q = p + sizeof(buf);
     const char* s = src;
+    int64_t dummy;
+    int64_t* ret = ret_ ? ret_ : &dummy;
     
     if (*s == '+')
 	*p++ = *s++;
@@ -1283,7 +1551,7 @@ int toml_rtoi(const char* src, int64_t* ret)
 }
 
 
-int toml_rtod(const char* src, double* ret)
+int toml_rtod(const char* src, double* ret_)
 {
     if (!src) return -1;
     
@@ -1291,6 +1559,8 @@ int toml_rtod(const char* src, double* ret)
     char* p = buf;
     char* q = p + sizeof(buf);
     const char* s = src;
+    double dummy;
+    double* ret = ret_ ? ret_ : &dummy;
 
     /* check for special cases */
     if (s[0] == '+' || s[0] == '-') *p++ = *s++;
@@ -1319,114 +1589,81 @@ int toml_rtod(const char* src, double* ret)
 }
 
 
+static char* kill_line_ending_backslash(char* str)
+{
+    if (!str) return 0;
+    
+    /* first round: find (backslash, \n) */
+    char* p = str;
+    while (0 != (p = strstr(p, "\\\n"))) {
+	char* q = (p + 1);
+	q += strspn(q, " \t\r\n");
+	memmove(p, q, strlen(q) + 1);
+    }
+    /* second round: find (backslash, \r, \n) */
+    p = str;
+    while (0 != (p = strstr(p, "\\\r\n"))) {
+	char* q = (p + 1);
+	q += strspn(q, " \t\r\n");
+	memmove(p, q, strlen(q) + 1);
+    }
+
+    return str;
+}
+
+
 int toml_rtos(const char* src, char** ret)
 {
     if (!src) return -1;
     if (*src != '\'' && *src != '"') return -1;
-    
-    char* buf = malloc(strlen(src) + 1);
-    if (!buf) return -1;
 
-    char* p = buf;
-    if (0 == strncmp(src, "'''", 3)) {
-	const char* s = src + 3;
-
-	/* skip first new line right after ''' */
-	if (*s == '\n')
-	    s++;
-	else if (s[0] == '\r' && s[1] == '\n')
-	    s += 2;
-
-	for (;;) {
-	    if (s[0] == '\\') {
-		if (s[1] == '\n' || (s[1] == '\r' && s[2] == '\n')) {
-		    /* line ending backslash */
-		    s++;		/* skip this backslash */
-		    s += strspn(s, " \t\r\n"); /* skip till next non-whitespace */
-		    continue;
-		}
-	    }
-	    if (0 == strncmp(s, "'''", 3)) break;
-	    *p++ = *s++;
-	}
-	
-	*p++ = 0;
-	*ret = buf;
-	return 0;
-    }
-
+    *ret = 0;
+    int srclen = strlen(src);
     if (*src == '\'') {
-	const char* s = src + 1;
-	while (*s != '\'') { *p++ = *s++; }
-	*p++ = 0;
-	*ret = buf;
-	return 0;
+	if (0 == strncmp(src, "'''", 3)) {
+	    const char* sp = src + 3;
+	    const char* sq = src + srclen - 3;
+	    if (! (sp <= sq && 0 == strcmp(sq, "'''")))
+		return -1;
+	    
+	    /* skip first new line right after ''' */
+	    if (*sp == '\n')
+		sp++;
+	    else if (sp[0] == '\r' && sp[1] == '\n')
+		sp += 2;
+
+	    *ret = kill_line_ending_backslash(strndup(sp, sq - sp));
+	} else {
+	    const char* sp = src + 1;
+	    const char* sq = src + srclen - 1;
+	    if (! (sp <= sq && *sq == '\''))
+		return -1;
+	    /* copy from sp to p */
+	    *ret = strndup(sp, sq - sp);
+	}
+	return *ret ? 0 : -1;
     }
 
+    const char* sp;
+    const char* sq;
     if (0 == strncmp(src, "\"\"\"", 3)) {
-	const char* s = src + 3;
-
-	/* skip first new line right after """ */
-	if (*s == '\n')
-	    s++;
-	else if (s[0] == '\r' && s[1] == '\n')
-	    s++, s++;
-
-	for (;;) {
-	    if (s[0] == '\\') {
-		if (s[1] == '\n' || (s[1] == '\r' && s[2] == '\n')) {
-		    /* line ending backslash */
-		    s++;		/* skip this backslash */
-		    s += strspn(s, " \t\r\n"); /* skip till next non-whitespace */
-		    continue;
-		}
-		switch (s[1]) {
-		case 'b': *p++ = '\b'; s += 2; break;
-		case 't': *p++ = '\t'; s += 2; break;
-		case 'n': *p++ = '\n'; s += 2; break;
-		case 'f': *p++ = '\f'; s += 2; break;
-		case 'r': *p++ = '\r'; s += 2; break;
-		case '"': *p++ = '"'; s += 2; break;
-		case '\'': *p++ = '\''; s += 2; break;
-		case '\\': *p++ = '\\'; s += 2; break;
-		default:
-		    *p++ = *s++; break;
-		}		    
-		continue;
-	    }
-	    if (0 == strncmp(s, "\"\"\"", 3)) break;
-	    *p++ = *s++;
-	}
-	*p++ = 0;
-	*ret = buf;
-	return 0;
-    }
+	sp = src + 3;
+	sq = src + srclen - 3;
+	if (! (sp <= sq && 0 == strcmp(sq, "\"\"\"")))
+	    return -1;
 	
-    if (*src == '"') {
-	const char* s = src + 1;
-	for (;;) {
-	    if (*s == '\\') {
-		switch (s[1]) {
-		case 'b': *p++ = '\b'; s += 2; break;
-		case 't': *p++ = '\t'; s += 2; break;
-		case 'n': *p++ = '\n'; s += 2; break;
-		case 'f': *p++ = '\f'; s += 2; break;
-		case 'r': *p++ = '\r'; s += 2; break;
-		case '"': *p++ = '"'; s += 2; break;
-		case '\\': *p++ = '\\'; s += 2; break;
-		default:
-		    *p++ = *s++; break;
-		}		    
-		continue;
-	    }
-	    if (*s == '"') break;
-	    *p++ = *s++;
-	}
-	*p++ = 0;
-	*ret = buf;
-	return 0;
+	/* skip first new line right after """ */
+	if (*sp == '\n')
+	    sp++;
+	else if (sp[0] == '\r' && sp[1] == '\n')
+	    sp += 2;
+    } else {
+	sp = src + 1;
+	sq = src + srclen - 1;
+	if (! (sp <= sq && *sq == '"'))
+	    return -1;
     }
 
-    abort();
-    return 0;
+    *ret = normalize_string(sp, sq - sp, 1, 0, 0);
+    return *ret ? 0 : -1;
 }
