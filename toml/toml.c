@@ -1085,6 +1085,7 @@ toml_table_t* toml_parse_file(FILE* fp,
 	char* x = realloc(buf, bufsz + 1);
 	if (!x) {
 	    snprintf(errbuf, errbufsz, "out of memory");
+	    xfree(buf);
 	    return 0;
 	}
 	buf = x;
