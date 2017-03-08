@@ -125,6 +125,11 @@ start 'lz4: ............'
 (cd lz4-r129/lib && make clean && make -j8 && PREFIX=$TARGETDIR make install) >& out/lz4.out && pass || fail
 
 ##########################
+start 'zstd: ............'
+(cd zstd-master && make clean && make -j8 && PREFIX=$TARGETDIR make install) >& out/zstd.out && pass || fail
+
+
+##########################
 start 'rapidjson: ......'
 (cp -r rapidjson/include/rapidjson $TARGETDIR/include) >& out/rapidjson.out && pass || fail
 
