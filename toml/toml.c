@@ -165,7 +165,7 @@ int toml_ucs_to_utf8(int64_t code, char buf[6])
 	buf[3] = 0x80 | ((code >> 12) & 0x3f);
 	buf[4] = 0x80 | ((code >> 6) & 0x3f);
 	buf[5] = 0x80 | (code & 0x3f);
-	return 5;
+	return 6;
     }
 
     return -1;
