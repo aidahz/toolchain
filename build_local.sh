@@ -63,14 +63,3 @@ echo -n 'libhdfs3: .......'
 (cd mendota/libhdfs3/src && make clean && make -j8 \
 	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
 
-##########################
-#echo -n 'xdrive: .........'
-#(cd mendota/xdrive && make clean && make -j8 \
-#	&& make install prefix=$TARGETDIR ) >& out/xdrive.out && pass || fail
-
-##########################
-echo -n 'dgza: ...........'
-(cd mendota/zabbix && GOPATH=$PWD make \
-	&& make install prefix=$TARGETDIR ) >& out/dgza.out && pass || fail
-
-
