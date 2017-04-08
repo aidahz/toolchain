@@ -49,6 +49,9 @@ mkdir -p out
 rm -rf installed 
 mkdir -p installed
 
+##########################
+start 'tomlc99: .......'
+(cd tomlc99 && make clean && make install prefix=$TARGETDIR) >& out/tomlc99.out && pass || fail
 
 ##########################
 start 'protobuf: .......'
