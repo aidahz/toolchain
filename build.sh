@@ -50,7 +50,7 @@ rm -rf installed
 mkdir -p installed
 
 ##########################
-start 'tomlc99: .......'
+start 'tomlc99: ........'
 (cd tomlc99 && make clean && make install prefix=$TARGETDIR) >& out/tomlc99.out && pass || fail
 
 ##########################
@@ -128,7 +128,7 @@ start 'lz4: ............'
 (cd lz4-r129/lib && make clean && make -j8 && PREFIX=$TARGETDIR make install) >& out/lz4.out && pass || fail
 
 ##########################
-start 'zstd: ............'
+start 'zstd: ...........'
 (cd zstd-master && make clean && make -j8 && PREFIX=$TARGETDIR make install) >& out/zstd.out && pass || fail
 
 
