@@ -94,9 +94,14 @@ start 'bzip2: ..........'
   && make install PREFIX=$TARGETDIR) >& out/bzip2.out && pass || fail
 
 ##########################
+start 'openssl: ........'
+(cd openssl-1.0.2k && ./config --prefix=$TARGETDIR/openssl no-shared \
+    && make clean && make && make install) >& out/openssl.out && pass || fail
+
+##########################
 start 'curl: ...........'
 (cd curl-7.49.0 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl --without-librtmp --disable-ldap --disable-ldaps \
+  && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl=$TARGETDIR/openssl --without-librtmp --disable-ldap --disable-ldaps \
   && make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
