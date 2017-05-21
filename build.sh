@@ -96,7 +96,7 @@ start 'bzip2: ..........'
 ##########################
 start 'curl: ...........'
 (cd curl-7.49.0 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no --without-librtmp --disable-ldap --disable-ldaps \
+  && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl --without-librtmp --disable-ldap --disable-ldaps \
   && make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
