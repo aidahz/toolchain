@@ -94,9 +94,9 @@ start 'bzip2: ..........'
   && make install PREFIX=$TARGETDIR) >& out/bzip2.out && pass || fail
 
 ##########################
-start 'openssl: ........'
-(cd openssl-1.0.2k && ./config --prefix=$TARGETDIR/openssl no-shared \
-    && make clean && make && make install) >& out/openssl.out && pass || fail
+# start 'openssl: ........'
+# (cd openssl-1.0.2k && ./config --prefix=$TARGETDIR/openssl shared \
+#     && make clean && make && make install) >& out/openssl.out && pass || fail
 
 ##########################
 start 'curl: ...........'
