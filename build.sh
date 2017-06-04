@@ -99,10 +99,10 @@ start 'bzip2: ..........'
 #     && make clean && make && make install) >& out/openssl.out && pass || fail
 
 ##########################
-start 'curl: ...........'
-(cd curl-7.49.0 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl --without-librtmp --disable-ldap --disable-ldaps \
-  && make clean && make -j8 && make install) >& out/curl.out && pass || fail
+# start 'curl: ...........'
+# (cd curl-7.49.0 \
+#   && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl --without-librtmp --disable-ldap --disable-ldaps \
+#   && make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
 start 'yaml: ...........'
@@ -121,7 +121,7 @@ start 'libuuid: ........'
 ##########################
 start 'aws: ............'
 (cd aws-sdk-cpp-master && rm -fr build && mkdir build && cd build \
-    && cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF -DCURL_LIBRARIES=$TOOCHAIN_DIR/installed/lib/libcurl.a .. \
+    && cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF .. \
     && make && make install) >& out/aws.out && pass || fail
 
 ##########################
