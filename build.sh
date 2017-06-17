@@ -56,6 +56,10 @@ start 'tomlc99: ........'
 ##########################
 start 'protobuf: .......'
 (rm -rf protobuf-3.0.0-GA && unzip protobuf-3.0.0-GA.zip \
+	&& unzip -q gmock.zip \
+        && mv googlemock-release-1.7.0 protobuf-3.0.0-GA/gmock \
+	&& unzip -q gtest.zip \
+        && mv googletest-release-1.7.0 protobuf-3.0.0-GA/gmock/gtest \
 	&& cd protobuf-3.0.0-GA  \
 	&& ./autogen.sh \
 	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
@@ -63,8 +67,8 @@ start 'protobuf: .......'
 	&& make install) >& out/protobuf.out && pass || fail
 
 ##########################
-start 'daemonize: ......'
-(cd daemonize-release-1.7.7 && ./configure --prefix=$TARGETDIR && make clean && make && make install) >& out/daemonize.out && pass || fail
+#start 'daemonize: ......'
+#(cd daemonize-release-1.7.7 && ./configure --prefix=$TARGETDIR && make clean && make && make install) >& out/daemonize.out && pass || fail
 
 ##########################
 start 'event: ..........'

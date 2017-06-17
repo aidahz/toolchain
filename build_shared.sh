@@ -3,6 +3,7 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MY_TOOLCHAIN_DIR=$DIR
 
+
 function fatal
 {
    echo
@@ -12,9 +13,19 @@ function fatal
 }
 
 
+STARTTIME=0
+function start
+{
+   echo -n $1
+   STARTTIME=$(date +%s)
+}
+
+
 function pass 
 {
-   echo '[ok]'
+   ENDTIME=$(date +%s)
+   ELAPSED=$(($ENDTIME - $STARTTIME))
+   echo "[ok  $ELAPSED sec]"
 }
 
 function fail
@@ -22,6 +33,8 @@ function fail
    echo '[fail]'
    if [ $1 ]; then echo "$@"; fi
 }
+
+
 
 ##########################
 [ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
@@ -35,17 +48,17 @@ TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 
 ##########################
-echo -n 'rm *.so: ........'
+start 'rm *.so: ........'
 (cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
 ##########################
-echo -n 'libxml2: ........'
+start 'libxml2: ........'
 (tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
   && ./configure --prefix=$TARGETDIR --without-python  \
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
 ##########################
-echo -n 'proj: ...........'
+start 'proj: ...........'
 (F=proj.4-4.9.3; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
   && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
@@ -54,7 +67,7 @@ echo -n 'proj: ...........'
 
 
 ##########################
-echo -n 'geos: ...........'
+start 'geos: ...........'
 (F=geos-3.4.2; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
   && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
@@ -62,7 +75,7 @@ echo -n 'geos: ...........'
   && make install ) >& out/geos.out && pass || fail
 
 ##########################
-echo -n 'gdal: ...........'
+start 'gdal: ...........'
 (F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && ./configure --prefix=$TARGETDIR --with-xml2=$TARGETDIR/bin/xml2-config \
 	--with-geos=$TARGETDIR/bin/geos-config \
