@@ -40,7 +40,7 @@ rm -rf $MY_TOOLCHAIN_DIR/llvm
 ##########################
 start 'llvm debug: .....'
 # NB: this is actually a Release build with assertions ON
-(rm -rf llvm-3.9.1.src && tar xf llvm-3.9.1.src.tar.xz && cd llvm-3.9.1.src \
+(rm -rf llvm-4.0.1.src && tar xf llvm-4.0.1.src.tar.xz && cd llvm-4.0.1.src \
 	&& rm -rf build \
 	&& mkdir build \
 	&& cd build \
@@ -54,7 +54,7 @@ start 'llvm debug: .....'
 
 ##########################
 start 'llvm release: ...'
-(rm -rf llvm-3.9.1.src && tar xf llvm-3.9.1.src.tar.xz && cd llvm-3.9.1.src \
+(rm -rf llvm-4.0.1.src && tar xf llvm-4.0.1.src.tar.xz && cd llvm-4.0.1.src \
 	&& rm -rf build \
 	&& mkdir build \
 	&& cd build \
