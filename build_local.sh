@@ -43,6 +43,9 @@ export PATH="$TARGETDIR/bin:$PATH"
 echo -n 'viper: ..........'
 (cd mendota/viper && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
+##########################
+echo -n 'xjit: ...........'
+(cd mendota/xjit && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
 ##########################
 echo -n 'sparquet: .......'
