@@ -54,22 +54,13 @@ start 'tomlc99: ........'
 (cd tomlc99 && make clean && make install prefix=$TARGETDIR) >& out/tomlc99.out && pass || fail
 
 ##########################
-start 'protobuf: .......'
-(rm -rf protobuf-3.0.0-GA && unzip -o protobuf-3.0.0-GA.zip \
-	&& unzip -o -q gmock.zip \
-	&& rm -rf protobuf-3.0.0-GA/gmock \
-        && mv googlemock-release-1.7.0 protobuf-3.0.0-GA/gmock \
-	&& unzip -o -q gtest.zip \
-        && mv googletest-release-1.7.0 protobuf-3.0.0-GA/gmock/gtest \
-	&& cd protobuf-3.0.0-GA  \
-	&& ./autogen.sh \
-	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
-	&& make clean && make -j8 \
-	&& make install) >& out/protobuf.out && pass || fail
-
-##########################
-#start 'daemonize: ......'
-#(cd daemonize-release-1.7.7 && ./configure --prefix=$TARGETDIR && make clean && make && make install) >& out/daemonize.out && pass || fail
+# start 'protobuf: .......'
+(rm -rf protobuf-3.4.1 && unzip -o protobuf-3.4.1.zip \
+	&& cd protobuf-3.4.1 \
+ 	&& ./autogen.sh \
+ 	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
+ 	&& make clean && make -j8 \
+ 	&& make install) >& out/protobuf.out && pass || fail
 
 ##########################
 start 'event: ..........'
@@ -189,7 +180,9 @@ start 'intelfp: ........'
 
 ##########################
 start 'grpc: ...........'
-(cd grpc && make clean \
+(rm -rf grpc && git clone -b $(curl -L https://grpc.io/release ) https://github.com/grpc/grpc \
+	&& cd grpc \
+	&& git submodule update --init \
 	&& make -j8 prefix=$TARGETDIR \
 	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
 
