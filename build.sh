@@ -54,7 +54,7 @@ start 'tomlc99: ........'
 (cd tomlc99 && make clean && make install prefix=$TARGETDIR) >& out/tomlc99.out && pass || fail
 
 ##########################
-# start 'protobuf: .......'
+start 'protobuf: .......'
 (rm -rf protobuf-3.4.1 && unzip -o protobuf-3.4.1.zip \
 	&& cd protobuf-3.4.1 \
  	&& ./autogen.sh \
