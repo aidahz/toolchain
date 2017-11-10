@@ -29,6 +29,10 @@ gflags
     cd build; cmake ..; make
 
 
+================== On grpc ================================
+One must run bootstrap.sh to download grpc.  We fix the version at 1.7.x
+grpc will include a protobuf version using git submodule, which will be 3.4.1
+
 ================== On Thrift and Parquet ==================
 One must install dependecies,
 On Centos

@@ -39,6 +39,7 @@ geos-3.4.2
 gflags-2.1.2
 glog-0.3.4
 gperftools-2.4
+grpc
 gtest-1.7.0
 installed
 krb5-1.14.3
@@ -47,8 +48,7 @@ libgsasl-1.8.0
 lz4-r127
 lz4-r129
 parquet-cpp-master
-protobuf-2.6.1
-protobuf-2.5.0
+protobuf-3.4.1
 rapidjson
 thrift
 yaml-0.1.5

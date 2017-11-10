@@ -38,6 +38,7 @@ function fail
 
 ##########################
 (cd mendota >& /dev/null) || fatal please symlink mendota
+(cd grpc >& /dev/null) || fatal please run bootstrap.sh to download grpc
 
 ##########################
 [ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
@@ -52,15 +53,6 @@ mkdir -p installed
 ##########################
 start 'tomlc99: ........'
 (cd tomlc99 && make clean && make install prefix=$TARGETDIR) >& out/tomlc99.out && pass || fail
-
-##########################
-start 'protobuf: .......'
-(rm -rf protobuf-3.4.1 && unzip -o protobuf-3.4.1.zip \
-	&& cd protobuf-3.4.1 \
- 	&& ./autogen.sh \
- 	&& ./configure --prefix=$TARGETDIR --enable-shared=no \
- 	&& make clean && make -j8 \
- 	&& make install) >& out/protobuf.out && pass || fail
 
 ##########################
 start 'event: ..........'
@@ -180,11 +172,14 @@ start 'intelfp: ........'
 
 ##########################
 start 'grpc: ...........'
-(rm -rf grpc && git clone -b $(curl -L https://grpc.io/release ) https://github.com/grpc/grpc \
-	&& cd grpc \
+	(cd grpc \
 	&& git submodule update --init \
 	&& make -j8 prefix=$TARGETDIR \
 	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
+
+start 'protobuf: .......'
+	(cd grpc/third_party/protobuf \
+		&& make prefix=$TARGETDIR install) >& out/protobuf.out && pass || fail
 
 ##########################
 start 'rm *.so: ........'
