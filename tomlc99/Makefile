@@ -5,7 +5,7 @@ CFLAGS = -std=c99 -Wall -Wextra
 CFLAGS += -O2 -DNDEBUG
 #CFLAGS += -O0 -g
 
-EXEC = toml_json toml_cat
+EXEC = toml_json 
 
 LIB = libtoml.a
 
