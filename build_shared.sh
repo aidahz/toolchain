@@ -70,7 +70,7 @@ start 'proj: ...........'
 start 'geos: ...........'
 (F=geos-3.4.2; rm -rf $F && tar xf $F.tar.gz && cd $F \
   && mkdir -p build && cd build \
-  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
+  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
   && make -j8  \
   && make install ) >& out/geos.out && pass || fail
 
