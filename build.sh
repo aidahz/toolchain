@@ -175,8 +175,8 @@ start 'intelfp: ........'
 start 'grpc: ...........'
 	(cd grpc \
 	&& git submodule update --init \
-	&& make -j8 prefix=$TARGETDIR \
-	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
+	&& make CFLAGS='-Wno-implicit-fallthrough' -j8 prefix=$TARGETDIR \
+	&& make CFLAGS='-Wno-implicit-fallthrough' prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
 
 start 'protobuf: .......'
 	(cd grpc/third_party/protobuf \
