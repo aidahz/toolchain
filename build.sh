@@ -175,8 +175,8 @@ start 'intelfp: ........'
 start 'grpc: ...........'
 	(cd grpc \
 	&& git submodule update --init \
-	&& make CFLAGS='-Wno-implicit-fallthrough' -j8 prefix=$TARGETDIR \
-	&& make CFLAGS='-Wno-implicit-fallthrough' prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
+	&& make CFLAGS='-Wno-implicit-fallthrough -Wno-expansion-to-defined' prefix=$TARGETDIR \
+	&& make CFLAGS='-Wno-implicit-fallthrough -Wno-expansion-to-defined' prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
 
 start 'protobuf: .......'
 	(cd grpc/third_party/protobuf \
@@ -194,10 +194,10 @@ start 'libgsasl: .......'
 
 
 ##########################
-# start 'kerboros: .......'
-# (cd krb5-1.14.3/src \
-#   && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
-#   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
+start 'kerboros: .......'
+(cd krb5-1.14.3/src \
+  && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
+  && make clean && make -j8 && make install) >& out/krb.out && pass || fail
 
 ##########################
 # DON'T NEED THIS SHIT
