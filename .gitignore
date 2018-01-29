@@ -28,7 +28,7 @@
 *.app
 
 apr-1.5.2
-aws-sdk-cpp
+aws-sdk-cpp-master
 bzip2-1.0.6
 cmake-3.5.2
 curl-7.49.0

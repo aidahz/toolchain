@@ -39,7 +39,6 @@ function fail
 ##########################
 (cd mendota >& /dev/null) || fatal please symlink mendota
 (cd grpc >& /dev/null) || fatal please run bootstrap.sh to download grpc
-(cd aws-sdk-cpp >& /dev/null) || fatal please run bootstrap.sh to download aws sdk 
 
 ##########################
 [ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
@@ -109,7 +108,7 @@ start 'libuuid: ........'
 
 ##########################
 start 'aws: ............'
-(cd aws-sdk-cpp && rm -fr build && mkdir build && cd build \
+(cd aws-sdk-cpp-master && rm -fr build && mkdir build && cd build \
     && cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF .. \
     && make && make install) >& out/aws.out && pass || fail
 

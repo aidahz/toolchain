@@ -96,7 +96,7 @@ echo -n 'libuuid: ........'
 
 ##########################
 echo -n 'aws: ............'
-(cd aws-sdk-cpp && rm -fr build && mkdir build && cd build \
+(cd aws-sdk-cpp-master && rm -fr build && mkdir build && cd build \
     && cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF -DCURL_LIBRARIES=$TOOCHAIN_DIR/installed/lib/libcurl.a .. \
     && make && make install) >& out/aws.out && pass || fail
 
