@@ -95,7 +95,6 @@ start 'bzip2: ..........'
 ##########################
 start 'yaml: ...........'
 (tar xvfz yaml-0.1.7.tar.gz && cd yaml-0.1.7 \
-  && (autoreconf --force --install || true) \
   && ./configure --prefix=$TARGETDIR --enable-shared=no \
   && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
 
