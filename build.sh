@@ -38,10 +38,10 @@ function fail
 
 ##########################
 (cd mendota >& /dev/null) || fatal please symlink mendota
-(cd grpc >& /dev/null) || fatal please run bootstrap.sh to download grpc
+# (cd grpc >& /dev/null) || fatal please run bootstrap.sh to download grpc
 
 ##########################
-[ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
+[ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to $DIR"
 TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 mkdir -p out
@@ -49,6 +49,14 @@ mkdir -p out
 ##########################
 rm -rf installed 
 mkdir -p installed
+
+##########################
+start 'protobuf: .......'
+(tar xfz protobuf-all-3.5.1.tar.gz && cd protobuf-3.5.1 \
+    && ./configure --prefix=$TARGETDIR --enable-shared=no \
+    && make clean \
+    && make -j8 \
+    && make install) >& out/protobuf.out && pass || fail
 
 ##########################
 start 'tomlc99: ........'
@@ -153,32 +161,43 @@ start 'decNumber: ......'
 ##########################
 start 'highwayhash: ....'
 # note: do not do make all; only make install works. 
-(cd highwayhash && make clean && make install) >& out/highwayhash.out && pass || fail
+(cd highwayhash
+    && make clean
+    && make -j8
+    && make install) >& out/highwayhash.out && pass || fail
 
 ##########################
 start 're2: ............'
-(cd re2-master && make clean && make -j8 && make install) >& out/re2.out && pass || fail
+(cd re2-master
+    && make clean
+    && make -j8
+    && make install) >& out/re2.out && pass || fail
 
 
 ##########################
 start 'apr: ............'
-(cd apr-1.5.2 && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/apr.out && pass || fail
+(cd apr-1.5.2 && ./configure --prefix=$TARGETDIR
+    && make clean
+    && make -j8 && make install) >& out/apr.out && pass || fail
 
 
 ##########################
 start 'intelfp: ........'
-(cd IntelRDFPMathLib20U1/LIBRARY && make clean && make CC=gcc CFLAGS=-O3 CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 -j8 && mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
+(cd IntelRDFPMathLib20U1/LIBRARY
+    && make clean
+    && make CC=gcc CFLAGS=-O3 CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 -j8
+    && mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
 
 ##########################
-start 'grpc: ...........'
-	(cd grpc \
-	&& git submodule update --init \
-	&& make -j8 prefix=$TARGETDIR \
-	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
-
-start 'protobuf: .......'
-	(cd grpc/third_party/protobuf \
-		&& make prefix=$TARGETDIR install) >& out/protobuf.out && pass || fail
+#start 'grpc: ...........'
+#	(cd grpc \
+#	&& git submodule update --init \
+#	&& make -j8 prefix=$TARGETDIR \
+#	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
+#
+#start 'protobuf: .......'
+#	(cd grpc/third_party/protobuf \
+#		&& make prefix=$TARGETDIR install) >& out/protobuf.out && pass || fail
 
 ##########################
 start 'rm *.so: ........'
