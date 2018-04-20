@@ -52,6 +52,7 @@ mkdir -p installed
 
 ##########################
 start 'protobuf: .......'
+rm -rf protobuf-3.5.1
 (tar xfz protobuf-all-3.5.1.tar.gz && cd protobuf-3.5.1 \
     && ./configure --prefix=$TARGETDIR --enable-shared=no \
     && make clean \
@@ -108,7 +109,8 @@ start 'yaml: ...........'
 
 ##########################
 start 'libuuid: ........'
-(tar xf libuuid-1.0.3.tar.gz && cd libuuid-1.0.3 \
+rm -rf libuuid-1.0.3
+(tar xfx libuuid-1.0.3.tar.gz && cd libuuid-1.0.3 \
   && ./configure --prefix=$TARGETDIR --enable-shared=no \
   && make clean && make -j8 && make install) >& out/libuuid.out && pass || fail
 
