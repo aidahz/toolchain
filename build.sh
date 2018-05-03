@@ -96,14 +96,16 @@ start 'bzip2: ..........'
 #     && make clean && make && make install) >& out/openssl.out && pass || fail
 
 ##########################
-# start 'curl: ...........'
-(cd curl-7.49.0 \
+start 'curl: ...........'
+rm -rf curl-7.59.0
+(tar xfz curl-7.59.0.tar.gz && cd curl-7.59.0 \
    && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl --without-librtmp --disable-ldap --disable-ldaps \
    && make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
 start 'yaml: ...........'
-(tar xvfz yaml-0.1.7.tar.gz && cd yaml-0.1.7 \
+rm -rf yaml-0.1.7
+(tar xfz yaml-0.1.7.tar.gz && cd yaml-0.1.7 \
   && ./configure --prefix=$TARGETDIR --enable-shared=no \
   && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
 
