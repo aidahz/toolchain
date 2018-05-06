@@ -62,3 +62,10 @@ echo -n 'libhdfs3: .......'
 (cd mendota/libhdfs3/src && make clean && make -j8 \
 	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
 
+
+##########################
+echo -n 'maven: .........'
+(tar xzf apache-maven-3.5.3-bin.tar.gz && 
+    ln -s apache-maven-3.5.3 maven &&
+    ln -s maven/bin/mvn installed/bin/mvn) >& out/maven.out && pass || fail 
+
