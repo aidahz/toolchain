@@ -66,6 +66,11 @@ echo -n 'libhdfs3: .......'
 ##########################
 echo -n 'maven: .........'
 (tar xzf apache-maven-3.5.3-bin.tar.gz && 
-    ln -s apache-maven-3.5.3 maven &&
-    ln -s maven/bin/mvn installed/bin/mvn) >& out/maven.out && pass || fail 
+        ln -s apache-maven-3.5.3 maven) >& out/maven.out && pass || fail
+
+##########################
+echo -n 'go: .........'
+(wget https://dl.google.com/go/go1.9.5.linux-amd64.tar.gz
+       && tar xzf go1.9.5.linux-amd64.tar.gz) >& out/go.out && pass || fail
+
 
