@@ -53,32 +53,29 @@ start 'rm *.so: ........'
 
 ##########################
 start 'libxml2: ........'
-(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 \
-  && ./configure --prefix=$TARGETDIR --without-python  \
-  && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
+(tar xf libxml2-2.9.4.tar.gz && cd libxml2-2.9.4 &&
+        ./configure --prefix=$TARGETDIR --without-python &&
+        make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
 ##########################
 start 'proj: ...........'
-(F=proj.4-4.9.3; rm -rf $F && tar xf $F.tar.gz && cd $F \
-  && mkdir -p build && cd build \
-  && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
-  && make -j8  \
-  && make install ) >& out/proj.out && pass || fail
+(F=proj.4-4.9.3; rm -rf $F && tar xf $F.tar.gz && cd $F &&
+     mkdir -p build && cd build &&
+     cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. &&
+     make -j8 && make install ) >& out/proj.out && pass || fail
 
 
 ##########################
 start 'geos: ...........'
-(F=geos-3.4.2; rm -rf $F && tar xf $F.tar.gz && cd $F \
-  && mkdir -p build && cd build \
-  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
-  && make -j8  \
-  && make install ) >& out/geos.out && pass || fail
+(F=geos-3.4.2; rm -rf $F && tar xf $F.tar.gz && cd $F &&
+     mkdir -p build && cd build &&
+     cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. &&
+     make -j8 && make install ) >& out/geos.out && pass || fail
 
 ##########################
 start 'gdal: ...........'
-(F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F \
-  && ./configure --prefix=$TARGETDIR --with-xml2=$TARGETDIR/bin/xml2-config \
-	--with-geos=$TARGETDIR/bin/geos-config \
-  && make clean && make -j8  \
-  && make install ) >& out/gdal.out && pass || fail
+(F=gdal-2.1.1; rm -rf $F && tar xf $F.tar.gz && cd $F &&
+     ./configure --prefix=$TARGETDIR --with-xml2=$TARGETDIR/bin/xml2-config \
+	         --with-geos=$TARGETDIR/bin/geos-config &&
+     make clean && make -j8 && make install ) >& out/gdal.out && pass || fail
 

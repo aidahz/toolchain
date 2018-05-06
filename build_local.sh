@@ -41,27 +41,29 @@ export PATH="$TARGETDIR/bin:$PATH"
 
 ##########################
 echo -n 'viper: ..........'
-(cd mendota/viper && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
+(cd mendota/viper && make clean &&
+        make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
 ##########################
 echo -n 'xjit: ...........'
-(cd mendota/xjit && make clean && make -j8 && make install prefix="$TARGETDIR" ) >& out/xjit.out && pass || fail
+(cd mendota/xjit && make clean &&
+        make -j8 && make install prefix="$TARGETDIR" ) >& out/xjit.out && pass || fail
 
 ##########################
 echo -n 'sparquet: .......'
-(cd mendota/sparquet && make clean && make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
+(cd mendota/sparquet && make clean &&
+        make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
 ##########################
 echo -n 'exx: ............'
-(cd mendota/exx && make clean && make -j8 \
-	&& make install prefix=$TARGETDIR ) >& out/exx && pass || fail
+(cd mendota/exx && make clean && make -j8 &&
+	make install prefix=$TARGETDIR ) >& out/exx && pass || fail
 
 ##########################
 echo -n 'libhdfs3: .......'
 # Use good old Makefiles
-(cd mendota/libhdfs3/src && make clean && make -j8 \
-	&& make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
-
+(cd mendota/libhdfs3/src && make clean && make -j8 &&
+	make install prefix=$TARGETDIR) >& out/libhdfs3.out && pass || fail
 
 ##########################
 echo -n 'maven: .........'
@@ -70,7 +72,7 @@ echo -n 'maven: .........'
 
 ##########################
 echo -n 'go: .........'
-(wget https://dl.google.com/go/go1.9.5.linux-amd64.tar.gz
-       && tar xzf go1.9.5.linux-amd64.tar.gz) >& out/go.out && pass || fail
+(wget https://dl.google.com/go/go1.9.5.linux-amd64.tar.gz &&
+        tar xzf go1.9.5.linux-amd64.tar.gz) >& out/go.out && pass || fail
 
 

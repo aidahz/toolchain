@@ -73,22 +73,20 @@ fi
 
 ##########################
 start 'cmake: ..........'
-(cd cmake-3.5.2 \
-  && ./configure --prefix=$TARGETDIR  \
-  && make clean && make -j8 && make install) >& out/cmake.out && pass || fail
+(cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
+        make clean && make -j8 && make install) >& out/cmake.out && pass || fail
 
 ##########################
 start 'googletest: .....'
-(cd googletest && rm -rf build && mkdir build && cd build \
-	&& cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. \
-	&& make all install) >& out/googletest.out && pass || fail
+(cd googletest && rm -rf build && mkdir build &&
+        cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. &&
+	make all install) >& out/googletest.out && pass || fail
 
 
 ##########################
 start 'bzip2: ..........'
-(cd bzip2-1.0.6 \
-  && make clean && make -j8  \
-  && make install PREFIX=$TARGETDIR) >& out/bzip2.out && pass || fail
+(cd bzip2-1.0.6 && make clean &&
+        make -j8 && make install PREFIX=$TARGETDIR) >& out/bzip2.out && pass || fail
 
 ##########################
 # start 'openssl: ........'
@@ -98,30 +96,32 @@ start 'bzip2: ..........'
 ##########################
 start 'curl: ...........'
 rm -rf curl-7.59.0
-(tar xfz curl-7.59.0.tar.gz && cd curl-7.59.0 \
-   && ./configure --prefix=$TARGETDIR --enable-shared=no --with-ssl --without-librtmp --disable-ldap --disable-ldaps \
-   && make clean && make -j8 && make install) >& out/curl.out && pass || fail
+(tar xfz curl-7.59.0.tar.gz && cd curl-7.59.0 &&
+        ./configure --prefix=$TARGETDIR --enable-shared=no \
+                    --with-ssl --without-librtmp --disable-ldap --disable-ldaps &&
+        make clean && make -j8 && make install) >& out/curl.out && pass || fail
 
 ##########################
 start 'yaml: ...........'
 rm -rf yaml-0.1.7
-(tar xfz yaml-0.1.7.tar.gz && cd yaml-0.1.7 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no \
-  && make clean && make -j8 && make install) >& out/yaml.out && pass || fail
+(tar xfz yaml-0.1.7.tar.gz && cd yaml-0.1.7 &&
+        ./configure --prefix=$TARGETDIR --enable-shared=no &&
+        make clean && make -j8 && make install) >& out/yaml.out && pass || fail
 
 ##########################
 start 'libuuid: ........'
 rm -rf libuuid-1.0.3
-(tar xfx libuuid-1.0.3.tar.gz && cd libuuid-1.0.3 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no \
-  && make clean && make -j8 && make install) >& out/libuuid.out && pass || fail
+(tar xfx libuuid-1.0.3.tar.gz && cd libuuid-1.0.3 &&
+        ./configure --prefix=$TARGETDIR --enable-shared=no &&
+        make clean && make -j8 && make install) >& out/libuuid.out && pass || fail
 
 
 ##########################
 start 'aws: ............'
-(cd aws-sdk-cpp-master && rm -fr build && mkdir build && cd build \
-    && cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF .. \
-    && make && make install) >& out/aws.out && pass || fail
+(cd aws-sdk-cpp-master && rm -fr build && mkdir build && cd build &&
+        cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release \
+              -DBUILD_ONLY="s3" -DBUILD_SHARED_LIBS=OFF -DENABLE_TESTING=OFF .. &&
+        make && make install) >& out/aws.out && pass || fail
 
 ##########################
 # (cd gperftools-2.4; ./configure --prefix=$TARGETDIR --enable-frame-pointers; make clean; make -j8 ; make install)
@@ -129,11 +129,13 @@ start 'aws: ............'
 
 ##########################
 start 'lz4: ............'
-(cd lz4-r129/lib && make clean && make -j8 && PREFIX=$TARGETDIR make install) >& out/lz4.out && pass || fail
+(cd lz4-r129/lib && make clean && make -j8 &&
+        make install PREFIX=$TARGETDIR) >& out/lz4.out && pass || fail
 
 ##########################
 start 'zstd: ...........'
-(cd zstd-master && make clean && make -j8 && PREFIX=$TARGETDIR make install) >& out/zstd.out && pass || fail
+(cd zstd-master && make clean && make -j8 &&
+        make install PREFIX=$TARGETDIR) >& out/zstd.out && pass || fail
 
 
 ##########################
@@ -144,12 +146,14 @@ start 'rapidjson: ......'
 
 ##########################
 start 'gflags: .........'
-(cd gflags-2.1.2 && cmake -DCMAKE_INSTALL_PREFIX=$TARGETDIR . && make clean && make -j8 && make install) >& out/gflags.out && pass || fail
+(cd gflags-2.1.2 && cmake -DCMAKE_INSTALL_PREFIX=$TARGETDIR . &&
+        make clean && make -j8 && make install) >& out/gflags.out && pass || fail
 
 
 ##########################
 start 'glog: ...........'
-(cd glog-0.3.4 && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/glog.out && pass || fail
+(cd glog-0.3.4 && ./configure --prefix=$TARGETDIR &&
+        make clean && make -j8 && make install) >& out/glog.out && pass || fail
 
 
 ##########################
@@ -172,25 +176,22 @@ start 'highwayhash: ....'
 
 ##########################
 start 're2: ............'
-(cd re2-master \
-    && make clean \
-    && make -j8 \
-    && make install) >& out/re2.out && pass || fail
+(cd re2-master && make clean &&
+        make -j8 && make install) >& out/re2.out && pass || fail
 
 
 ##########################
 start 'apr: ............'
-(cd apr-1.5.2 && ./configure --prefix=$TARGETDIR \
-    && make clean \
-    && make -j8 && make install) >& out/apr.out && pass || fail
+(cd apr-1.5.2 && ./configure --prefix=$TARGETDIR &&
+        make clean && make -j8 && make install) >& out/apr.out && pass || fail
 
 
 ##########################
 start 'intelfp: ........'
-(cd IntelRDFPMathLib20U1/LIBRARY \
-    && make clean \
-    && make CC=gcc CFLAGS=-O3 CALL_BY_REF=0 GLOBAL_RND=0 GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 -j8 \
-    && mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
+(cd IntelRDFPMathLib20U1/LIBRARY && make clean &&
+        make -j8 CC=gcc CFLAGS=-O3 CALL_BY_REF=0 GLOBAL_RND=0 \
+             GLOBAL_FLAGS=0 UNCHANGED_BINARY_FLAGS=0 &&
+        mv libbid.a ../../installed/lib) >& out/intelfp.out && pass || fail
 
 ##########################
 start 'rm *.so: ........'
@@ -198,9 +199,8 @@ start 'rm *.so: ........'
 
 ##########################
 start 'libgsasl: .......'
-(cd libgsasl-1.8.0 \
-  && ./configure --prefix=$TARGETDIR --enable-shared=no \
-  && make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
+(cd libgsasl-1.8.0 && ./configure --prefix=$TARGETDIR --enable-shared=no &&
+        make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
 
 
 ##########################
