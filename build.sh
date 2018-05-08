@@ -72,9 +72,9 @@ fi
 (cd libevent-2.0.22-stable && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
 
 ##########################
-start 'cmake: ..........'
-(cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
-        make clean && make -j8 && make install) >& out/cmake.out && pass || fail
+# start 'cmake: ..........'
+# (cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
+#       make clean && make -j8 && make install) >& out/cmake.out && pass || fail
 
 ##########################
 start 'googletest: .....'
