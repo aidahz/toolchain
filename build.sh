@@ -73,8 +73,10 @@ fi
 
 ##########################
 # start 'cmake: ..........'
-# (cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
-#       make clean && make -j8 && make install) >& out/cmake.out && pass || fail
+if ! (cmake --version 2>&1 | grep 'version 3'); then 
+    (cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
+       make clean && make -j8 && make install) >& out/cmake.out && pass || fail
+fi
 
 ##########################
 start 'googletest: .....'
