@@ -75,6 +75,7 @@ fi
 # start 'cmake: ..........'
 if (cmake3 >& /dev/null); then 
     ln -s $(which cmake3) $TARGETDIR/bin/
+    export PATH="$TARGETDIR/bin:$PATH"   
 elif ! (cmake --version 2>&1 | grep 'version 3'); then 
     (cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
             make clean && make -j8 && make install) >& out/cmake.out && pass || fail
