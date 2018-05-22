@@ -218,10 +218,10 @@ rm -rf gss-1.0.3
 
 
 ##########################
-# start 'kerboros: .......'
-# (cd krb5-1.14.3/src \
-#   && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
-#   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
+ start 'kerboros: .......'
+ (cd krb5-1.14.3/src \
+   && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
+   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
 
 ##########################
 # DON'T NEED THIS SHIT
