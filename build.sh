@@ -208,6 +208,12 @@ start 'libgsasl: .......'
 	--enable-shared=no &&
         make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
 
+##########################
+start 'gss: ............'
+(cd gss-1.0.3 && ./configure --prefix=$TARGETDIR --enable-shared=no &&
+        make clean && make -j8 && 
+	make install)  >& out/libgss.out && pass || fail
+
 
 ##########################
 # start 'kerboros: .......'
