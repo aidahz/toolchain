@@ -210,7 +210,9 @@ start 'libgsasl: .......'
 
 ##########################
 start 'gss: ............'
-(cd gss-1.0.3 && ./configure --prefix=$TARGETDIR --enable-shared=no &&
+rm -rf gss-1.0.3
+(tar xfz gss-1.0.3.tar.gz && cd gss-1.0.3 &&
+        ./configure --prefix=$TARGETDIR --enable-shared=no &&
         make clean && make -j8 && 
 	make install)  >& out/libgss.out && pass || fail
 
