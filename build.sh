@@ -203,7 +203,9 @@ start 'rm *.so: ........'
 
 ##########################
 start 'libgsasl: .......'
-(cd libgsasl-1.8.0 && ./configure --prefix=$TARGETDIR --enable-shared=no &&
+(cd libgsasl-1.8.0 && ./configure --prefix=$TARGETDIR \
+	--with-gssapi-impl=mit \
+	--enable-shared=no &&
         make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
 
 
