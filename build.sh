@@ -209,15 +209,6 @@ start 'libgsasl: .......'
         make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
 
 ##########################
-start 'gss: ............'
-rm -rf gss-1.0.3
-(tar xfz gss-1.0.3.tar.gz && cd gss-1.0.3 &&
-        ./configure --prefix=$TARGETDIR --enable-shared=no &&
-        make clean && make -j8 && 
-	make install)  >& out/libgss.out && pass || fail
-
-
-##########################
  start 'kerboros: .......'
  (cd krb5-1.14.3/src \
    && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
