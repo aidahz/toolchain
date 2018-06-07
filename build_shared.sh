@@ -57,6 +57,10 @@ start 'libxml2: ........'
         ./configure --prefix=$TARGETDIR --without-python &&
         make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
+#
+# Disable these. Moved into respect dg dirs
+#
+if false; then
 ##########################
 start 'proj: ...........'
 (F=proj.4-4.9.3; rm -rf $F && tar xf $F.tar.gz && cd $F &&
@@ -78,4 +82,6 @@ start 'gdal: ...........'
      ./configure --prefix=$TARGETDIR --with-xml2=$TARGETDIR/bin/xml2-config \
 	         --with-geos=$TARGETDIR/bin/geos-config &&
      make clean && make -j8 && make install ) >& out/gdal.out && pass || fail
+
+fi
 
