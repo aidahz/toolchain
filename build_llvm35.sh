@@ -1,6 +1,6 @@
 set -e 
 tar xJf llvm-3.5.2.src.tar.xz
-ln -s llvm-3.5.2.src llvm
+ln -f -s llvm-3.5.2.src llvm
 
 sudo mkdir -p /opt/llvm-release+assert
 sudo chown $USER /opt/llvm-release+assert
