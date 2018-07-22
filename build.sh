@@ -81,10 +81,10 @@ elif ! (cmake --version 2>&1 | grep 'version 3'); then
 fi
 
 ##########################
-start 'googletest: .....'
-(cd googletest && rm -rf build && mkdir build &&
-        cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. &&
-	make all install) >& out/googletest.out && pass || fail
+# start 'googletest: .....'
+# (cd googletest && rm -rf build && mkdir build &&
+#         cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGETDIR .. &&
+# 	make all install) >& out/googletest.out && pass || fail
 
 
 ##########################
@@ -149,15 +149,15 @@ start 'rapidjson: ......'
 
 
 ##########################
-start 'gflags: .........'
-(cd gflags-2.1.2 && cmake -DCMAKE_INSTALL_PREFIX=$TARGETDIR . &&
-        make clean && make -j8 && make install) >& out/gflags.out && pass || fail
+# start 'gflags: .........'
+# (cd gflags-2.1.2 && cmake -DCMAKE_INSTALL_PREFIX=$TARGETDIR . &&
+#         make clean && make -j8 && make install) >& out/gflags.out && pass || fail
 
 
 ##########################
-start 'glog: ...........'
-(cd glog-0.3.4 && ./configure --prefix=$TARGETDIR &&
-        make clean && make -j8 && make install) >& out/glog.out && pass || fail
+# start 'glog: ...........'
+# (cd glog-0.3.4 && ./configure --prefix=$TARGETDIR &&
+#         make clean && make -j8 && make install) >& out/glog.out && pass || fail
 
 
 ##########################
