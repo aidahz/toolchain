@@ -21,6 +21,7 @@ function fail
 {
    echo '[fail]'
    if [ $1 ]; then echo "$@"; fi
+   exit 1
 }
 
 
@@ -45,9 +46,9 @@ echo -n 'viper: ..........'
         make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
 ##########################
-echo -n 'xjit: ...........'
-(cd mendota/xjit && make clean &&
-        make -j8 && make install prefix="$TARGETDIR" ) >& out/xjit.out && pass || fail
+#echo -n 'xjit: ...........'
+#(cd mendota/xjit && make clean &&
+#        make -j8 && make install prefix="$TARGETDIR" ) >& out/xjit.out && pass || fail
 
 ##########################
 echo -n 'sparquet: .......'

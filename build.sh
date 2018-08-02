@@ -32,6 +32,7 @@ function fail
 {
    echo '[fail]'
    if [ $1 ]; then echo "$@"; fi
+   exit 1
 }
 
 
