@@ -28,10 +28,10 @@
 *.app
 
 apr-1.5.2
-aws-sdk-cpp-master
+aws-sdk-cpp-1.5.10
 bzip2-1.0.6
 cmake-3.5.2
-curl-7.49.0
+curl-7.59.0
 installed
 gdal-1.9.2
 gdal-2.1.1
@@ -48,7 +48,10 @@ libgsasl-1.8.0
 lz4-r127
 lz4-r129
 parquet-cpp-master
-protobuf-3.4.1
+protobuf-3.5.1
 rapidjson
 thrift
-yaml-0.1.5
+yaml-0.1.7
+gss-1.0.3
+llvm-3.5.2.src
+go1.9.5.linux-amd64.tar.gz
