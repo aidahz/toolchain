@@ -30,17 +30,3 @@ sudo chown $USER /opt/llvm7-{release,release+assert}
 			.. &&
 	make -j8 && make install) || fatal llvm7-release
 
-
-##########################
-(rm -rf llvm-7.0.1.src && tar xf llvm-7.0.1.src.tar.xz && 
-	cd llvm-7.0.1.src &&
-	mkdir build && 
-	cd build &&
-	CXXFLAGS=-I$TOOLCHAIN_DIR/installed/include LDFLAGS=-L$TOOLCHAIN_DIR/installed/lib \
-		cmake -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX=/opt/llvm7-release+assert \
-			-DLLVM_TARGETS_TO_BUILD=X86 \
-			-DCMAKE_BUILD_TYPE=Release \
-			-DLLVM_ENABLE_ASSERTIONS=On \
-			.. &&
-	make -j8 && make install)  || fatal llvm7-release+assert
-
