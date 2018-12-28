@@ -46,11 +46,6 @@ echo -n 'viper: ..........'
         make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
 
 ##########################
-#echo -n 'xjit: ...........'
-#(cd mendota/xjit && make clean &&
-#        make -j8 && make install prefix="$TARGETDIR" ) >& out/xjit.out && pass || fail
-
-##########################
 echo -n 'sparquet: .......'
 (cd mendota/sparquet && make clean &&
         make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
