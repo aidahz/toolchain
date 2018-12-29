@@ -8,14 +8,21 @@ function fatal
    exit 1
 }
 
-
-rm -rf llvm-7.0.1.src
-rm -rf llvm
-tar xJf llvm-7.0.1.src.tar.xz
-ln -f -s llvm-7.0.1.src llvm
-
 sudo mkdir -p /opt/llvm7-{release,release+assert} 
 sudo chown $USER /opt/llvm7-{release,release+assert}
+
+
+# llvm-7 requires python 2.7 during build
+pyver=$(python -V 2>&1 | sed 's/.* \([0-9]\).\([0-9]\).*/\1\2/')
+if [ "$pyver" -lt "27" ]; then
+    wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
+    tar xzf Python-2.7.10.tgz
+    cd Python-2.7.10
+    ./configure
+    (sudo make -j8 altinstall) || fatal make-python-27
+    alias python=python2.7
+fi
+
 
 ##########################
 (rm -rf llvm-7.0.1.src && tar xf llvm-7.0.1.src.tar.xz &&
