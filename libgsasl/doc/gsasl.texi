@@ -1,0 +1,10 @@
+\input texinfo   @c -*- mode: texinfo; coding: us-ascii; -*-
+@setfilename gsasl.info
+@include version.texi
+@settitle GNU Simple Authentication and Security Layer @value{VERSION}
+@finalout
+
+@c Unify some of the indices.
+@syncodeindex tp fn
+@syncodeindex pg fn
+
