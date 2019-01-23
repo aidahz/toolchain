@@ -1,0 +1,83 @@
+# Mesajele în limba românã pentru gsasl.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Acest fiºier este distribuit sub aceeaºi licenþã ca ºi pachetul gsasl.
+# Laurentiu Buzdugan <lbuz@rolix.org>, 2003,2004.
+#
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gsasl 0.2.2\n"
+"Report-Msgid-Bugs-To: bug-gsasl@gnu.org\n"
+"POT-Creation-Date: 2004-11-29 01:57+0100\n"
+"PO-Revision-Date: 2004-12-29 12:00-0500\n"
+"Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
+"Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, c-format
+msgid "Chose SASL mechanism:\n"
+msgstr "Alegeþi mecanismul SASL:\n"
+
+#, c-format
+msgid "Input SASL mechanism supported by server:\n"
+msgstr "Introduceþi mecanismul SASL suportat de server:\n"
+
+#, c-format
+msgid "Using mechanism:\n"
+msgstr "Folosind mecanismul:\n"
+
+#, c-format
+msgid "Output from client:\n"
+msgstr "Ieºirea de la client:\n"
+
+#, c-format
+msgid "Output from server:\n"
+msgstr "Ieºirea de la server:\n"
+
+#, c-format
+msgid "Libgsasl error (%d): %s"
+msgstr "Eroare libgsasl (%d): %s"
+
+#, c-format
+msgid "This client supports the following mechanisms:\n"
+msgstr "Acest client suportã urmãtoarele mecanisme:\n"
+
+#, c-format
+msgid "This server supports the following mechanisms:\n"
+msgstr "Acest server suportã urmãtoarele mecanisme:\n"
+
+#, c-format
+msgid "Cannot find mechanism...\n"
+msgstr "Nu pot gãsi mecanismul...\n"
+
+#, c-format
+msgid "Enter base64 authentication data from server (press RET if none):\n"
+msgstr "Introduceþi datele de autentificare base64 de la server (apãsaþi  RET dacã nu existã):\n"
+
+#, c-format
+msgid "Enter base64 authentication data from client (press RET if none):\n"
+msgstr "Introduceþi datele de autentificare base64 de la client (apãsaþi  RET dacã nu existã):\n"
+
+#, c-format
+msgid "Client authentication finished (server trusted)...\n"
+msgstr "Autentificarea clientului a fost terminatã (server de încredere)...\n"
+
+#, c-format
+msgid "Server authentication finished (client trusted)...\n"
+msgstr "Autentificarea clientului a fost terminatã (client de încredere)...\n"
+
+#, c-format
+msgid "Enter application data (EOF to finish):\n"
+msgstr "Introduceþi datele aplicaþiei (EOF pentru a termina):\n"
+
+#, c-format
+msgid "Base64 encoded application data to send:\n"
+msgstr "Datele aplicaþiei encodate Base64 de trimis:\n"
+
+#, c-format
+msgid "Session finished...\n"
+msgstr "Sesiune terminatã...\n"

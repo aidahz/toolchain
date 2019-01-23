@@ -1,0 +1,119 @@
+
+SIMPLE AUTHENTICATION AND SECURITY LAYER (SASL) MECHANISMS
+----------------------------------------------------------
+
+(last updated 2004-04-29)
+
+The Simple Authentication and Security Layer (SASL) [RFC2222] is a
+method for adding authentication support to connection-based
+protocols.  To use this specification, a protocol includes a command
+for identifying and authenticating a user to a server and for
+optionally negotiating a security layer for subsequent protocol
+interactions.  The command has a required argument identifying a SASL
+mechanism.
+
+SASL mechanisms are named by strings, from 1 to 20 characters in
+length, consisting of upper-case letters, digits, hyphens, and/or
+underscores.  SASL mechanism names must be registered with the IANA.
+Procedures for registering new SASL mechanisms are given in the
+section "Registration procedures" of RFC2222.
+
+MECHANISMS           USAGE    REFERENCE   OWNER
+----------           -----    ---------   -----
+KERBEROS_V4          LIMITED  [RFC2222]   IESG <iesg@ietf.org>
+
+GSSAPI               COMMON   [RFC2222]   IESG <iesg@ietf.org> 
+
+SKEY                 OBSOLETE [RFC2444]   IESG <iesg@ietf.org>
+
+EXTERNAL             COMMON   [RFC2222]   IESG <iesg@ietf.org>
+
+CRAM-MD5             LIMITED  [RFC2195]   IESG <iesg@ietf.org> 
+    		
+ANONYMOUS            COMMON   [RFC2245]   IESG <iesg@ietf.org>
+
+OTP                  COMMON   [RFC2444]   IESG <iesg@ietf.org>
+
+GSS-SPNEGO           LIMITED  [Leach]     Paul Leach <paulle@microsoft.com>
+
+PLAIN                COMMON   [RFC2595]   IESG <iesg@ietf.org>
+
+SECURID              COMMON   [RFC2808]   Magnus Nystrom <magnus@rsasecurity.com>
+
+NTLM                 LIMITED  [Leach]     Paul Leach <paulle@microsoft.com>
+
+NMAS_LOGIN           LIMITED  [Gayman]    Mark G. Gayman <mgayman@novell.com>
+
+NMAS_AUTHEN          LIMITED  [Gayman]    Mark G. Gayman <mgayman@novell.com>
+
+DIGEST-MD5           COMMON   [RFC2831]   IESG <iesg@ietf.org>
+
+9798-U-RSA-SHA1-ENC  COMMON    [RFC3163]  robert.zuccherato@entrust.com
+
+9798-M-RSA-SHA1-ENC  COMMON   [RFC3163]   robert.zuccherato@entrust.com
+
+9798-U-DSA-SHA1      COMMON   [RFC3163]   robert.zuccherato@entrust.com
+
+9798-M-DSA-SHA1      COMMON   [RFC3163]   robert.zuccherato@entrust.com
+
+9798-U-ECDSA-SHA1    COMMON   [RFC3163]   robert.zuccherato@entrust.com
+
+9798-M-ECDSA-SHA1    COMMON   [RFC3163]   robert.zuccherato@entrust.com
+
+KERBEROS_V5          COMMON   [Josefsson] Simon Josefsson <simon@josefsson.org>
+
+NMAS-SAMBA-AUTH      LIMITED  [Brimhall]  Vince Brimhall <vbrimhall@novell.com>
+ 
+
+References
+----------
+
+[RFC2222] Myers, J., "Simple Authentication and Security Layer
+          (SASL)", RFC 2222, Netscape Communications, October 1997.
+
+[RFC2195]  Klensin, J., Catoe, R., Krumviede, P. "IMAP/POP AUTHorize
+           Extension for Simple Challenge/Response", RFC 2195, MCI,
+           September 1997.
+
+[RFC2245]  Newman, C., "Anonymous SASL Mechanism", RFC 2245, Innosoft,
+           November 1997. 
+
+[RFC2444]  Newman, C., "The One-Time-Password SASL Mechanism", RFC
+           2444, October 1998.
+
+[RFC2595]  Newman, C., "Using TLS with IMAP, POP3 and ACAP", RFC 2595,
+           Innosoft, June 1999.
+
+[RFC2808]  Nystrom, M., "The SecurID(r) SASL Mechanism", RFC 2808,
+           April 2000.
+
+[RFC2831]  Leach, P. and C. Newman, "Using Digest Authentication as a
+           SASL Mechanism", RFC 2831, May 2000.
+
+
+[RFC3163]  R. Zuccherato and M. Nystrom, "ISO/IEC 9798-3 Authentication 
+           SASL Mechanism", RFC 3163, August 2001.
+
+
+
+People
+------
+
+[Brimhall] Vince Brimhall, <vbrimhall@novell.com>, April 2004.
+
+[Gayman] Mark G. Gayman, <mgayman@novell.com>, September 2000.
+
+[Josefsson] Simon Josefsson, <simon@josefsson.org>, January 2004.
+
+[Leach] Paul Leach, <paulle@microsoft.com>, December 1998, June 2000.
+
+[]
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,111 @@
+To: help-gsasl@gnu.org, info-gnu@gnu.org
+Subject: GNU SASL 1.8.0 released (new stable branch)
+<#part sign=pgpmime>
+GNU SASL is a modern C library that implement the standard network
+security protocol Simple Authentication and Security Layer (SASL).  The
+framework itself and a couple of common SASL mechanisms are implemented.
+GNU SASL can be used by network applications for IMAP, SMTP, XMPP and
+similar protocols to provide authentication services.  Support for the
+more recent SCRAM-SHA-1, OPENID20 and SAML20 mechanisms is included.
+
+* Version 1.8.0 (released 2012-05-28) [stable]
+
+** This is a new major stable release.  Brief changes compared to 1.6.x:
+
+*** SAML20 support following RFC 6595.
+
+*** OPENID20 support following RFC 6616.
+
+*** Added SMTP server examples (for e.g., SCRAM, SAML20, OPENID20).
+
+*** Various cleanups, portability and other bug fixes.
+See the NEWS entries during the 1.7.x branch for details.
+
+** The API and ABI is fully backwards compatible with version 1.6.x.
+
+Improving GNU SASL is costly, but you can help!  We are looking for
+organizations that find GNU SASL useful and wish to contribute back.
+You can contribute by reporting bugs, improve the software, purchase
+support contracts, or donate money or equipment.
+
+Commercial support contracts for GNU SASL are available, and they help
+finance continued maintenance.  Simon Josefsson Datakonsult AB, a
+Stockholm based privately held company, is currently funding GNU SASL
+maintenance.  We are always looking for interesting development
+projects.  See http://josefsson.org/ for more details.
+
+The project's web page is available at:
+  https://www.gnu.org/software/gsasl/
+
+All manuals are available from:
+  https://www.gnu.org/software/gsasl/manual/
+
+Specifically, the following formats are available.
+
+The main manual:
+  https://www.gnu.org/software/gsasl/manual/gsasl.html - HTML format
+  https://www.gnu.org/software/gsasl/manual/gsasl.pdf - PDF format
+
+API Reference manual:
+  https://www.gnu.org/software/gsasl/reference/ - GTK-DOC HTML
+
+Doxygen documentation:
+  https://www.gnu.org/software/gsasl/doxygen/ - HTML format
+  https://www.gnu.org/software/gsasl/doxygen/gsasl.pdf - PDF format
+
+If you need help to use GNU SASL, or want to help others, you are
+invited to join our help-gsasl mailing list, see:
+  https://lists.gnu.org/mailman/listinfo/help-gsasl
+
+Here are the compressed sources of the entire package:
+  ftp://ftp.gnu.org/gnu/gsasl/gsasl-1.8.0.tar.gz (4.7MB)
+  ftp://ftp.gnu.org/gnu/gsasl/gsasl-1.8.0.tar.gz.sig (OpenPGP)
+
+Here are the compressed sources of the LGPL library (included above):
+  ftp://ftp.gnu.org/gnu/gsasl/libgsasl-1.8.0.tar.gz (1.2MB)
+  ftp://ftp.gnu.org/gnu/gsasl/libgsasl-1.8.0.tar.gz.sig (OpenPGP)
+
+We also provide pre-built Windows binaries:
+  ftp://ftp.gnu.org/gnu/gsasl/gsasl-1.8.0-x86.zip (32-bit)
+  ftp://ftp.gnu.org/gnu/gsasl/gsasl-1.8.0-x64.zip (64-bit)
+  ftp://ftp.gnu.org/gnu/gsasl/gsasl-1.8.0-x86-kfw322.zip (32-bit Kerberos)
+
+For code coverage, cyclomatic code complexity charts and clang output see:
+  https://www.gnu.org/software/gsasl/coverage/
+  https://www.gnu.org/software/gsasl/cyclo/
+  https://www.gnu.org/software/gsasl/clang-analyzer/
+
+The software is cryptographically signed by the author using an
+OpenPGP key identified by the following information:
+
+pub   1280R/B565716F 2002-05-05 [expires: 2013-05-10]
+      Key fingerprint = 0424 D4EE 81A0 E3D1 19C6  F835 EDA2 1E94 B565 716F
+uid                  Simon Josefsson <simon@josefsson.org>
+sub   2048R/105E722E 2012-03-13 [expires: 2013-07-26]
+sub   2048R/728AB82C 2012-03-13 [expires: 2013-07-26]
+sub   2048R/9394F626 2012-03-13 [expires: 2013-07-26]
+sub   1280R/4D5D40AE 2002-05-05 [expires: 2013-05-10]
+
+The key is available from:
+  http://josefsson.org/key.txt
+  dns:b565716f.josefsson.org?TYPE=CERT
+
+Here are the SHA-1 and SHA-224 checksums:
+
+343fd97ae924dc406986c02fb9b889f4114239ae  gsasl-1.8.0.tar.gz
+e22b0c89a2d52c0632d79193c17be6cb8fbf15d54a8de9e9da166aab  gsasl-1.8.0.tar.gz
+
+08fd5dfdd3d88154cf06cb0759a732790c47b4f7  libgsasl-1.8.0.tar.gz
+aec151fc10d45f654fd6a37fe5b96171e0cb7cba6901304928732be0  libgsasl-1.8.0.tar.gz
+
+d0d50fde3d2b45c265c16a4c383e02c466ce5a05  gsasl-1.8.0-x86.zip
+57e8f057b867c6fcac6449f767fa2bfea9b4616e77bdefd76ce17855  gsasl-1.8.0-x86.zip
+
+5aec37928fc72e700ba71b5617bfc4b32bc873a1  gsasl-1.8.0-x64.zip
+cb1fdf45e704c3f25b86e30bdf43431797c4497abbddef10083c5516  gsasl-1.8.0-x64.zip
+
+17557c8e959fbe913fd82042b182891a48fbac07  gsasl-1.8.0-x86-kfw322.zip
+399f10aa6fc71ae06577e90a13fe73cd4e88eaf2eb9c78cf01bfaede  gsasl-1.8.0-x86-kfw322.zip
+
+Happy hacking,
+Simon
