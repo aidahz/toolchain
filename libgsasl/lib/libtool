@@ -1,8 +1,8 @@
-#! /bin/sh
+#! /bin/bash
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (libgsasl) 1.8.1
-# Libtool was configured on host eric-centos:
+# Libtool was configured on host ericlam-preemp:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -65,7 +65,7 @@ pic_mode=default
 fast_install=needless
 
 # Shell to use when invoking shell scripts.
-SHELL="/bin/sh"
+SHELL="/bin/bash"
 
 # An echo program that protects backslashes.
 ECHO="printf %s\\n"
@@ -84,19 +84,19 @@ build=x86_64-unknown-linux-gnu
 build_os=linux-gnu
 
 # A sed program that does not truncate output.
-SED="/usr/bin/sed"
+SED="/bin/sed"
 
 # Sed that helps us avoid accidentally triggering echo(1) options like -n.
 Xsed="$SED -e 1s/^X//"
 
 # A grep program that handles long lines.
-GREP="/usr/bin/grep"
+GREP="/bin/grep"
 
 # An ERE matcher.
-EGREP="/usr/bin/grep -E"
+EGREP="/bin/grep -E"
 
 # A literal string matcher.
-FGREP="/usr/bin/grep -F"
+FGREP="/bin/grep -F"
 
 # A BSD- or MS-compatible name lister.
 NM="/usr/bin/nm -B"
@@ -275,10 +275,10 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/usr/lib/gcc/x86_64-redhat-linux/4.8.5 /usr/lib64 /lib64 "
+sys_lib_search_path_spec="/usr/lib/gcc/x86_64-linux-gnu/4.9 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib "
 
 # Run-time system search path for libraries.
-sys_lib_dlsearch_path_spec="/lib64 /usr/lib64 /lib /usr/lib /usr/lib64/dyninst /usr/lib64/mysql /usr/local/lib "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa "
 
 # Whether dlopen is supported.
 dlopen_support=unknown
@@ -320,7 +320,7 @@ pic_flag=" -fPIC -DPIC"
 wl="-Wl,"
 
 # Compiler flag to prevent dynamic linking.
-link_static_flag=""
+link_static_flag="-static"
 
 # Does compiler simultaneously support -c and -o options?
 compiler_c_o="yes"
@@ -402,7 +402,7 @@ hardcode_automatic=no
 inherit_rpath=no
 
 # Whether libtool must link a program against all its dependency libraries.
-link_all_deplibs=unknown
+link_all_deplibs=no
 
 # Set to "yes" if exported symbols are required.
 always_export_symbols=no
@@ -502,7 +502,7 @@ hardcode_action=immediate
 #         compiler:		$LTCC
 #         compiler flags:		$LTCFLAGS
 #         linker:		$LD (gnu? $with_gnu_ld)
-#         $progname:	(GNU libtool) 2.4.2
+#         $progname:	(GNU libtool) 2.4.2 Debian-2.4.2-1.7ubuntu1
 #         automake:	$automake_version
 #         autoconf:	$autoconf_version
 #
@@ -512,7 +512,7 @@ hardcode_action=immediate
 
 PROGRAM=libtool
 PACKAGE=libtool
-VERSION=2.4.2
+VERSION="2.4.2 Debian-2.4.2-1.7ubuntu1"
 TIMESTAMP=""
 package_revision=1.3337
 
@@ -6549,7 +6549,10 @@ func_mode_link ()
 	case $pass in
 	dlopen) libs="$dlfiles" ;;
 	dlpreopen) libs="$dlprefiles" ;;
-	link) libs="$deplibs %DEPLIBS% $dependency_libs" ;;
+	link)
+	  libs="$deplibs %DEPLIBS%"
+	  test "X$link_all_deplibs" != Xno && libs="$libs $dependency_libs"
+	  ;;
 	esac
       fi
       if test "$linkmode,$pass" = "lib,dlpreopen"; then
@@ -6869,19 +6872,19 @@ func_mode_link ()
 	    # It is a libtool convenience library, so add in its objects.
 	    convenience+=" $ladir/$objdir/$old_library"
 	    old_convenience+=" $ladir/$objdir/$old_library"
+	    tmp_libs=
+	    for deplib in $dependency_libs; do
+	      deplibs="$deplib $deplibs"
+	      if $opt_preserve_dup_deps ; then
+		case "$tmp_libs " in
+		*" $deplib "*) specialdeplibs+=" $deplib" ;;
+		esac
+	      fi
+	      tmp_libs+=" $deplib"
+	    done
 	  elif test "$linkmode" != prog && test "$linkmode" != lib; then
 	    func_fatal_error "\`$lib' is not a convenience library"
 	  fi
-	  tmp_libs=
-	  for deplib in $dependency_libs; do
-	    deplibs="$deplib $deplibs"
-	    if $opt_preserve_dup_deps ; then
-	      case "$tmp_libs " in
-	      *" $deplib "*) specialdeplibs+=" $deplib" ;;
-	      esac
-	    fi
-	    tmp_libs+=" $deplib"
-	  done
 	  continue
 	fi # $pass = conv
 
@@ -7773,6 +7776,9 @@ func_mode_link ()
 	    age="$number_minor"
 	    revision="$number_minor"
 	    lt_irix_increment=no
+	    ;;
+	  *)
+	    func_fatal_configuration "$modename: unknown library version type \`$version_type'"
 	    ;;
 	  esac
 	  ;;

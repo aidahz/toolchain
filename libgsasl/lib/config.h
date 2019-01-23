@@ -213,7 +213,7 @@
 #define HAVE_INTTYPES_H_WITH_UINTMAX 1
 
 /* Define if you have the libgcrypt library. */
-/* #undef HAVE_LIBGCRYPT */
+#define HAVE_LIBGCRYPT 1
 
 /* Define if you have the libgss library. */
 /* #undef HAVE_LIBGSS */
@@ -222,7 +222,7 @@
 /* #undef HAVE_LIBGSSAPI32 */
 
 /* Define if you have the libidn library. */
-/* #undef HAVE_LIBIDN */
+#define HAVE_LIBIDN 1
 
 /* Define if you have the libntlm library. */
 /* #undef HAVE_LIBNTLM */
@@ -263,10 +263,10 @@
 /* #undef HAVE_OS_H */
 
 /* Define to 1 if you have the `pr29_8z' function. */
-/* #undef HAVE_PR29_8Z */
+#define HAVE_PR29_8Z 1
 
 /* Define to 1 if you have the <pr29.h> header file. */
-/* #undef HAVE_PR29_H */
+#define HAVE_PR29_H 1
 
 /* Define to 1 if atoll is declared even after undefining macros. */
 #define HAVE_RAW_DECL_ATOLL 1

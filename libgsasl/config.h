@@ -397,7 +397,7 @@
 /* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `gnutls_session_channel_binding' function. */
-/* #undef HAVE_GNUTLS_SESSION_CHANNEL_BINDING */
+#define HAVE_GNUTLS_SESSION_CHANNEL_BINDING 1
 
 /* Define if you have the iconv() function and it works. */
 #define HAVE_ICONV 1
@@ -442,7 +442,7 @@
 #define HAVE_LC_MESSAGES 1
 
 /* Define if you have the libgnutls library. */
-/* #undef HAVE_LIBGNUTLS */
+#define HAVE_LIBGNUTLS 1
 
 /* Define to 1 if the system has the type `long long int'. */
 #define HAVE_LONG_LONG_INT 1
@@ -1373,9 +1373,6 @@
 
 /* Define if the mbrtowc function returns a wrong return value. */
 /* #undef MBRTOWC_RETVAL_BUG */
-
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
 
 /* Define to 1 if open() fails to recognize a trailing slash. */
 /* #undef OPEN_TRAILING_SLASH_BUG */
