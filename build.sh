@@ -211,16 +211,25 @@ start 'rm *.so: ........'
 
 ##########################
 start 'libgsasl: .......'
-(cd libgsasl-1.8.0 && ./configure --prefix=$TARGETDIR \
+(cd libgsasl && autoheader && autoreconf --install --force && LIBS=-lcrypto ./configure --prefix=$TARGETDIR \
 	--with-gssapi-impl=mit \
-	--enable-shared=no &&
-        make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
+	--enable-shared=no --disable-nls &&
+        make clean && make && make install) >& out/libgsasl.out && pass || fail
 
 ##########################
  start 'kerboros: .......'
  (cd krb5-1.14.3/src \
    && ./configure --prefix=$TARGETDIR --enable-static --disable-shared \
    && make clean && make -j8 && make install) >& out/krb.out && pass || fail
+
+##########################
+start 'boost: ...........'
+rm -rf boost_1_69_0
+if [ ! -f boost_1_69_0.tar.gz ] ; then
+wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz 
+fi
+
+tar zxvf boost_1_69_0.tar.gz >& out/boost.out && pass || fail
 
 ##########################
 # DON'T NEED THIS SHIT
