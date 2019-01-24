@@ -32,9 +32,6 @@ PATH: /home/ericlam/p/deepgreen5.all/run/dghome/bin
 PATH: /home/ericlam/p/deepgreen5.all/run/dghome/bin
 PATH: /home/ericlam/p/toolchain/installed/bin
 PATH: /home/ericlam/p/deepgreen5.all/run/dghome/bin
-PATH: /home/ericlam/p/deepgreen5.all/run/dghome/bin
-PATH: /home/ericlam/p/toolchain/installed/bin
-PATH: /home/ericlam/p/deepgreen5.all/run/dghome/bin
 PATH: .
 PATH: /home/ericlam/hadoop/bin
 PATH: /usr/local/unixODBC/bin
@@ -954,7 +951,7 @@ configure:20403: $? = 0
 configure:20403: result: yes
 configure:20403: checking for vasnprintf
 configure:20403: gcc -o conftest -g -O2   conftest.c -lcrypto >&5
-/tmp/cce6CyjI.o: In function `main':
+/tmp/ccnPMb9z.o: In function `main':
 /home/ericlam/p/toolchain/libgsasl/lib/conftest.c:85: undefined reference to `vasnprintf'
 collect2: error: ld returned 1 exit status
 configure:20403: $? = 1
@@ -1057,7 +1054,7 @@ configure:20403: $? = 0
 configure:20403: result: yes
 configure:20403: checking for _set_invalid_parameter_handler
 configure:20403: gcc -o conftest -g -O2   conftest.c -lcrypto >&5
-/tmp/ccYTTyHS.o: In function `main':
+/tmp/ccoqOAFI.o: In function `main':
 /home/ericlam/p/toolchain/libgsasl/lib/conftest.c:86: undefined reference to `_set_invalid_parameter_handler'
 collect2: error: ld returned 1 exit status
 configure:20403: $? = 1
@@ -3848,7 +3845,6 @@ config.status:2031: creating securid/Makefile
 config.status:2031: creating src/Makefile
 config.status:2031: creating tests/Makefile
 config.status:2031: creating config.h
-config.status:2212: config.h is unchanged
 config.status:2291: executing depfiles commands
 config.status:2291: executing libtool commands
 config.status:2291: executing po-directories commands
