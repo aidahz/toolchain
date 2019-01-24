@@ -67,6 +67,12 @@ rm -rf protobuf-3.5.1
     && make install) >& out/protobuf.out && pass || fail
 
 ##########################
+start 'librdkafka: ......'
+(cd librdkafka \
+  && ./configure --enable-static --enable-ssl --enable-sasl --prefix=${TARGETDIR}/rdkafka  \
+  && make clean && make && make install) >& out/librdkafka.out && pass || fail
+
+##########################
 start 'tomlc99: ........'
 (cd tomlc99 && make clean && make install prefix=$TARGETDIR) >& out/tomlc99.out && pass || fail
 
