@@ -4,12 +4,12 @@ printf-parse.lo: printf-parse.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h printf-args.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h wchar.h \
  /usr/include/wchar.h stdio.h /usr/include/stdio.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h /usr/include/xlocale.h \
  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdint.h /usr/include/stdint.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h /usr/include/stdint.h \
  stdlib.h /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
@@ -35,8 +35,8 @@ printf-parse.lo: printf-parse.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- xsize.h /usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/syslimits.h \
+ xsize.h /usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
@@ -62,7 +62,7 @@ printf-parse.h:
 
 printf-args.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 wchar.h:
 
@@ -72,7 +72,7 @@ stdio.h:
 
 /usr/include/stdio.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
 
@@ -80,7 +80,7 @@ stdio.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar2.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdint.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h:
 
 /usr/include/stdint.h:
 
@@ -156,9 +156,9 @@ string.h:
 
 xsize.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/limits.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/limits.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/syslimits.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/syslimits.h:
 
 /usr/include/limits.h:
 

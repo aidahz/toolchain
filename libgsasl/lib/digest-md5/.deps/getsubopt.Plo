@@ -1,6 +1,6 @@
 getsubopt.lo: getsubopt.c /usr/include/stdc-predef.h ../config.h parser.h \
- tokens.h /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
- ../gl/string.h /usr/include/string.h /usr/include/features.h \
+ tokens.h /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h ../gl/string.h \
+ /usr/include/string.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
@@ -22,7 +22,7 @@ parser.h:
 
 tokens.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 ../gl/string.h:
 

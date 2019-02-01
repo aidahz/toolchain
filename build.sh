@@ -216,11 +216,30 @@ start 'rm *.so: ........'
 (cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
 ##########################
+start 'libgsasl-conf: ..'
+(cd libgsasl && 
+	autoheader && 
+	autoreconf --install --force && 
+	LIBS=-lcrypto ./configure --prefix=$TARGETDIR \
+	   --with-gssapi-impl=mit \
+	   --enable-shared=no --disable-nls) >& out/libgsasl.out && pass || fail
+
+
+# disable the build of doc
+cat > libgsasl/doc/Makefile <<HEREHERE
+all:
+
+clean:
+
+install:
+
+HEREHERE
+
 start 'libgsasl: .......'
-(cd libgsasl && autoheader && autoreconf --install --force && LIBS=-lcrypto ./configure --prefix=$TARGETDIR \
-	--with-gssapi-impl=mit \
-	--enable-shared=no --disable-nls &&
+(cd libgsasl && 
         make clean && make && make install) >& out/libgsasl.out && pass || fail
+
+
 
 ##########################
  start 'kerboros: .......'
@@ -231,10 +250,7 @@ start 'libgsasl: .......'
 ##########################
 start 'boost: ...........'
 rm -rf boost_1_69_0
-if [ ! -f boost_1_69_0.tar.gz ] ; then
-wget https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz 
-fi
-
+cat boost_1_69_0.tar.gz.? > boost_1_69_0.tar.gz 
 tar zxvf boost_1_69_0.tar.gz >& out/boost.out && pass || fail
 
 ##########################

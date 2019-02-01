@@ -1,5 +1,5 @@
 session.lo: session.c /usr/include/stdc-predef.h ../config.h session.h \
- tokens.h /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
+ tokens.h /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h \
  /usr/include/openssl/des.h /usr/include/openssl/e_os2.h \
  /usr/include/x86_64-linux-gnu/openssl/opensslconf.h \
  /usr/include/openssl/des_old.h /usr/include/openssl/symhacks.h \
@@ -29,7 +29,7 @@ session.lo: session.c /usr/include/stdc-predef.h ../config.h session.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib.h ../gl/stdio.h \
  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
  ../gl/wchar.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
  /usr/include/x86_64-linux-gnu/bits/stdio.h \
@@ -49,7 +49,7 @@ session.h:
 
 tokens.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 /usr/include/openssl/des.h:
 
@@ -139,7 +139,7 @@ tokens.h:
 
 /usr/include/wchar.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 

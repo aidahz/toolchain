@@ -5,7 +5,7 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-prefix=/home/ericlam/p/toolchain/installed
+prefix=/home/cktan/p/toolchain/installed
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
@@ -15,5 +15,5 @@ Description: GNU Simple Authentication and Security Layer (SASL)
 URL: http://www.gnu.org/software/gsasl/
 Version: 1.8.1
 Libs: -L${libdir} -lgsasl
-Libs.private: -lgcrypt -lgpg-error -lidn 
+Libs.private:   
 Cflags: -I${includedir}

@@ -1,6 +1,6 @@
 printer.lo: printer.c /usr/include/stdc-predef.h ../config.h printer.h \
- tokens.h /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
- ../gl/stdlib.h /usr/include/stdlib.h /usr/include/features.h \
+ tokens.h /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h ../gl/stdlib.h \
+ /usr/include/stdlib.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
@@ -25,7 +25,7 @@ printer.lo: printer.c /usr/include/stdc-predef.h ../config.h printer.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib.h ../gl/stdio.h \
  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
  ../gl/wchar.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
  /usr/include/x86_64-linux-gnu/bits/stdio.h \
@@ -39,7 +39,7 @@ printer.h:
 
 tokens.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 ../gl/stdlib.h:
 
@@ -113,7 +113,7 @@ tokens.h:
 
 /usr/include/wchar.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 

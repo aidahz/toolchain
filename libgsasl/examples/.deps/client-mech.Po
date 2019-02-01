@@ -1,11 +1,11 @@
 client-mech.o: client-mech.c /usr/include/stdc-predef.h ../config.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h ../gl/stdio.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h ../gl/stdio.h \
  /usr/include/stdio.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/libio.h \
  /usr/include/_G_config.h ../gl/wchar.h /usr/include/wchar.h \
@@ -44,7 +44,7 @@ client-mech.o: client-mech.c /usr/include/stdc-predef.h ../config.h \
 
 ../config.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
 
 ../gl/stdio.h:
 
@@ -60,7 +60,7 @@ client-mech.o: client-mech.c /usr/include/stdc-predef.h ../config.h \
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 

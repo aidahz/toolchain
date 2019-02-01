@@ -1,6 +1,6 @@
 validate.lo: validate.c /usr/include/stdc-predef.h ../config.h validate.h \
- tokens.h /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdbool.h ../gl/string.h \
+ tokens.h /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdbool.h ../gl/string.h \
  /usr/include/string.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -23,9 +23,9 @@ validate.h:
 
 tokens.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdbool.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdbool.h:
 
 ../gl/string.h:
 

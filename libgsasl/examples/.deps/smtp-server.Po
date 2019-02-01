@@ -4,8 +4,8 @@ smtp-server.o: smtp-server.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
- /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h /usr/include/xlocale.h \
+ /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h /usr/include/endian.h \
  /usr/include/x86_64-linux-gnu/bits/endian.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
@@ -27,9 +27,9 @@ smtp-server.o: smtp-server.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h ../gl/netdb.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h ../gl/netdb.h \
  /usr/include/netdb.h /usr/include/netinet/in.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdint.h /usr/include/stdint.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h ../gl/sys/socket.h \
  /usr/include/x86_64-linux-gnu/sys/socket.h ../gl/sys/uio.h \
  /usr/include/x86_64-linux-gnu/sys/uio.h \
@@ -81,7 +81,7 @@ smtp-server.o: smtp-server.c /usr/include/stdc-predef.h ../config.h \
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 /usr/include/xlocale.h:
 
@@ -143,7 +143,7 @@ smtp-server.o: smtp-server.c /usr/include/stdc-predef.h ../config.h \
 
 /usr/include/x86_64-linux-gnu/bits/stdlib.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
 
 ../gl/netdb.h:
 
@@ -151,7 +151,7 @@ smtp-server.o: smtp-server.c /usr/include/stdc-predef.h ../config.h \
 
 /usr/include/netinet/in.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdint.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h:
 
 /usr/include/stdint.h:
 

@@ -1,5 +1,5 @@
 xalloc-die.lo: xalloc-die.c /usr/include/stdc-predef.h ../config.h \
- xalloc.h /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
+ xalloc.h /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h \
  xalloc-oversized.h stdlib.h /usr/include/stdlib.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -31,7 +31,7 @@ xalloc-die.lo: xalloc-die.c /usr/include/stdc-predef.h ../config.h \
 
 xalloc.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 xalloc-oversized.h:
 

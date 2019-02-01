@@ -397,7 +397,7 @@
 /* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `gnutls_session_channel_binding' function. */
-#define HAVE_GNUTLS_SESSION_CHANNEL_BINDING 1
+/* #undef HAVE_GNUTLS_SESSION_CHANNEL_BINDING */
 
 /* Define if you have the iconv() function and it works. */
 #define HAVE_ICONV 1
@@ -442,7 +442,7 @@
 #define HAVE_LC_MESSAGES 1
 
 /* Define if you have the libgnutls library. */
-#define HAVE_LIBGNUTLS 1
+/* #undef HAVE_LIBGNUTLS */
 
 /* Define to 1 if the system has the type `long long int'. */
 #define HAVE_LONG_LONG_INT 1
@@ -1352,8 +1352,7 @@
    slash. */
 #define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
 
 /* If malloc(0) is != NULL, define this to 1. Otherwise define this to 0. */

@@ -1,5 +1,5 @@
 striconv.lo: striconv.c /usr/include/stdc-predef.h ../config.h striconv.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h iconv.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h iconv.h \
  /usr/include/iconv.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -31,8 +31,8 @@ striconv.lo: striconv.c /usr/include/stdc-predef.h ../config.h striconv.h \
  /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
  /usr/include/x86_64-linux-gnu/bits/string3.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/syslimits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
@@ -46,7 +46,7 @@ striconv.lo: striconv.c /usr/include/stdc-predef.h ../config.h striconv.h \
 
 striconv.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 iconv.h:
 
@@ -138,9 +138,9 @@ string.h:
 
 /usr/include/x86_64-linux-gnu/bits/string3.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/limits.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/limits.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed/syslimits.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed/syslimits.h:
 
 /usr/include/limits.h:
 

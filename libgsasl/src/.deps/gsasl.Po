@@ -4,11 +4,11 @@ gsasl.o: gsasl.c /usr/include/stdc-predef.h internal.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/libio.h \
  /usr/include/_G_config.h ../gl/wchar.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
  /usr/include/x86_64-linux-gnu/bits/stdio.h \
@@ -37,7 +37,7 @@ gsasl.o: gsasl.c /usr/include/stdc-predef.h internal.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdbool.h ../gl/sys/socket.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdbool.h ../gl/sys/socket.h \
  /usr/include/x86_64-linux-gnu/sys/socket.h ../gl/sys/uio.h \
  /usr/include/x86_64-linux-gnu/sys/uio.h \
  /usr/include/x86_64-linux-gnu/bits/uio.h \
@@ -56,7 +56,7 @@ gsasl.o: gsasl.c /usr/include/stdc-predef.h internal.h ../config.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
  /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/netinet/in.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdint.h /usr/include/stdint.h \
+ /usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/in.h ../gl/netdb.h \
  /usr/include/netdb.h /usr/include/rpc/netdb.h \
@@ -70,8 +70,7 @@ gsasl.o: gsasl.c /usr/include/stdc-predef.h internal.h ../config.h \
  ../gl/quote.h ../gl/version-etc.h ../gl/xalloc.h \
  ../gl/xalloc-oversized.h ../gl/gettext.h /usr/include/locale.h \
  /usr/include/x86_64-linux-gnu/bits/locale.h gsasl_cmd.h callbacks.h \
- imap.h smtp.h ../gl/sockets.h /usr/include/gnutls/gnutls.h \
- /usr/include/x86_64-linux-gnu/bits/timex.h /usr/include/gnutls/compat.h
+ imap.h smtp.h ../gl/sockets.h
 
 /usr/include/stdc-predef.h:
 
@@ -93,7 +92,7 @@ internal.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
@@ -107,7 +106,7 @@ internal.h:
 
 /usr/include/wchar.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
@@ -191,7 +190,7 @@ internal.h:
 
 /usr/include/asm-generic/errno-base.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdbool.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdbool.h:
 
 ../gl/sys/socket.h:
 
@@ -245,7 +244,7 @@ internal.h:
 
 /usr/include/netinet/in.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdint.h:
+/usr/lib/gcc/x86_64-linux-gnu/6/include/stdint.h:
 
 /usr/include/stdint.h:
 
@@ -314,9 +313,3 @@ imap.h:
 smtp.h:
 
 ../gl/sockets.h:
-
-/usr/include/gnutls/gnutls.h:
-
-/usr/include/x86_64-linux-gnu/bits/timex.h:
-
-/usr/include/gnutls/compat.h:
