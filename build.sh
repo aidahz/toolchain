@@ -58,6 +58,15 @@ mkdir -p $TARGETDIR/jars
 wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.271/aws-java-sdk-bundle-1.11.271.jar) >& out/aws.out && pass || fail
 
 ##########################
+start 'sigar: ..........'
+rm -rf sigar-master
+(unzip sigar-master.zip && cd sigar-master &&
+    bash autogen.sh &&
+    ./configure --prefix=$TARGETDIR --enable-shared=no &&
+    make clean && make -j8 &&
+    make install) >& out/sigar.out && pass || fail
+
+##########################
 start 'protobuf: .......'
 rm -rf protobuf-3.5.1
 (tar xfz protobuf-all-3.5.1.tar.gz && cd protobuf-3.5.1 \
