@@ -5,7 +5,7 @@
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.
 
-prefix=/home/ubuntu/p/toolchain/installed
+prefix=/home/ftian/p/toolchain/installed
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

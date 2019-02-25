@@ -22,7 +22,7 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /home/ubuntu/p/toolchain/installed
+prefix = /home/ftian/p/toolchain/installed
 exec_prefix = ${prefix}
 datarootdir = ${prefix}/share
 datadir = ${datarootdir}
@@ -35,29 +35,29 @@ INSTALL_DATA = ${INSTALL} -m 644
 # We use $(mkdir_p).
 # In automake <= 1.9.x, $(mkdir_p) is defined either as "mkdir -p --" or as
 # "$(mkinstalldirs)" or as "$(install_sh) -d". For these automake versions,
-# ${SHELL} /home/ubuntu/p/toolchain/libgsasl/lib/build-aux/install-sh does not start with $(SHELL), so we add it.
+# ${SHELL} /home/ftian/p/toolchain/libgsasl/lib/build-aux/install-sh does not start with $(SHELL), so we add it.
 # In automake >= 1.10, /bin/mkdir -p is derived from ${MKDIR_P}, which is defined
 # either as "/path/to/mkdir -p" or ".../install-sh -c -d". For these automake
 # versions, $(mkinstalldirs) and $(install_sh) are unused.
-mkinstalldirs = $(SHELL) ${SHELL} /home/ubuntu/p/toolchain/libgsasl/lib/build-aux/install-sh -d
-install_sh = $(SHELL) ${SHELL} /home/ubuntu/p/toolchain/libgsasl/lib/build-aux/install-sh
+mkinstalldirs = $(SHELL) ${SHELL} /home/ftian/p/toolchain/libgsasl/lib/build-aux/install-sh -d
+install_sh = $(SHELL) ${SHELL} /home/ftian/p/toolchain/libgsasl/lib/build-aux/install-sh
 MKDIR_P = /bin/mkdir -p
 mkdir_p = /bin/mkdir -p
 
-GMSGFMT_ = :
-GMSGFMT_no = :
-GMSGFMT_yes = :
+GMSGFMT_ = /usr/bin/msgfmt
+GMSGFMT_no = /usr/bin/msgfmt
+GMSGFMT_yes = /usr/bin/msgfmt
 GMSGFMT = $(GMSGFMT_$(USE_MSGCTXT))
-MSGFMT_ = :
-MSGFMT_no = :
-MSGFMT_yes = :
+MSGFMT_ = /usr/bin/msgfmt
+MSGFMT_no = /usr/bin/msgfmt
+MSGFMT_yes = /usr/bin/msgfmt
 MSGFMT = $(MSGFMT_$(USE_MSGCTXT))
-XGETTEXT_ = :
-XGETTEXT_no = :
-XGETTEXT_yes = :
+XGETTEXT_ = /usr/bin/xgettext
+XGETTEXT_no = /usr/bin/xgettext
+XGETTEXT_yes = /usr/bin/xgettext
 XGETTEXT = $(XGETTEXT_$(USE_MSGCTXT))
 MSGMERGE = msgmerge
-MSGMERGE_UPDATE = : --update
+MSGMERGE_UPDATE = /usr/bin/msgmerge --update
 MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
@@ -473,11 +473,11 @@ update-gmo: Makefile $(GMOFILES)
 
 # Recreate Makefile by invoking config.status. Explicitly invoke the shell,
 # because execution permission bits may not work on the current file system.
-# Use /bin/bash, which is the shell determined by autoconf for the use by its
+# Use /bin/sh, which is the shell determined by autoconf for the use by its
 # scripts, not $(SHELL) which is hardwired to /bin/sh and may be deficient.
 Makefile: Makefile.in.in Makevars $(top_builddir)/config.status POTFILES.in LINGUAS
 	cd $(top_builddir) \
-	  && /bin/bash ./config.status $(subdir)/$@.in po-directories
+	  && /bin/sh ./config.status $(subdir)/$@.in po-directories
 
 force:
 
