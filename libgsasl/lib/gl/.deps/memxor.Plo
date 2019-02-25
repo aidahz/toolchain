@@ -1,5 +1,5 @@
 memxor.lo: memxor.c /usr/include/stdc-predef.h ../config.h memxor.h \
- /usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h
+ /usr/lib/gcc/aarch64-linux-gnu/5/include/stddef.h
 
 /usr/include/stdc-predef.h:
 
@@ -7,4 +7,4 @@ memxor.lo: memxor.c /usr/include/stdc-predef.h ../config.h memxor.h \
 
 memxor.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/6/include/stddef.h:
+/usr/lib/gcc/aarch64-linux-gnu/5/include/stddef.h:

@@ -41,6 +41,11 @@ TARGETDIR=$DIR/installed
 export PATH="$TARGETDIR/bin:$PATH"
 
 ##########################
+echo -n 'exx: ............'
+(cd mendota/exx && make clean && make -j8 &&
+	make install prefix=$TARGETDIR ) >& out/exx && pass || fail
+
+##########################
 echo -n 'viper: ..........'
 (cd mendota/viper && make clean &&
         make -j8 && make install prefix="$TARGETDIR" ) >& out/viper.out && pass || fail
@@ -49,11 +54,6 @@ echo -n 'viper: ..........'
 echo -n 'sparquet: .......'
 (cd mendota/sparquet && make clean &&
         make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
-
-##########################
-echo -n 'exx: ............'
-(cd mendota/exx && make clean && make -j8 &&
-	make install prefix=$TARGETDIR ) >& out/exx && pass || fail
 
 ##########################
 echo -n 'libhdfs3: .......'
