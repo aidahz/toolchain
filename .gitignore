@@ -45,6 +45,7 @@
 /krb5-1.14.3
 /libevent-2.0.22-stable
 /libgsasl-1.8.0
+/libgsasl
 /lz4-r127
 /lz4-r129
 /parquet-cpp-master
