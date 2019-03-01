@@ -282,5 +282,5 @@ bash build_shared.sh
 echo 
 echo '*** local ***'
 echo 
-bash build_local.sh
+bash build_local_arm.sh
 
