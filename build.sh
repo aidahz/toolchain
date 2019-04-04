@@ -79,7 +79,7 @@ rm -rf protobuf-3.5.1
 start 'librdkafka: ......'
 (cd librdkafka \
   && ./configure --enable-static --enable-ssl --enable-sasl --prefix=${TARGETDIR}/rdkafka  \
-  && make clean && make && make install) >& out/librdkafka.out && pass || fail
+  && sed -i -e 's/-Wl,-Bstatic//g' -e 's/^LDFLAGS_STATIC=.*/LDFLAGS_STATIC= -Wl,-Bstatic/g' Makefile.config && make clean && make && make install) >& out/librdkafka.out && pass || fail
 
 ##########################
 start 'tomlc99: ........'
