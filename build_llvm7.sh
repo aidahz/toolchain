@@ -17,9 +17,8 @@ pyver=$(python -V 2>&1 | sed 's/.* \([0-9]\).\([0-9]\).*/\1\2/')
 if [ "$pyver" -lt "27" ]; then
     wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
     tar xzf Python-2.7.10.tgz
-    cd Python-2.7.10
-    ./configure
-    (sudo make -j8 altinstall) || fatal make-python-27
+    (cd Python-2.7.10 && ./configure) || fatal make-python27-configure
+    (cd Python-2.7.10 && sudo make -j8 altinstall) || fatal make-python-27
     alias python=python2.7
 fi
 
