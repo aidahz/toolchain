@@ -66,11 +66,12 @@ start 'tomlc99: ........'
 
 ##########################
 start 'event: ..........'
+rm -rf libevent-2.0.22-stable
 HINT=
 if [ -e /opt/local/include/openssl ] && ! [ -e /usr/local/include/openssl ] ; then
     HINT='HINT: try (cd /usr/local/include; ln -s /opt/local/include/openssl)'
 fi
-(cd libevent-2.0.22-stable && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
+(tar xvfz libevent-2.0.22-stable.tar.gz && cd libevent-2.0.22-stable && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
 
 ##########################
 # start 'cmake: ..........'
