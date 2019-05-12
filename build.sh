@@ -87,18 +87,17 @@ start 'tomlc99: ........'
 
 ##########################
 start 'event: ..........'
-rm -rf libevent-2.1.8-stable
 HINT=
 if [ -e /opt/local/include/openssl ] && ! [ -e /usr/local/include/openssl ] ; then
     HINT='HINT: try (cd /usr/local/include; ln -s /opt/local/include/openssl)'
 fi
-(tar xvf libevent-2.1.8-stable.tar.gz && cd libevent-2.1.8-stable && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
+(cd libevent-2.0.22-stable && ./configure --prefix=$TARGETDIR && make clean && make -j8 && make install) >& out/event.out && pass || fail $HINT
 
 ##########################
+# start 'cmake: ..........'
 if (cmake3 >& /dev/null); then 
     ln -s $(which cmake3) $TARGETDIR/bin/cmake
 elif ! (cmake --version 2>&1 | grep 'version 3'); then 
-    start 'cmake: ..........'
     (cd cmake-3.5.2 && ./configure --prefix=$TARGETDIR &&
             make clean && make -j8 && make install) >& out/cmake.out && pass || fail
 fi
