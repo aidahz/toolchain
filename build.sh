@@ -76,6 +76,14 @@ rm -rf protobuf-3.5.1
     && make install) >& out/protobuf.out && pass || fail
 
 ##########################
+start 'flatbuffers: .......'
+rm -fr flatbuffers-1.11.0
+(tar xfz flatbuffers-1.11.0.tar.gz && cd flatbuffers-1.11.0 \
+	&& cmake -G "Unix Makefiles" \
+	   -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release \
+	&& make && make install) >& out/flatbuffers.out && pass || fail
+
+##########################
 start 'librdkafka: ......'
 (cd librdkafka \
   && ./configure --enable-static --enable-ssl --enable-sasl --prefix=${TARGETDIR}/rdkafka  \
