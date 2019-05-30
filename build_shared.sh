@@ -57,6 +57,12 @@ start 'libxml2: ........'
         ./configure --prefix=$TARGETDIR --without-python &&
         make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
 
+##########################
+ start 'kerboros: .......'
+ (cd krb5-1.14.3/src \
+   && ./configure --prefix=$TARGETDIR \
+   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
+
 #
 # Disable these. Moved into respect dg dirs
 #
