@@ -159,7 +159,7 @@ rm -fr flatbuffers-1.11.0
 (tar xfz flatbuffers-1.11.0.tar.gz && cd flatbuffers-1.11.0 \
 	&& cmake -G "Unix Makefiles" \
 	   -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN_DIR/installed -DCMAKE_BUILD_TYPE=Release \
-	&& make && make install) >& out/flatbuffers.out && pass || fail
+	&& make -j8 && make install) >& out/flatbuffers.out && pass || fail
 
 
 ##########################
