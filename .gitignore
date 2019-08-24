@@ -56,11 +56,11 @@
 /yaml-0.1.7
 /gss-1.0.3
 /llvm-3.5.2.src
+/go1.9.5.linux-amd64.tar.gz
 /librdkafka
 /mendota
 /maven
 /go
-/go1.*.tar.gz
 /llvm
 /llvm-7.0.1.src
 /build

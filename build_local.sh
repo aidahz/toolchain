@@ -69,11 +69,11 @@ rm -f maven
 
 ##########################
 echo -n 'wget go: .......'
-( [ -a go1.12.9.linux-amd64.tar.gz ] || 
-	wget https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz ) >& out/go.out && pass || fail 
+( [ -a go1.9.5.linux-amd64.tar.gz ] || 
+	wget https://dl.google.com/go/go1.9.5.linux-amd64.tar.gz ) >& out/go.out && pass || fail 
 
 ##########################
 echo -n 'go: ............'
-(tar xzf go1.12.9.linux-amd64.tar.gz) >& out/go.out && pass || fail
+(tar xzf go1.9.5.linux-amd64.tar.gz) >& out/go.out && pass || fail
 
 
