@@ -22,6 +22,8 @@ if [ "$pyver" -lt "27" ]; then
     alias python=python2.7
 fi
 
+MY_TOOLCHAIN_DIR=$DIR
+[ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
 
 ##########################
 (rm -rf llvm-7.0.1.src && tar xf llvm-7.0.1.src.tar.xz &&
