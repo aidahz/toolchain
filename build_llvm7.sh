@@ -8,6 +8,10 @@ function fatal
    exit 1
 }
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+MY_TOOLCHAIN_DIR=$DIR
+[ "$MY_TOOLCHAIN_DIR" == "$TOOLCHAIN_DIR" ]  || fatal "please set TOOLCHAIN_DIR to this $DIR"
+
 sudo mkdir -p /opt/llvm7-{release,release+assert} 
 sudo chown $USER /opt/llvm7-{release,release+assert}
 
