@@ -56,7 +56,7 @@ echo -n 'sparquet: .......'
         make && make install prefix="$TARGETDIR" ) >& out/sparquet.out && pass || fail
 
 ##########################
-if [ "$DG_ENV_VER" == "5" ] ; then 
+if [ "$DG_ENV_VER" == 5 ] || [ -f "/usr/include/parquet/arrow/reader.h" ] ; then
 echo -n 'parquet: .......'
 (cd mendota/parquet && make clean &&
         make && make install prefix="$TARGETDIR" ) >& out/parquet.out && pass || fail
